@@ -9,4 +9,4 @@ app.use(morgan('combined', {
 }))
 
 app.use('/', express.static(__dirname))
-app.listen(PORT, function() { console.log(`listening on PORT. ${PORT}.`, __dirname) })
+app.listen(PORT, function() { console.log(`listening on PORT: ${PORT}.`, __dirname) })
