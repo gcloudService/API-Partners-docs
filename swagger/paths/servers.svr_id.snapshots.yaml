@@ -1,0 +1,95 @@
+post:
+  summary: 스냅샷 생성
+  description: |
+    g클라우드 서버(베이직/프리미엄)의 현재 상태를 기록하는 스냅샷을 생성할 수 있습니다.
+    - 한 서버당 최대 10개의 스냅샷을 생성할 수 있습니다.
+    - 생성할 스냅샷과 연결된 서버가 다른 스냅샷을 생성 중이거나 삭제 중일 경우에는 생성할 수 없습니다.
+
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/servers/vm_1/snapshots \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'name=snap1&desc=test-snap'
+    ```
+
+    ### Error Code
+    - `-4401` : [API] 스냅샷 생성 오류. 스냅샷명 중복
+    - `-4402` : [API] 스냅샷 생성 오류. 스냅샷 생성 불가 상태. 스냅샷 생성하려는 서버가 삭제된 상태입니다.
+    - `-4403` : [API] 스냅샷 생성 오류. 스냅샷 생성 불가 상태. 스냅샷 생성하려는 서버에 스냅샷이 '생성중' 혹은 '삭제중' 상태입니다.
+    - `-4404` : [API] 스냅샷 생성 오류. 스냅샷은 서버명 10개까지 가능합니다.
+    - `-4405` : [API] 스냅샷 생성 오류. 베이직, 프리미엄 타입의 서버만 가능합니다.
+  tags:
+    - Servers
+    - Snapshots
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/snap_name
+    - $ref: ../parameters/index.yaml#/snap_desc
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/snapshots",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "name=snap1&desc=test-snap",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'POST',
+          url: 'http://10.222.222.227:3000/v1/servers/vm_1/snapshots',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            name: 'snap1',
+            desc: 'test-snap'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    202:
+      description: Accepted. 스냅샷 생성 요청(비동기) 성공
+      schema:
+        $ref: ../definitions/Snapshots.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml

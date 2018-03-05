@@ -1,0 +1,17 @@
+swagger: 2.0
+schemes:
+  - http
+host: 10.222.222.227:3000
+basePath: /v1
+info:
+  $ref: ./swagger/info/index.yaml
+produces:
+  - application/json
+tags:
+  $ref: ./swagger/tags/index.yaml
+parameters:
+  $ref: ./swagger/parameters/index.yaml
+paths:
+  $ref: ./swagger/paths/index.yaml
+definitions:
+  $ref: ./swagger/definitions/index.yaml

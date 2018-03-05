@@ -1,0 +1,193 @@
+post:
+  summary: 공인 IP 할당
+  description: |
+    g클라우드 서버에 공인 IP를 할당할 수 있습니다.
+    - 다른 자원에서 이미 사용 중인 공인 IP는 할당할 수 없습니다.
+    - 동일한 서비스 존을 사용하고 있는 자원에 대해서만 공인 IP를 할당할 수 있습니다.
+
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/servers/vm_1/ips/pubIp_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+
+    ### Error Code
+    - `-4161` : [API] 서버 IP 부착 오류. IP 부착 불가 상태. 정지 또는 시작 상태의 서버만 IP를 부착할 수 있습니다.
+    - `-4162` : [API] 서버 IP 부착 오류. IP 부착 불가 상태. 서비스존에 사용 가능한 IP가 없습니다.
+    - `-4163` : [API] 서버 IP 부착 오류. 유효하지 않은 파라미터. 서버의 서비스존과 IP의 서비스존이 다릅니다.
+    - `-4164` : [API] 서버 IP 부착 오류. IP 부착 불가 상태. IP가 이미 다른 자원에서 사용중입니다.
+    - `-4167` : [API] 서버 IP 부착 오류. IP 부착 불가 상태. 서버에 부착된 IP가 존재합니다.
+  tags:
+    - Servers
+    - PublicIps
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - $ref: ../parameters/index.yaml#/ip_id
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/ips/pubIp_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+            method: 'POST',
+            url: 'http://10.222.222.227:3000/v1/servers/vm_1/ips/pubIp_1',
+            headers: {
+              'cache-control': 'no-cache',
+              'content-type': 'application/x-www-form-urlencoded',
+              'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+            }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: |
+        Created. 공인 IP 할당 성공
+      schema:
+        $ref: ../definitions/Servers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 서버/IP가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+delete:
+  summary: 공인 IP 해제
+  description: |
+    g클라우드 서버에 할당된 공인 IP를 해제할 수 있습니다.
+    - g클라우드 서버의 네트워크가 차단되었을 경우, 공인 IP를 해제할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X DELETE \
+      http://10.222.222.227:3000/v1/servers/vm_1/ips/pubIp_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+
+    ### Error Code
+    - `-4165` : [API] 서버 IP 해제 오류. IP 해제 불가 상태. IP가 서버에 부착된 상태가 아닙니다.
+    - `-4166` : [API] 서버 IP 해제 오류. IP 해제 불가 상태. IP에 연결된 방화벽이 존재합니다.
+    - `-4167` : [API] 서버 IP 부착 오류. IP 부착 불가 상태. 서버에 부착된 IP가 존재합니다.
+    - `-4168` : [API] 서버 IP 해제 오류. IP 해제 불가 상태. 서버 네크워크 차단 상태입니다. 네트워크 허용 후 다시 시도해주세요.
+  tags:
+    - Servers
+    - PublicIps
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/ips/pubIp_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'DELETE',
+          url: 'http://10.222.222.227:3000/v1/servers/vm_1/ips/pubIp_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - $ref: ../parameters/index.yaml#/ip_id
+  responses:
+    200:
+      description: |
+        Created. 공인 IP 해제 성공
+      schema:
+        $ref: ../definitions/Servers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 서버/IP가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

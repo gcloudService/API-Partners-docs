@@ -1,0 +1,126 @@
+put:
+  summary: 서버 사양변경
+  description: |
+    g클라우드 서버의 CPU, Memory 사양을 변경할 수 있습니다.
+    - g클라우드 서버(SSD)는 CPU, Memory 사양을 변경할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/servers/vm_1/spec \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'cpu=2&memory=2'
+    ```
+
+    ### Error Code
+    - `-4121` : [API] 서버 사양 변경 오류. 서버 변경 불가 상태. 정지 상태에서만 가능합니다.
+    - `-4122` : [API] 서버 사양 변경 오류. 서버 변경 불가 상태. 정지 상태에서만 가능합니다.`
+    - `-4123` : [API] 서버 사양 변경 오류. cpu 기본 사양보다 작게 변경 요청
+    - `-4124` : [API] 서버 사양 변경 오류. memory 기본 사양보다 작게 변경 요청
+    - `-4125` : [API] 서버 사양 변경 오류. 16vCorec cpu 요청시 memory를 16보다 작게 요청
+    - `-4126` : [API] 서버 사양 변경 오류. 변경 가능한 최대 메모리 초과
+    - `-4127` : [API] 서버 사양 변경 오류. 기존 타입에서 변경할 수 없는 사양
+    - `-4128` : [API] 서버 사양 변경 오류. ssd 사양의 서버는 변경 불가
+  tags:
+    - Servers
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - name: cpu
+      description: |
+        g클라우드 서버(베이직/프리미엄)의 CPU 사양(vCore)을 입력하는 매개변수입니다.
+        - g클라우드 서버(베이직)은 [1, 2, 4, 8] 중 하나를 입력할 수 있습니다.
+        - g클라우드 서버(프리미엄)은 [4, 8, 16] 중 하나를 입력할 수 있습니다.
+      in: formData
+      required: false
+      type: integer
+      format: int32
+    - name: memory
+      description: |
+        g클라우드 서버(베이직/프리미엄)의 Memory 사양(GB)을 입력하는 매개변수입니다.
+        - g클라우드 서버(베이직)은 [1, 2, 3, 4, 8, 16] 중 하나를 입력할 수 있습니다.
+        - g클라우드 서버(프리미엄)은 [16, 32, 64, 128] 중 하나를 입력할 수 있습니다. (단, 16은 cpu 매개변수가 16일 때만 가능합니다.)
+      in: formData
+      required: false
+      type: integer
+      format: int32
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/spec",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "cpu=2&memory=2",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'http://10.222.222.227:3000/v1/servers/vm_1/spec',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'cpu': 2,
+            'memory': 2
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: |
+        OK. 기존 값과 동일한 수정 요청
+      schema:
+        $ref: ../definitions/Servers.yaml
+    201:
+      description: |
+        Created. 서버 사양 변경 성공
+      schema:
+        $ref: ../definitions/Servers.yaml
+    400:
+      description: Bad request. 필수 파라미터가 없거나 파라미터 조건이 맞지 않는 경우
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패. 인증 받지 않은 사용자
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 요청한 서버가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 넘어온 svr_id와 일치하는 자원이 없는 경우
+      schema:
+        $ref: ../definitions/NotFound.yaml

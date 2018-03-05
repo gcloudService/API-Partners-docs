@@ -1,0 +1,104 @@
+type: object
+properties:
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+  createdate:
+    type: dateTime
+    description: 이용자 계정의 생성일에 해당하는 속성입니다.
+    example: "2017-09-12 08:53:12"
+  resources:
+    type: object
+    description: 이용자가 소유한 자원에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+    properties:
+      servers:
+        type: array
+        description: 이용자가 소유한 자원 중 g클라우드 서버에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: g클라우드 서버의 ID에 해당하는 속성입니다.
+              example: vm_1
+            name:
+              type: string
+              description: g클라우드 서버의 자원명에 해당하는 속성입니다.
+              example: A-서버
+      volumes:
+        type: array
+        description: 이용자가 소유한 자원 중 g클라우드 스토리지에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
+              example: vol_1
+            name:
+              type: string
+              description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
+              example: 추가 스토리지
+      ips:
+        type: array
+        description: 이용자가 소유한 자원 중 공인 IP에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 공인 IP의 ID에 해당하는 속성입니다.
+              example: pubIp_1
+      fws:
+        type: array
+        description: 이용자가 소유한 자원 중 방화벽 정책에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 방화벽 정책의 ID에 해당하는 속성입니다
+              example: fr_1
+      lbs:
+        type: array
+        description: 이용자가 소유한 자원 중 로드밸런서에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 로드밸런서의 ID에 해당하는 속성입니다.
+              example: lbg_1
+            name:
+              type: string
+              description: 로드밸런서의 자원명에 해당하는 속성입니다.
+              example: 이벤트 로드밸런서
+      snapshots:
+        type: array
+        description: 이용자가 소유한 자원 중 스냅샷에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 스냅샷의 ID에 해당하는 속성입니다.
+              example: snap_1
+            name:
+              type: string
+              description: 스냅샷의 자원명에 해당하는 속성입니다.
+              example: 백업용 스냅샷
+      images:
+        type: array
+        description: 이용자가 소유한 자원 중 이미지에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 이미지의 ID에 해당하는 속성입니다.
+              example: img_1
+            name:
+              type: string
+              description: 이미지의 자원명에 해당하는 속성입니다.
+              example: 스케일아웃 이미지

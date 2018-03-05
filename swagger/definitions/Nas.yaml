@@ -1,0 +1,81 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너 ID
+    example: biz_1004
+  user_id:
+    type: string
+    description: 사용자 ID
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  nas_id:
+    type: string
+    description: NAS ID
+    example: nas_1
+    pattern: ^(nas_)+[1-9]{1}\d*$
+  name:
+    type: string
+    description: NAS 이름
+    example: nas-A
+    minLength: 1
+    maxLength: 16
+    pattern: ^[\w\-]{1,16}$
+  desc:
+    type: string
+    description: NAS 설명
+    example: 백업용 나쓰
+    minLength: 0
+    maxLength: 100
+    pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  protocol:
+    type: string
+    description: NAS 프로토콜
+    example: cifs
+    enum: [nfs, cifs]
+  size:
+    type: float
+    description: NAS 용량, TB 단위
+    example: 1.2
+  status:
+    type: string
+    description: NAS 상태
+    example: 9
+    enum: ["0", "9", D]
+  mount_path:
+    type: string
+    description:  NAS 마운트 패쓰
+    example: mount1
+    pattern: ^[a-z]{1}([\w]){0,15}$
+  private_ip:
+    type: string
+    description: NAS 사설 IP
+    example: 192.168.248.2
+    format: ipv4
+  regdate:
+    type: dateTime
+    description: 생성일
+    example: '2017-09-14 05:14:26'
+  updatedate:
+    type: dateTime
+    description: 수정일
+    example: '2017-09-14 05:14:26'
+  usage:
+    type: integer
+    description: NAS 사용량, Byte 단위
+    example: 50000
+  snapshots:
+    type: object
+    properties:
+      snap_id:
+        type: string
+        description: NAS 스냅샷 ID
+        example: nas_1
+        pattern: ^(nas_)+[1-9]{1}\d*$
+      name:
+        type: string
+        description: NAS 스냅샷 이름
+        example: snap-test
+        pattern: ^[\w\-]{1,16}$

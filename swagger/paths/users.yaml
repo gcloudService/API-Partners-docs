@@ -1,0 +1,241 @@
+post:
+  summary: 이용자 등록
+  description: |
+    이용자 계정을 등록합니다.
+    - 등록된 이용자만 자원을 생성 및 할당 받을 수 있습니다.
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/users \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d user_id={YOUR--USER-ID}
+    ```
+
+    ### Error Code
+    - `-3851` : [API] 이용자 등록 오류. 이미 존재하는 이용자.
+  tags:
+    - Users
+  produces:
+    - application/json
+  parameters:
+    - name: user_id
+      description: |
+        이용자의 ID에 해당하는 매개변수입니다.
+        - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 3자 이상 16자 이하로만 입력할 수 있습니다.
+      in: formData
+      required: true
+      type: string
+      minLength: 3
+      maxLength: 16
+      pattern: ^[\w\-]$
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/users",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "user_id=company_777",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'POST',
+          url: 'http://10.222.222.227:3000/v1/users',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'user_id': 'company_777'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: Created. 이용자 등록 성공
+      schema:
+        $ref: ../definitions/Users.yaml
+    400:
+      description: Bad Request. 파라미터 오류
+      schema:
+        type: object
+        properties:
+          msg:
+            type: string
+            description: 에러 메세지
+            example: "'user_id' must [alphabetic, numeric, '-', '_'] only combination is possible. (must 3 ~ 50 characters). Your input 'user_id': ''."
+          code:
+            type: integer
+            description: 에러 코드
+            example: -621
+          desc:
+            type: string
+            description: 에러 설명
+            example: "[Auth] REST API 오류. 필수값이 없거나 유효하지 않습니다."
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        type: object
+        properties:
+          msg:
+            type: string
+            description: 에러 메세지
+            example: "Check your access token. Your input: undefined."
+          code:
+            type: integer
+            description: 에러 코드
+            example: -601
+          desc:
+            type: string
+            description: 에러 설명
+            example: "[Auth] JWT 오류. 토큰값이 필요합니다"
+    403:
+      description: Forbidden. 이미 등록된 이용자
+      schema:
+        type: object
+        properties:
+          msg:
+            type: string
+            description: 에러 메세지
+            example: "user_id '{YOUR-USER_ID}' is already a user of partner '{YOUR-ID}'."
+          code:
+            type: integer
+            description: 에러 코드
+            example: -601
+          desc:
+            type: string
+            description: 에러 설명
+            example: "[API] 이용자 등록 오류. 이미 존재하는 이용자."
+get:
+  summary: 이용자 조회
+  description: |
+    이용자 목록을 조회할 수 있습니다.
+    - list
+
+    ### cURL
+    ```
+    curl -X GET \
+      http://10.222.222.227:3000/v1/users \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+  tags:
+    - Users
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/users",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'GET',
+          url: 'http://10.222.222.227:3000/v1/users',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  parameters:
+    - name: q
+      in: query
+      type: string
+      description: |
+        조회 조건을 설정하는 매개변수 입니다.
+        - 사용할 수 있는 조회 조건
+          - user_id: 이용자 ID
+        - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
+        - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
+        - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
+        - 예시) /v1/users?q=user_id=company_777
+    - name: order
+      in: query
+      type: string
+      description: |
+        조회 결과에 대한 정렬 조건을 설정하는 매개변수 입니다.
+        - 사용할 수 있는 정렬 조건
+        - user_id: 이용자 ID
+        - createdata: 이용자의 계정 생성일
+        - 사용할 수 있는 정렬 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력할 수 있으며 앞에 입력된 조건의 우선 순위가 높습니다.
+        - 정렬의 기본 값은 오름차순 정렬입니다. 정렬 조건의 앞에 –를 붙일 경우, 내림차순으로 정렬할 수 있습니다.
+        - 예시) /v1/users?order=user_id,-createdate
+    # - $ref: ../parameters/index.yaml#/collectionPaging
+  responses:
+    200:
+      description: OK. 이용자 조회 성공
+      schema:
+        type: array
+        description: 이용자 목록
+        items:
+          $ref: ../definitions/Users.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml

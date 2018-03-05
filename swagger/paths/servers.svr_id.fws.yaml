@@ -1,0 +1,318 @@
+post:
+  summary: 방화벽 정책 추가
+  description: |
+    g클라우드 서버에 방화벽 정책을 추가할 수 있습니다.
+    - g클라우드 서버의 네트워크가 차단되었을 경우, 방화벽 정책을 추가할 수 없습니다.
+    - 공인 IP가 할당된 g클라우드 서버에 대해서만 방화벽 정책을 추가할 수 있습니다.
+    - 방화벽 정책은 g클라우드 서버에 종속적입니다.
+    - 반점으로 값을 구분하여 한 서버에 여러 개의 방화벽 정책을 동시에 추가할 수 있습니다.
+
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/servers/vm_1/fws \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'service=HTTPS&protocol=TCP&start_port=443&end_port=443&ip_group=0.0.0.0/0&desc=add firewall'
+    ```
+
+    ### Error Code
+    - `-4151` : [API] 서버 방화벽 추가 오류. 방화벽 추가 불가 상태. 할당된 공인 IP가 없습니다.
+    - `-4152` : [API] 서버 방화벽 추가 오류. 유효하지 않은 파라미터. 'service' & 'protocol' 파라미터는 수가 일치해야 합니다.
+    - `-4153` : [API] 서버 방화벽 추가 오류. 유효하지 않은 파라미터. 'service'는 API 문서에 정의된 파라미터만 사용가능 합니다.
+    - `-4154` : [API] 서버 방화벽 추가 오류. 유효하지 않은 파라미터. 'protocol'는 API 문서에 정의된 파라미터만 사용가능 합니다.
+    - `-4155` : [API] 서버 방화벽 추가 오류. 유효하지 않은 파라미터. API 문서에 정의된 파라미터 규칙을 따라야합니다.
+    - `-4156` : [API] 서버 방화벽 추가 오류. 내부 오류.
+    - `-5151` : [API] 서버 방화벽 추가 오류. 방화벽 추가 불가 상태. 서버 네크워크 차단 상태입니다. 네트워크 허용 후 다시 시도해주세요.
+
+  tags:
+    - Servers
+    # - Firewall
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - in: formData
+      name: service
+      required: true
+      type: string
+      # enum: [USER, HTTP, HTTPS, DNS, FTP-DATA, FTP, IMAP, IMAPS, LDAP, MMS, MSSQL, MYSQL, POP3, POP3S, SMTP, SSH, MS-WBT-SERVER]
+      description: |
+        응용 계층의 프로토콜을 정하는 매개변수로 사용자 정의 Service 혹은 Well-known port를 입력 값으로 가질 수 있습니다.
+        - 사용자 정의 Service 사용을 위해서는 입력 값으로 USER를 사용할 수 있습니다. 
+        - [Well-known port](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) 사용을 위해서는 아래 값을 하나를 선택할 수 있습니다. 
+          - **HTTP**
+          - **HTTPS**
+          - **DNS**
+          - **FTP-DATA**
+          - **FTP**
+          - **IMAP**
+          - **IMAPS**
+          - **LDAP**
+          - **MMS**
+          - **MSSQL**
+          - **MYSQL**
+          - **POP3**
+          - **POP3S**
+          - **SMTP**
+          - **SMTPS**
+          - **SSH**
+          - **MS-WBT-SERVER**
+    - in: formData
+      name: protocol
+      required: true
+      type: string
+      enum: [TCP, UDP, ICMP]
+      description: |
+        네트워크 및 전송 계층의 프로토콜을 정하는 매개변수로 TCP, UDP, ICMP를 입력 값으로 가질 수 있습니다.
+        - protocol이 ICMP일 경우, service는 USER만 입력할 수 있습니다. 
+    - in: formData
+      name: start_port
+      required: false
+      type: integer
+      minimum: 0
+      maximum: 65535
+      description: |
+        방화벽이 접속을 허용하는 port구간의 시작 점에 해당하는 매개변수입니다.
+        - protocol이 ICMP일 경우, 해당 값은 0만 입력할 수 있습니다.
+        - service가 Well-known port 이고, 값을 입력하지 않을 경우 Well-known port의 기본 포트로 자동 설정됩니다.
+          - **HTTP**: 80
+          - **HTTPS**: 443
+          - **DNS**: 53
+          - **FTP-DATA**: 20
+          - **FTP**: 21
+          - **IMAP**: 143
+          - **IMAPS**: 993
+          - **LDAP**: 390
+          - **MMS**: 9093
+          - **MSSQL**: 1433
+          - **MYSQL**: 3306
+          - **POP3**: 110
+          - **POP3S**: 995
+          - **SMTP**: 25
+          - **SMTPS**: 465
+          - **SSH**: 22
+          - **MS-WBT-SERVER**: 3389
+    - in: formData
+      name: end_port
+      required: false
+      type: integer
+      minimum: 0
+      maximum: 65535
+      description: |
+        방화벽이 접속을 허용하는 port 구간의 종료 점에 해당하는 매개변수입니다.
+        - protocol이 ICMP일 경우, 해당 값은 0만 입력할 수 있습니다.
+        - service가 Well-known port이고, 해당 값을 입력하지 않을 경우 기본 포트로 자동 설정됩니다.
+          - **HTTP**: 80
+          - **HTTPS**: 443
+          - **DNS**: 53
+          - **FTP-DATA**: 20
+          - **FTP**: 21
+          - **IMAP**: 143
+          - **IMAPS**: 993
+          - **LDAP**: 390
+          - **MMS**: 9093
+          - **MSSQL**: 1433
+          - **MYSQL**: 3306
+          - **POP3**: 110
+          - **POP3S**: 995
+          - **SMTP**: 25
+          - **SMTPS**: 465
+          - **SSH**: 22
+          - **MS-WBT-SERVER**: 3389
+    - in: formData
+      name: ip_group
+      required: false
+      type: string
+      description: |
+        방화벽이 접속을 허용하는 IP의 그룹에 해당하는 매개변수로 값은 CIDR 방식(X.X.X.X/X)으로 입력할 수 있습니다.
+        - 입력하지 않을 경우, 0.0.0.0/0으로 적용됩니다.
+        - [CIDR 계산기](http://www.ipaddressguide.com/cidr#range)
+    - in: formData
+      name: desc
+      required: false
+      type: string
+      description: |
+        방화벽 정보에 대한 설명에 해당하는 속성입니다.
+        - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/fws",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "service=HTTPS&protocol=TCP&start_port=443&end_port=443&ip_group=0.0.0.0/0&desc=add firewall",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'POST',
+          url: 'http://10.222.222.227:3000/v1/servers/vm_1/fws',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'service': 'HTTPS',
+            'protocol': 'TCP',
+            'start_port': '443',
+            'end_port': '443',
+            'ip_group': '0.0.0.0/0',
+            'desc': 'add firewall'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: |
+        Created. 방화벽 정책 추가 성공
+      schema:
+        $ref: ../definitions/Servers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. svr_id 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. svr_id 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+delete:
+  summary: 방화벽 정책 삭제
+  description: |
+    g클라우드 서버에서 방화벽을 정책을 삭제할 수 있습니다.
+    - g클라우드 서버의 네트워크가 차단되었을 경우, 방화벽 정책을 삭제할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X DELETE \
+      http://10.222.222.227:3000/v1/servers/vm_1/fws?fw_ids=fr_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+
+    ### Error Code
+    - `-4157` : [API] 서버 방화벽 삭제 오류. 방화벽 삭제 불가 상태. 할당된 공인 IP가 없습니다.
+    - `-4158` : [API] 서버 방화벽 삭제 오류. 방화벽 삭제 불가 상태. 설정된 방화벽이 없습니다.
+    - `-4159` : [API] 서버 방화벽 삭제 오류. 방화벽 삭제 불가 상태. 존재하지 않는 방화벽 정책입니다.
+    - `-5152` : [API] 서버 방화벽 삭제 오류. 방화벽 삭제 불가 상태. 서버 네크워크 차단 상태입니다. 네트워크 허용 후 다시 시도해주세요.
+
+  tags:
+    - Servers
+    # - Firewall
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - in: query
+      name: fw_ids
+      required: true
+      type: string
+      pattern: ^(fr_)+[1-9]{1}\d*$
+      example: fr_1,fr_2
+      description: 방화벽 정책의 ID에 해당하는 매개변수입니다.
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/fws?fw_ids=fr_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'DELETE',
+          url: 'http://10.222.222.227:3000/v1/servers/vm_1/fws?fw_ids=fr_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: | 
+        OK. 방화벽 정책 삭제 성공
+      schema:
+        $ref: ../definitions/Servers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 서버/방화벽이 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

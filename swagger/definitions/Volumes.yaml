@@ -1,0 +1,87 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  vol_id:
+    type: string
+    description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
+    example: vol_1
+    pattern: ^(vol_)+[1-9]{1}\d*$
+  name:
+    type: string
+    description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
+    example: backup-volume
+    minLength: 1
+    maxLength: 16
+    pattern: ^[\w\-]{1,16}$
+  desc:
+    type: string
+    description: g클라우드 스토리지에 대한 설명에 해당하는 속성입니다.
+    example: 백업용 추가 볼륨
+    minLength: 0
+    maxLength: 100
+    pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  size:
+    type: integer
+    description: g클라우드 스토리지의 용량에 해당하는 속성으로 속성값의 단위는 GB입니다.
+    example: 50
+    enum: [50,100,150,200,250,300,350,400,450,500]
+  status:
+    type: string
+    description: |
+      g클라우드 스토리지의 현재 상태 값에 해당하는 속성입니다.
+      - 01: g클라우드 스토리지가 생성되고 있는 상태를 나타내는 속성값입니다.
+      - 02: g클라우드 스토리지가 생성된 상태를 나타내는 속성값입니다.
+      - 03: g클라우드 스토리지가 삭제되고 있는 상태를 나타내는 속성값입니다.
+      - 04: g클라우드 스토리지가 삭제된 상태를 나타내는 속성값입니다.
+    example: '02'
+    enum: ['01','02','03','04']
+  attached:
+    type: string
+    description: |
+      g클라우드 스토리지의 g클라우드 서버 장착 여부를 확인할 수 있는 속성입니다.
+      - Y: g클라우드 스토리지가 g클라우드 서버에 장착된 상태를 나타내는 속성값입니다.
+      - N: g클라우드 스토리지가 어느 자원에도 장착되어 있지 않은 상태를 나타내는 속성값입니다.
+    example: Y
+    enum: [Y, N]
+  attachdate:
+    type: dateTime
+    description: g클라우드 스토리지의 g클라우드 서버 장착일에 해당하는 속성입니다.
+    example: 2017-09-13 14:49:46
+  detachdate:
+    type: dateTime
+    description: g클라우드 스토리지의 g클라우드 서버 해제일에 해당하는 속성입니다.
+    example: 'null'
+  createdate:
+    type: dateTime
+    description: g클라우드 스토리지의 생성일에 해당하는 속성입니다.
+    example: 2017-09-13 10:22:17
+  deletedate:
+    type: dateTime
+    description: g클라우드 스토리지의 삭제일에 해당하는 속성입니다.
+    example: 0000-00-00 00:00:00
+  server:
+    type: object
+    description: g클라우드 스토리지가 장착되어 있는 g클라우드 서버에 해당하는 속성으로 배열로 제공됩니다.
+    properties:
+      svr_id:
+        type: string
+        description: g클라우드 서버의 ID에 해당하는 속성입니다.
+        example: vm_1
+        pattern: ^(vm_)+[1-9]{1}\d*$
+      name:
+        type: string
+        description: g클라우드 서버의 자원명에 해당하는 속성입니다.
+        example: WAS_1
+        minLength: 1
+        maxLength: 16
+        pattern: ^[\w\-]{1,16}$

@@ -1,0 +1,14 @@
+type: object
+properties:
+  msg:
+    type: string
+    description: 에러 메세지
+    example: "permission deny. {RESOURCE-NAME} '{RESOURCE-ID}' is not your resource."
+  code:
+    type: integer
+    description: 에러 코드
+    example: -3012
+  desc:
+    type: string
+    description: 에러 설명
+    example: "[API] 자원 접근 권한. 해당 자원이 입력된 파트너의 자원이 아님."

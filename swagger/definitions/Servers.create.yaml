@@ -1,0 +1,224 @@
+type: object
+description: |
+  - 서버 조회의 [Response 200 Accepted. 서버 조회 성공]과 password 속성이 추가된다는 점을 제외하고는 동일
+properties:
+  partner_id:
+    type: string
+    description: 파트너 ID
+    example: biz_1004
+  user_id:
+    type: string
+    description: 사용자 ID
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  svr_id:
+    type: string
+    description: 서버 ID
+    example: vm_1
+    pattern: ^(vm_)+[1-9]{1}\d*$
+  name:
+    type: string
+    description: 서버 이름
+    example: WAS_1
+    minLength: 1
+    maxLength: 16
+    pattern: ^[\w\-]{1,16}$
+  desc:
+    type: string
+    description: 서버 설명
+    example: 사용자 관리용 WAS 서버
+    minLength: 0
+    maxLength: 100
+    pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  status:
+    type: string
+    description: 서버 상태
+    example: '03'
+    enum: ['01','02','03','04','05','06','07']
+  regdate:
+    type: dateTime
+    description: 등록일
+    example: '2017-09-13 01:47:45'
+  os:
+    type: integer
+    description: 서버 OS
+    example: Linux
+    enum: ['Linux','Windows']
+  cpu:
+    type: integer
+    description: 서버 CPU
+    example: 1
+  memory:
+    type: integer
+    description: 서버 메모리
+    example: 2
+  type:
+    type: string
+    description: 서버 종류
+    example: basic
+    enum: ['basic','premium','ssd']
+  private_ip:
+    type: string
+    description: 서버 사설 IP
+    example: 192.168.248.2
+    format: ipv4
+  img_id:
+    type: string
+    description: 현재 서버가 생성된 이미지 ID
+    example: img_131
+    pattern: ^(img_)+[1-9]{1}\d*$
+  network:
+    type: string
+    description: 서버 네트워크
+    example: start
+    enum: [stop,start]
+  service_zone:
+    type: string
+    description: 서버 서비스존
+    enum: [zone_1, zone_2]
+    pattern: ^(zone_)+[1-9]{1}\d*$
+    example: zone_1
+  password:
+    type: string
+    description: |
+      g클라우드 서버 운영체제의 접속 비밀번호를 확인할 수 있는 속성으로 서버 생성 시에만 확인할 수 있습니다.
+    example: $#ESs&13H
+  volumes:
+    type: array
+    description: 서버에 부착된 볼륨
+    items:
+      type: object
+      properties:
+        vol_id:
+          type: string
+          description: 볼륨 ID
+          example: vol_1
+          pattern: ^(vol_)+[1-9]{1}\d*$
+        vol_name:
+          type: string
+          description: 볼륨 이름
+          example: 서버 추가 볼륨
+        vol_size:
+          type: integer
+          description: 볼륨 크기
+          example: 50
+  ips:
+    type: array
+    description: 서버에 부착된 공인 IP
+    items:
+      type: object
+      properties:
+        ip_id:
+          type: string
+          description: IP ID
+          example: pubIp_1
+          pattern: ^(pubIp_)+[1-9]{1}\d*$
+        ip_addr:
+          type: string
+          description: IP 주소
+          example: 10.222.222.143
+          format: ipv4
+  fws:
+    type: array
+    description: 서버에 설정된 방화벽 정보
+    items:
+      type: object
+      properties:
+        fw_id:
+          type: string
+          description: 방화벽 ID
+          example: fr_1
+          pattern: ^(fr_)+[1-9]{1}\d*$
+        service:
+          type: string
+          description: 서비스
+          example: HTTP
+        protocol:
+          type: string
+          description: 프로토콜
+          example: TCP
+        start_port:
+          type: integer
+          description: 시작 포트번호
+          example: 80
+          minimum: 1
+          maximum: 65535
+        end_port:
+          type: integer
+          description: 끝 포트번호
+          example: 80
+          minimum: 1
+          maximum: 65535
+        ip_group:
+          type: string
+          description: IP/그룹
+          example: 0.0.0.0/0
+        desc:
+          type: string
+          description: 방화벽 설명
+          example: apache 방화벽
+  lbs:
+    type: array
+    description: 서버에 연결되어 있는 로드밸런서
+    items:
+      type: object
+      properties:
+        lbg_id:
+          type: string
+          description: 로드밸런서 ID
+          example: lbg_2
+          pattern: ^(lbg_)+[1-9]{1}\d*$
+        lb_port:
+          type: integer
+          description: 로드밸런서 포트
+          example: 80
+          minimum: 1
+          maximum: 65535
+        lb_svr_port:
+          type: integer
+          description: 로드밸런서와 연결된 서버의 포트
+          example: 8080
+          minimum: 1
+          maximum: 65535
+  images:
+    type: array
+    description: 서버로 생성한 이미지
+    items:
+      type: object
+      properties:
+        img_id:
+          type: string
+          description: 로드밸런서 ID
+          example: img_1
+          pattern: ^(img_)+[1-9]{1}\d
+        img_name:
+          type: string
+          description: 이미지 이름
+          example: centos-6.x-i686_TEST
+          minLength: 1
+          maxLength: 16
+          pattern: ^[\w\-]{1,16}$
+  snaps:
+    type: array
+    description: 서버로 생성한 스냅샷
+    items:
+      type: object
+      properties:
+        snap_id:
+          type: string
+          description: 스냅샷 ID
+          example: snap_1
+          pattern: ^(snap_)+[1-9]{1}\d*$
+        snap_name:
+          type: string
+          description: 스냅샷 이름
+          example: backup-snap
+          minLength: 1
+          maxLength: 16
+          pattern: ^[\w\-]{1,16}$p
+  storage:
+    type: integer
+    description: 서버 전체 볼륨 크기
+    example: 100

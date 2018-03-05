@@ -1,0 +1,70 @@
+/auth/api:
+  $ref: ./auth.api.yaml
+/auth/api/token:
+  $ref: ./auth.api.token.yaml
+/users:
+  $ref: ./users.yaml
+/users/{user_id}:
+  $ref: ./users.user_id.yaml
+/servers:
+  $ref: ./servers.yaml
+/servers/{svr_id}:
+  $ref: ./servers.svr_id.yaml
+/servers/{svr_id}/spec:
+  $ref: ./servers.svr_id.spec.yaml
+/servers/{svr_id}/action:
+  $ref: ./servers.svr_id.action.yaml
+/servers/{svr_id}/password:
+  $ref: ./servers.svr_id.password.yaml
+/servers/{svr_id}/network:
+  $ref: ./servers.svr_id.network.yaml
+/servers/{svr_id}/volumes/{voL_id}:
+  $ref: ./servers.svr_id.volumes.vol_id.yaml
+/servers/{svr_id}/fws:
+  $ref: ./servers.svr_id.fws.yaml
+/servers/{svr_id}/ips/{ip_id}:
+  $ref: ./servers.svr_id.ips.ip_id.yaml
+/servers/{svr_id}/snapshots:
+  $ref: ./servers.svr_id.snapshots.yaml
+/volumes:
+  $ref: ./volumes.yaml
+/volumes/{vol_id}:
+  $ref: ./volumes.vol_id.yaml
+/ips:
+  $ref: ./ips.yaml
+/ips/{ip_id}:
+  $ref: ./ips.ip_id.yaml
+/lbs:
+  $ref: ./lbs.yaml
+/lbs/{lb_id}:
+  $ref: ./lbs.lb_id.yaml
+/lbs/{lb_id}/ips/{ip_id}:
+  $ref: ./lbs.lb_id.ips.ip_id.yaml
+/lbs/{lb_id}/setup:
+  $ref: ./lbs.lb_id.setup.yaml
+/lbs/{lb_id}/network:
+  $ref: ./lbs.lb_id.network.yaml
+/lbs/{lb_id}/ports:
+  $ref: ./lbs.lb_id.ports.yaml
+/lbs/{lb_id}/ports/{port}/servers:
+  $ref: ./lbs.lb_id.ports.port.servers.yaml
+/snapshots:
+  $ref: ./snapshots.yaml
+/snapshots/{snap_id}:
+  $ref: ./snapshots.snap_id.yaml
+/images:
+  $ref: ./images.yaml
+/images/{img_id}:
+  $ref: ./images.img_id.yaml
+# /nas:
+#   $ref: ./nas.yaml
+# /nas/{nas_id}:
+#   $ref: ./nas.nas_id.yaml
+# /nas/{nas_id}/size:
+#   $ref: ./nas.nas_id.size.yaml
+# /nas/{nas_id}/snapshots:
+#   $ref: ./nas.nas_id.snapshots.yaml
+# /nas/{nas_id}/snapshots/{snap_id}/recovery:
+#   $ref: ./nas.nas_id.snapshots.snap_id.recovery.yaml
+# /nas/cifs:
+#   $ref: ./nas.cifs.yaml

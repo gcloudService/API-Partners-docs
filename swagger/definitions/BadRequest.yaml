@@ -1,0 +1,14 @@
+type: object
+properties:
+  msg:
+    type: string
+    description: 에러 메세지
+    example: "'{PARAMETER}' is must required. Your input '{PARAMETER}': ''."
+  code:
+    type: integer
+    description: 에러 코드
+    example: -621
+  desc:
+    type: string
+    description: 에러 설명
+    example: "[Auth] REST API 오류. 필수값이 없거나 유효하지 않습니다."

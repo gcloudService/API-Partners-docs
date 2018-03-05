@@ -1,0 +1,251 @@
+partner_id:
+  name: partner_id
+  type: string
+  description: 파트너 ID
+  example: biz_1004
+user_id:
+  name: user_id
+  type: string
+  description: 이용자의 ID에 해당하는 매개변수입니다.
+  in: formData
+  required: true
+  minLength: 3
+  maxLength: 16
+  pattern: ^[\w\-]{3,16}$
+  example: company_777
+svr_id:
+  name: svr_id
+  description: g클라우드 서버의 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(vm_)+[1-9]{1}\d*$
+  example: vm_1
+svr_name:
+  name: name
+  type: string
+  description: |
+    g클라우드 서버의 자원명에 해당하는 매개변수입니다.
+    - 이용자의 다른 g클라우드 서버의 자원명과 중복될 수 없습니다.
+    - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 3
+  maxLength: 16
+  pattern: ^[\w\-]$
+  example: event-server
+svr_desc:
+  name: desc
+  type: string
+  description: |
+    g클라우드 서버에 대한 설명을 입력하는 매개변수입니다.
+    - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 0
+  maxLength: 100
+  pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  example: 이벤트서버
+vol_id:
+  name: vol_id
+  description: g클라우드 스토리지의 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(vol_)+[1-9]{1}\d*$
+  example: vol_1
+vol_name:
+  name: name
+  type: string
+  description: |
+    g클라우드 스토리지의 자원명에 해당하는 매개변수입니다.
+    - 이용자의 다른 g클라우드 스토리지의 자원명과 중복될 수 없습니다.
+    - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 3
+  maxLength: 16
+  pattern: ^[\w\-]$
+  example: backup-volume
+vol_desc:
+  name: desc
+  type: string
+  description: |
+    g클라우드 스토리지에 대한 설명을 입력하는 매개변수입니다.
+    - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 0
+  maxLength: 100
+  pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  example: 백업 볼륨
+ip_id:
+  name: ip_id
+  description: g클라우드 공인 IP ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(pubIp_)+[1-9]{1}\d*$
+  example: pubIp_1
+lb_id:
+  name: lb_id
+  description: 로드밸런서의 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(lbg_)+[1-9]{1}\d*$
+  example: lbg_1
+lb_name:
+  name: name
+  type: string
+  description: |
+    로드밸런서의 자원명에 해당하는 매개변수입니다.
+    - 이용자의 다른 로드밸런서의 자원명과 중복될 수 없습니다.
+    - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 3
+  maxLength: 16
+  pattern: ^[\w\-]$
+  example: 80-lb
+lb_desc:
+  name: desc
+  type: string
+  description: |
+    로드밸런서에 대한 설명을 입력하는 매개변수입니다.
+    - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 0
+  maxLength: 100
+  pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  example: 아파치 로드밸런서
+snap_id:
+  name: snap_id
+  description: 스냅샷의 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(snap_)+[1-9]{1}\d*$
+  example: vm_1
+snap_name:
+  name: name
+  type: string
+  description: |
+    스냅샷의 자원명에 해당하는 매개변수입니다.
+    - 이용자의 다른 스냅샷의 자원명과 중복될 수 없습니다.
+    - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 3
+  maxLength: 16
+  pattern: ^[\w\-]$
+  example: backup-snap
+snap_desc:
+  name: desc
+  type: string
+  description: |
+    스냅샷에 대한 설명을 입력하는 매개변수입니다.
+    - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 0
+  maxLength: 100
+  pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  example: 백업 스냅샷
+img_id:
+  name: img_id
+  description: 이미지의 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(img_)+[1-9]{1}\d*$
+  example: img_1
+img_name:
+  name: name
+  type: string
+  description: |
+    이미지의 자원명에 해당하는 매개변수입니다.
+    - 이용자의 다른 g클라우드 서버의 자원명과 중복될 수 없습니다.
+    - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 3
+  maxLength: 16
+  pattern: ^[\w\-]$
+  example: backup-image
+img_desc:
+  name: desc
+  type: string
+  description: |
+    이미지에 대한 설명을 입력하는 매개변수입니다.
+    - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+  in: formData
+  required: false
+  minLength: 0
+  maxLength: 100
+  pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  example: 백업 이미지
+nas_id:
+  name: nas_id
+  description: NAS Id
+  in: path
+  required: true
+  type: string
+  pattern: ^(nas_)+[1-9]{1}\d*$
+  example: nas_1
+nas_name:
+  name: name
+  type: string
+  description: |
+    NAS 이름
+    - 중복 불가
+  in: formData
+  required: false
+  minLength: 3
+  maxLength: 16
+  pattern: ^[\w\-]$
+  example: backup-nas
+nas_desc:
+  name: desc
+  type: string
+  description: NAS 설명
+  in: formData
+  required: false
+  minLength: 0
+  maxLength: 100
+  pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  example: 백업 NAS
+service_zone:
+  name: service_zone
+  description: 서비스 존
+  in: formData
+  required: true
+  type: string
+  enum: [zone_1, zone_2]
+  pattern: ^(zone_)+[1-9]{1}\d*$
+  example: zone_1
+collectionQuery:
+  name: q
+  in: query
+  type: string
+  description: |
+    검색 조건 추가
+    - e.g.) /v1/servers?q=user_id=test,type=SATA
+    - **=** 조건만 가능합니다.
+collectionPaging:
+  name: paging
+  in: query
+  description: |-
+    목록의 페이징 처리
+    - e.g.) /v1/servers?paging=10,5
+      - 6번째 부터 10개 가져옴
+  type: string
+collectionOrder:
+  name: order
+  in: query
+  type: string
+  description: |-
+    목록의 정렬(내림차순의 정렬은 **-**를 앞에 붙입니다.)
+    - e.g.) /v1/servers?order=-name,cpu
+      - 이름의 내림차순, cpu의 오름차순

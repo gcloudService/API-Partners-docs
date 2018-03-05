@@ -1,0 +1,17 @@
+swagger: 2.0
+schemes:
+  - https
+host: cpapi.gabia.com
+basePath: /v1
+info:
+  $ref: ./swagger/info/index.yaml
+produces:
+  - application/json
+tags:
+  $ref: ./swagger/tags/index.yaml
+parameters:
+  $ref: ./swagger/parameters/index.yaml
+paths:
+  $ref: ./swagger/paths/index.yaml
+definitions:
+  $ref: ./swagger/definitions/index.yaml
