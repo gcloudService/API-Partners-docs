@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# [1.3.0] - 2018-03-06
+**기존 개발 버전과 동일하게 적용**
+
 # [0.1.1] - 2018-03-06
 - `/swagger`
     - 실서버 정보로 변경
