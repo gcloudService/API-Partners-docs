@@ -35,7 +35,6 @@ delete:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_PORT => "3000",
           CURLOPT_URL => "https://cpapi.gabia.com/v1/users/company_777",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",

@@ -41,7 +41,6 @@ put:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_PORT => "3000",
           CURLOPT_URL => "https://cpapi.gabia.com/v1/nas/nas_1/size",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",

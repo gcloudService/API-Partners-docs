@@ -63,7 +63,6 @@ post:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_PORT => "3000",
           CURLOPT_URL => "https://cpapi.gabia.com/v1/images",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
@@ -187,7 +186,6 @@ get:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_PORT => "3000",
           CURLOPT_URL => "https://cpapi.gabia.com/v1/images",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
