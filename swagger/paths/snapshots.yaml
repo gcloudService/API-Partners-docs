@@ -7,7 +7,7 @@ get:
     ### cURL
     ```
     curl -X GET \
-      http://10.222.222.227:3000/v1/snapshots \
+      https://cpapi.gabia.com/v1/snapshots \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -57,7 +57,7 @@ get:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/snapshots",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/snapshots",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -81,7 +81,7 @@ get:
 
         var options = {
           method: 'GET',
-          url: 'http://10.222.222.227:3000/v1/snapshots',
+          url: 'https://cpapi.gabia.com/v1/snapshots',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',

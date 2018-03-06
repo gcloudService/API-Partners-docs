@@ -1,0 +1,89 @@
+post:
+  summary: NAS 스냅샷 생성
+  description: |
+    NAS 스냅샷을 생성합니다.
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/nas/nas_1/snapshots \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'name=snap1&desc=test-snap'
+    ```
+
+    ### Error Code
+    - `-4731` : [API] NAS 스냅샷 생성 오류. 스냅샷명 중복
+
+  tags:
+    - Nas
+    - Snapshots
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/snap_name
+    - $ref: ../parameters/index.yaml#/snap_desc
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/nas/nas_1/snapshots",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "name=snap1&desc=test-snap",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+            method: 'POST',
+            url: 'http://10.222.222.227:3000/v1/nas/nas_1/snapshots',
+            headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+            },
+            form: {
+              name: 'snap1',
+              desc: 'test-snap'
+            }
+        };
+
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+  responses:
+    202:
+      description: Accepted. 스냅샷 생성 요청 성공.
+      schema:
+        $ref: ../definitions/Snapshots.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml

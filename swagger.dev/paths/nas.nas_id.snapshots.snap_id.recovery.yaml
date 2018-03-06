@@ -1,0 +1,92 @@
+post:
+  summary: NAS 스냅샷 복구
+  description: |
+    NAS 스냅샷을 복구하면 복구한 스냅샷 생성일 이후에 생성된 대상 NAS의 스냅샷은 모두 삭제됩니다.
+    - **NAS** type의 스냅샷으로만 복구가 가능합니다.
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/nas/nas_1/snapshots/snap_1/recovery \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+
+    ### Error Code
+    - `-4732` : [API] NAS 복구 오류. NAS 타입의 스냅샷으로만 복구 가능합니다.
+    - `-4733` : [API] NAS 복구 오류. NAS 복구는 해당 NAS로 생성된 스냅샷으로만 가능합니다.
+  tags:
+    - Nas
+    - Snapshots
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/nas_id
+    - $ref: ../parameters/index.yaml#/snap_id
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/nas/nas_1/snapshots/snap_1/recovery",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+            method: 'PUT',
+            url: 'http://10.222.222.227:3000/v1/nas/nas_1/snapshots/snap_1/recovery',
+            headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+            }
+        };
+
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+  responses:
+    201:
+      description: Created. NAS 스냅샷 복구 성공.
+      schema:
+        $ref: ../definitions/Snapshots.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. nas_id, snap_id가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

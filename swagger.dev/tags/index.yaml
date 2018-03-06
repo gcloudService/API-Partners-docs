@@ -1,0 +1,33 @@
+- name: Token
+  description: |
+    파트너 인증 및 API 사용을 위해 JWT(JSON Web Token)을 발급 받을 수 있습니다.
+- name: Users
+  description: |
+    이용자는 파트너의 고객으로 최종적으로 클라우드 인프라 자원을 이용하는 사람을 의미합니다.
+- name: Servers
+  description: |
+    g클라우드 서버는 가상 서버로 스토리지 종류와 사양에 따라 베이직, 프리미엄, SSD로 나뉩니다.
+- name: Volumes
+  description: |
+    g클라우드 스토리지는 볼륨 스토리지로 g클라우드 서버에 장착하여 사용할 수 있습니다.
+- name: PublicIps
+  description: |
+    공인 IP를 통해 g클라우드 서버나 로드밸런서를 인터넷망과 연결할 수 있습니다.
+# - name: Firewall
+#   description: |
+#     서버에 방화벽을 추가합니다.
+#     - 방화벽은 **공인 IP**가 부착된 서버만 추가할 수 있습니다.
+#     - 추가된 방화벽은 수정 불가합니다.(삭제 후 다시 추가)
+- name: LoadBalancers
+  description: |
+    로드밸런서를 통해 트래픽 부하를 여러 개의 g클라우드 서버로 분산시킬 수 있습니다.
+- name: Snapshots
+  description: |
+    스냅샷을 통해 g클라우드 서버의 상태를 간편하고 빠르게 저장할 수 있습니다. 
+- name: Images
+  description: |
+    이미지를 관리하는 API 입니다.
+    - 이미지를 통해 스냅샷을 생성한 시점(g클라우드 서버(SSD)의 경우 이미지를 생성한 시점)과 동일한 서버 환경을 가진 새로운 g클라우드 서버를 생성할 수 있습니다.
+# - name: Nas
+#   description: |
+#     NAS를 관리하는 API 입니다.

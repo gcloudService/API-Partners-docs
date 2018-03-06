@@ -1,0 +1,359 @@
+post:
+  summary: 연결 서버 추가
+  description: |-
+    로드밸런서 포트에 g클라우드 서버를 연결하고 서버의 포트를 설정할 수 있습니다.
+    - 로드밸런서의 네트워크가 차단되었을 경우 연결 서버를 추가할 수 없습니다.
+    - **연결 서버는 g클라우드 서버와 로드밸런서의 서비스 존과 관계 없이 추가할 수 있습니다.**
+
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'svr_ids=vm_2&svr_ports=80'
+    ```
+
+    ### Error Code
+    - `-4631` : [API] 로드밸런서 포트에 서버 추가 오류. 로드밸런서 서버 추가 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4632` : [API] 로드밸런서 포트에 서버 추가 오류. 존재하는 않는 포트에 대한 서버 추가 요청
+    - `-4633` : [API] 로드밸런서 포트에 서버 추가 오류. 추가하려는 서버가 포트에 이미 존재`
+    - `-4634` : [API] 로드밸런서 포트에 서버 추가 오류. 존재하지 않는 서버들에 대한 추가`
+    - `-4635` : [API] 로드밸런서 포트에 서버 추가 오류. 사용자의 자원이 아닌 서버들에 대한 추가
+  tags:
+    - LoadBalancers
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - in: path
+      name: port
+      required: true
+      type: integer
+      description: 로드밸런서 포트의 번호에 해당하는 매개변수입니다.
+      minimum: 1
+      maximum: 65535
+      example: 80
+    - in: formData
+      name: svr_ids
+      required: true
+      type: string
+      description: |
+        로드밸런서 포트에 연결된 서버의 ID에 해당하는 매개변수입니다. 
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 svr_port와 동일해야 합니다.
+      example: vm_1,vm_2,vm_3
+    - in: formData
+      name: svr_ports
+      required: true
+      type: string
+      description: |-
+        로드밸런서 포트에 연결된 서버의 포트에 해당하는 매개변수입니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 svr_ids와 동일해야 합니다.
+      example: 80,21,22
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "svr_ids=vm_2&svr_ports=80",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'POST',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'svr_ids': 'vm_2',
+            'svr_ports': '80'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: OK. 연결 서버 추가 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+put:
+  summary: 연결 서버 수정
+  description: |
+    로드밸런서 포트에 연결된 g클라우드 서버의 서버 포트를 수정할 수 있습니다.	
+    - 로드밸런서의 네트워크가 차단되었을 경우 연결 서버를 수정할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'svr_ids=vm_2&svr_ports=8080'
+    ```
+
+    ### Error Code
+    - `-4641` : [API] 로드밸런서 포트에 서버 수정 오류. 로드밸런서 서버 수정 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4642` : [API] 로드밸런서 포트에 서버 수정 오류. 존재하는 않는 포트에 대한 서버 수정 요청
+    - `-4643` : [API] 로드밸런서 포트에 서버 수정 오류. 존재하지 않는 서버들에 대한 수정
+    - `-4644` : [API] 로드밸런서 포트에 서버 수정 오류. 사용자의 자원이 아닌 서버들에 대한 수정
+    - `-4645` : [API] 로드밸런서 포트에 서버 수정 오류. 기존과 같은 데이터로 수정 요청
+    - `-4646` : [API] 로드밸런서 포트에 서버 수정 오류. 해당 포트에 존재하지 않는 서버들에 대한 수정
+  tags:
+    - LoadBalancers
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - in: path
+      name: port
+      required: true
+      type: integer
+      description: 로드밸런서 포트의 번호에 해당하는 매개변수입니다.
+      minimum: 1
+      maximum: 65535
+      example: 80
+    - in: formData
+      name: svr_ids
+      required: true
+      type: string
+      description: |
+        로드밸런서 포트에 연결된 서버의 ID에 해당하는 매개변수입니다. 
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 svr_port와 동일해야 합니다.
+      example: vm_1,vm_2,vm_3
+    - in: formData
+      name: svr_ports
+      required: true
+      type: string
+      description: |
+        로드밸런서 포트에 연결된 서버의 포트에 해당하는 매개변수입니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 svr_ids와 동일해야 합니다.
+      example: 80,21,22
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "svr_ids=vm_2&svr_ports=8080",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'svr_ids': 'vm_2',
+            'svr_ports': '8080'
+          }
+        };
+
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+  responses:
+    201:
+      description: Created. 연결 서버 수정 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. lb_id,svr_ids 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+delete:
+  summary: 연결 서버 삭제
+  description: |-
+    로드밸런서 포트에 연결된 g클라우드 서버를 삭제(연결 해제)할 수 있습니다.	
+    - 로드밸런서의 네트워크가 차단되었을 경우 연결 서버를 삭제할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X DELETE \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+
+    ### Error Code
+    - `-4651` : [API] 로드밸런서 포트에 서버 삭제 오류. 로드밸런서 서버 삭제 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4652` : [API] 로드밸런서 포트에 서버 삭제 오류. 존재하는 않는 포트에 대한 서버 삭제 요청
+    - `-4653` : [API] 로드밸런서 포트에 서버 삭제 오류. 존재하지 않는 서버들에 대한 삭제
+    - `-4654` : [API] 로드밸런서 포트에 서버 삭제 오류. 사용자의 자원이 아닌 서버들에 대한 삭제
+    - `-4655` : [API] 로드밸런서 포트에 서버 삭제 오류. 해당 포트에 존재하지 않는 서버들에 대한 삭제
+    - `-4656` : [API] 로드밸런서 삭제 오류. 로드밸런서 삭제 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+  tags:
+    - LoadBalancers
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - in: path
+      name: port
+      required: true
+      type: integer
+      description: 로드밸런서 포트의 번호에 해당하는 매개변수입니다.
+      minimum: 1
+      maximum: 65535
+      example: 80
+    - in: query
+      name: svr_ids
+      required: true
+      type: string
+      description: |-
+        로드밸런서 포트에 연결된 서버의 ID에 해당하는 매개변수입니다. 
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다.
+      example: vm_1,vm_2,vm_3
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'DELETE',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 서버 포트 정보 삭제 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. lb_id,svr_ids 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

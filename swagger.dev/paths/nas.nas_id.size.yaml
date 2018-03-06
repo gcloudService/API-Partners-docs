@@ -1,0 +1,106 @@
+put:
+  summary: NAS 용량 변경
+  description: |
+    NAS 용량을 변경합니다.
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/nas/nas_1/size \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'size=1.5'
+    ```
+
+    ### Error Code
+    - `-4714` : [API] NAS 수정 오류. NAS 용량 변경 불가. 현재 사용중인 용량보다 작은 용량으로 변경할 수 없습니다.
+
+  tags:
+    - Nas
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/nas_id
+    - in: formData
+      name: size
+      required: true
+      type: float
+      minimum: 1.0
+      maximum: 10.0
+      example: 1.5
+      description: |
+        NAS 용량
+        - Tera Byte 단위
+        - e.g.) 1.5 -> 1500GB
+        - **1.0** <= size <= **10.0**
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/nas/nas_1/size",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "size=1.5",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+            method: 'PUT',
+            url: 'http://10.222.222.227:3000/v1/nas/nas_1/size',
+            headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+            },
+            form: {
+              'size': 1.5
+            }
+        };
+
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+  responses:
+    201:
+      description: Created. 용량 변경 성공
+      schema:
+        $ref: ../definitions/Nas.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. nas_id NAS가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

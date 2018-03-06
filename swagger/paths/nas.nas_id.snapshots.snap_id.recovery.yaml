@@ -7,7 +7,7 @@ post:
     ### cURL
     ```
     curl -X PUT \
-      http://10.222.222.227:3000/v1/nas/nas_1/snapshots/snap_1/recovery \
+      https://cpapi.gabia.com/v1/nas/nas_1/snapshots/snap_1/recovery \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -32,7 +32,7 @@ post:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/nas/nas_1/snapshots/snap_1/recovery",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/nas/nas_1/snapshots/snap_1/recovery",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -56,7 +56,7 @@ post:
 
         var options = {
             method: 'PUT',
-            url: 'http://10.222.222.227:3000/v1/nas/nas_1/snapshots/snap_1/recovery',
+            url: 'https://cpapi.gabia.com/v1/nas/nas_1/snapshots/snap_1/recovery',
             headers: {
                 'cache-control': 'no-cache',
                 'content-type': 'application/x-www-form-urlencoded',

@@ -1,0 +1,124 @@
+put:
+  summary: 서버 상태 변경
+  description: |
+    g클라우드 서버의 상태를 변경할 수 있습니다.
+    | Status | Status Description                  |
+    |--------|-------------------------------------|
+    | 01     | g클라우드 서버가 정지된 상태        |
+    | 02     | g클라우드 서버가 정지되고 있는 상태 |
+    | 03     | g클라우드 서버가 시작된 상태        |
+    | 04     | g클라우드 서버가 삭제된 상태        |
+    | 05     | g클라우드 서버가 시작되고 있는 상태 |
+    | 06     | g클라우드 서버가 삭제되고 있는 상태 |
+    | 07     | g클라우드 서버가 생성되고 있는 상태 |
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/servers/vm_1/action \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'type=stop'
+    ```
+
+    ### Error Code
+    - `-4111` : [API] 서버 상태 변경 오류. 요청 불가 상태
+    - `-4113` : [API] 서버 상태 변경 오류. 시작 오류
+    - `-4114` : [API] 서버 상태 변경 오류. 정지 오류
+    - `-4115` : [API] 서버 상태 변경 오류. 재시작 오류
+    - `-4116` : [API] 서버 상태 변경 오류. 강제종류 오류
+    - `-4117` : [API] 서버 상태 변경 오류. 내부 오류.
+  tags:
+    - Servers
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - name: type
+      description: |
+        g클라우드 서버의 상태 변경에 사용되는 매개변수로 start, stop, reboot, kill 중 하나의 값을 입력할 수 있습니다.
+        - **start**: 정지된 상태(status: 01)의 g클라우드 서버를 시작된 상태(status: 03)로 변경할 수 있습니다. 이미 시작 상태인 경우 요청을 할 수 없으며, 요청 성공 시에는 일시적으로 시작되고 있는 상태(status: 05)가 된 후에 시작된 상태(status: 03)로 변경됩니다.
+        - **stop**: 시작된 상태(status: 03)의 g클라우드 서버를 정지된 상태(status: 01)로 변경할 수 있습니다.
+        - **reboot**: 시작된 상태(status: 03)의 g클라우드 서버를 재시작할 수 있습니다.
+        - **kill**: 시작된 상태(status: 03)의 g클라우드 서버를 강제종료 할 수 있습니다.
+
+        **kill을 통한 서버의 강제 종료는 서버의 안정성에 영향을 줄 수 있습니다. 운영체제 문제로 인해 reboot이 정상적으로 동작하지 않거나, 예기치 않은 오류로 인해 서버가 비정상적으로 작동될 경우에만 사용해 주시기 바랍니다.**
+      in: formData
+      required: true
+      type: string
+      enum:
+        - start
+        - stop
+        - reboot
+        - kill
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/action",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "type=stop",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'http://10.222.222.227:3000/v1/servers/vm_1/action',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            type: 'stop'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    202:
+      description: Accepted. 서버 상태 변경 요청 성공
+      schema:
+        $ref: ../definitions/Servers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. svr_id 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. svr_id 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

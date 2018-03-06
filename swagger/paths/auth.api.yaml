@@ -9,7 +9,7 @@ post:
     ### cURL
     ```
     curl -X POST \
-      http://10.222.222.227:3000/v1/auth/api \
+      https://cpapi.gabia.com/v1/auth/api \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
       -d 'partner_id={YOUR-ID}&secret={YOUR-SECRET-KEY}'
@@ -31,7 +31,7 @@ post:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/auth/api",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/auth/api",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -55,7 +55,7 @@ post:
 
         var options = {
           method: 'POST',
-          url: 'http://10.222.222.227:3000/v1/auth/api',
+          url: 'https://cpapi.gabia.com/v1/auth/api',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',

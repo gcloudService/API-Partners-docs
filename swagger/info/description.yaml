@@ -24,10 +24,9 @@ JWT는 2시간 동안 유효하며, 만료 후에는 재발급 받을 수 있습
 | Key                     | Value                         |
 |-------------------------|-------------------------------|
 | 프로토콜(Protocol)       | HTTPS                         |
-| 호스트(Host)             | 10.222.222.2227               |
-| 포트(Port)               | 3000                          |
+| 호스트(Host)             | cpapi.gabia.com               |
 | 버전(Version)            | v1                            |
-| API URL(API request URL) | http://10.222.222.227:3000/v1 |
+| API URL(API request URL) | https://cpapi.gabia.com/v1 |
 
 API URL은 API 서버에 요청을 보낼 때 기본이 되는 URL입니다. 
 API URL에 Path, Query를 추가하거나 HTTP Body에 Formdata를 추가하여 가상 인프라 자원을 생성 및 제어하는 요청(HTTP Request)을 API 서버로 보낼 수 있습니다.
@@ -134,7 +133,7 @@ curl -X GET
 
 ```
 curl -X PUT 
-  http://10.222.222.227:3000/v1/servers/vm_1 
+  https://cpapi.gabia.com/v1/servers/vm_1 
   -H 'authorization: Bearer {YOUR-JWT-TOKEN}' 
   -H 'cache-control: no-cache' 
   -H 'content-type: application/x-www-form-urlencoded' 
@@ -189,7 +188,7 @@ HTTP 상태 코드가 400(Bad Request), 401(Unauthorized), 403(Forbidden), 404(N
       {
         "rel": "self",
         "method": "GET",
-        "href": "http://10.222.222.227:3000/v1/servers/vm_1"
+        "href": "https://cpapi.gabia.com/v1/servers/vm_1"
       }
     ]
   }
@@ -205,7 +204,7 @@ HTTP 상태 코드가 400(Bad Request), 401(Unauthorized), 403(Forbidden), 404(N
   {
     "user_id": "company_777",
     "timestamp": "2017-11-27 05:11:03",
-    "link": "http://10.222.222.227:3000/v1/servers/vm_1",
+    "link": "https://cpapi.gabia.com/v1/servers/vm_1",
     "resource_id": "vm_1",
     "result": "Success",
     "work": "servers.create"

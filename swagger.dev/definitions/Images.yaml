@@ -1,0 +1,108 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  img_id:
+    type: string
+    description: 이미지의 ID에 해당하는 속성입니다.
+    example: img_1
+    pattern: ^(img_)+[1-9]{1}\d*$
+  name:
+    type: string
+    description: 이미지의 자원명에 해당하는 속성입니다.
+    example: centos-6.x-i686_TEST
+    minLength: 1
+    maxLength: 16
+    pattern: ^[\w\-]{1,16}$
+  desc:
+    type: string
+    description: 이미지에 대한 설명에 해당하는 속성입니다.
+    example: ''
+    minLength: 0
+    maxLength: 100
+    pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  status:
+    type: string
+    description: |
+      이미지의 현재 상태값에 해당하는 속성입니다.
+      - 0: 이미지가 생성되고 있는 상태를 나타내는 속성값입니다.
+      - 9: 이미지가 생성된 상태를 나타내는 속성값입니다.
+      - 2: 이미지가 삭제되고 있는 상태를 나타내는 속성값입니다.
+      - D: 이미지가 삭제된 상태를 나타내는 속성값입니다.
+    example: '0'
+    enum: ['0', '9', '2', 'D']
+  img_type:
+    type: string
+    description: |
+      이미지를 생성한 서버의 종류를 나타내는 속성입니다.
+      - SATA: g클라우드 서버(베이직/프리미엄)을 나타내는 속성값입니다.
+      - SSD: g클라우드 서버(SSD)를 나타내는 속성값 입니다.
+    example: SATA
+  img_os:
+    type: string
+    description: |
+      이미지의 운영체제 종류를 나타내는 속성입니다.
+      - Linux: Linux 계열 운영체제(CentOS, Ubuntu, Debian, Fedora 등)를 나타내는 속성값입니다.
+      - Windows: Windows 계열 운영체제를 나타내는 속성값입니다.
+    example: Linux
+  img_os_type:
+    type: string
+    description: |
+      이미지의 상세한 운영체제 종류를 나타내는 속성입니다.
+      - cent: Linux 계열 운영체제 중 CentOS를 나타내는 속성값입니다.
+      - ubuntu: Linux 계열 운영체제 중 Ubuntu를 나타내는 속성값입니다.
+      - debian: Linux 계열 운영체제 중 Debian를 나타내는 속성값입니다.
+      - fedora: Linux 계열 운영체제 중 Fedora를 나타내는 속성값입니다.
+      - windows: windows 계열 운영체제를 나타내는 속성값입니다.
+    example: cent
+  img_os_bit:
+    type: integer
+    description: 이미지의 운영체제가 32비트 기반 시스템인지 64비트기반 시스템인지를 나타내는 속성으로 속성값의 단위는 비트 입니다.
+    example: 32
+  img_memory:
+    type: integer
+    description: |
+      이미지로 생성할 수 있는 서버의 Memory 사양의 최소치를 나타내는 속성으로 속성값의 단위는 GB입니다.
+      - 일반적으로 Linux 계열의 이미지는 해당 값이 1이고, Windows 계열의 이미지는 2입니다.
+    example: 1
+  max_memory:
+    type: integer
+    description: 이미지로 생성할 수 있는 서버의 Memory 사양의 최대치를 나타내는 속성으로 속성값의 단위는 GB입니다.
+    example: 4
+  max_cpu:
+    type: integer
+    description: 이미지로 생성할 수 있는 서버의 CPU 사양의 최대치를 나타내는 속성으로 속성값의 단위는 vCore입니다.
+    example: 4
+  img_cpu:
+    type: integer
+    description: |
+      이미지로 생성할 수 있는 서버의 CPU 사양의 최소치를 나타내는 속성으로 속성값의 단위는 vCore입니다.
+      - 일반적으로 Linux 계열의 이미지는 해당 값이 1이고, Windows 계열의 이미지는 2입니다.
+    example: 1
+  img_size:
+    type: integer
+    description: 이미지의 용량에 해당하는 속성으로 속성값의 단위는 GB입니다.
+    example: 50
+  snap_id:
+    type: string
+    description: |
+      이미지를 생성하는데 사용된 스냅샷의 ID에 해당하는 속성입니다.
+      - g클라우드 서버(베이직/프리미엄)에만 해당되며, g클라우드 서버(SSD)는 해당되지 않는 속성입니다.
+    example:
+  regdate:
+    type: dateTime
+    description: 이미지의 생성일에 해당하는 속성입니다
+    example: '2017-09-13 10:28:08'
+  updatedate:
+    type: dateTime
+    description: 이미지의 수정일에 해당하는 속성입니다.
+    example: 0000-00-00 00:00:00

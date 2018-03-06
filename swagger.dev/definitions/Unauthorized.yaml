@@ -1,0 +1,14 @@
+type: object
+properties:
+  msg:
+    type: string
+    description: 에러 메세지
+    example: "invalid secret key. Your input : ''."
+  code:
+    type: integer
+    description: 에러 코드
+    example: -606
+  desc:
+    type: string
+    description: 에러 설명
+    example: "[Auth] JWT 오류. 유효하지 않은 secret key"

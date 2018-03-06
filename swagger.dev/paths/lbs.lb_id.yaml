@@ -1,0 +1,275 @@
+get:
+  summary: 로드밸런서 상세 정보
+  description: |
+    로드밸런서의 상세 정보를 확인할 수 있습니다.
+
+    ### cURL
+    ```
+    curl -X GET \
+      http://10.222.222.227:3000/v1/lbs/lbg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+  tags:
+    - LoadBalancers
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'GET',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 로드밸런서 상세 정보 조회 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+put:
+  summary: 로드밸런서 정보 변경
+  description: |
+    로드밸런서의 자원명과 설명을 변경할 수 있습니다.
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/lbs/lbg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'name=new-name&desc=new-desc'
+    ```
+
+    ### Error Code
+    - `-4671` : [API] 로드밸런서 수정 오류. 로드밸런서명 중복
+  tags:
+    - LoadBalancers
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - $ref: ../parameters/index.yaml#/lb_name
+    - $ref: ../parameters/index.yaml#/lb_desc
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "name=new-name&desc=new-desc",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'name': 'new-name'
+            'desc': 'new-desc'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 기존 값과 동일한 수정 요청
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    201:
+      description: Created. 로드밸런서 정보 변경 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우, 로드밸런서명 중복
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+delete:
+  summary: 로드밸런서 삭제
+  description: |
+    로드밸런서를 삭제할 수 있습니다.
+    - 로드밸런서의 네트워크가 차단되었을 경우 삭제할 수 없습니다.
+    - 로드밸런서에 할당된 공인 IP는 자동 해제됩니다.
+
+    ### cURL
+    ```
+    curl -X DELETE \
+      http://10.222.222.227:3000/v1/lbs/lbg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+
+    ### Error Code
+    - `-4661` : [API] 로드밸런서 삭제 오류. 로드밸런서 삭제 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+  tags:
+    - LoadBalancers
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'DELETE',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    204:
+      description: No Content. 로드밸런서 삭제 성공
+      schema:
+        type: object
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. lb_id 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. lb_id 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

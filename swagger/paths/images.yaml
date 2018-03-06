@@ -13,7 +13,7 @@ post:
     ### cURL
     ```
     curl -X POST \
-      http://10.222.222.227:3000/v1/images \
+      https://cpapi.gabia.com/v1/images \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -64,7 +64,7 @@ post:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/images",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/images",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -89,7 +89,7 @@ post:
 
         var options = {
             method: 'POST',
-            url: 'http://10.222.222.227:3000/v1/images',
+            url: 'https://cpapi.gabia.com/v1/images',
             headers: {
               'cache-control': 'no-cache',
               'content-type': 'application/x-www-form-urlencoded',
@@ -136,7 +136,7 @@ get:
     ### cURL
     ```
     curl -X GET \
-      http://10.222.222.227:3000/v1/images \
+      https://cpapi.gabia.com/v1/images \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -188,7 +188,7 @@ get:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/images",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/images",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -212,7 +212,7 @@ get:
 
         var options = {
           method: 'GET',
-          url: 'http://10.222.222.227:3000/v1/images',
+          url: 'https://cpapi.gabia.com/v1/images',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',

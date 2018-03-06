@@ -1,0 +1,59 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
+  user_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  ip_id:
+    type: string
+    description: 공인 IP의 ID에 해당하는 속성입니다.
+    example: pubIp_1
+    pattern: ^(pubIp_)+[1-9]{1}\d*$
+  ip_addr:
+    type: string
+    description: 공인 IP의 주소에 해당하는 속성입니다.
+    example: 10.222.222.143
+    format: ipv4
+  ip_attach:
+    type: string
+    description: |
+      공인 IP가 할당된 자원의 종류를 나타내는 속성입니다.
+      - SVR: g클라우드 서버에 할당되었음을 나타내는 속성값입니다. 
+      - LB: 로드밸런서에 할당되었음을 나타내는 속성값입니다.
+      - "": 어느 자원에도 할당되지 않았음을 나타내는 속성값입니다.
+      - NULL: 어느 자원에도 할당되지 않았음을 나타내는 속성값입니다.
+    enum: [SVR, LB, "", null]
+    example: SVR
+  service_zone:
+    type: string
+    description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
+    enum: [zone_1, zone_2]
+    pattern: ^(zone_)+[1-9]{1}\d*$
+    example: zone_1
+  attached:
+    type: object
+    description: 공인 IP가 할당된 자원에 대해 확인할 수 있는 속성으로 배열로 제공됩니다
+    properties:
+      id:
+        type: string
+        description: 할당된 자원의 ID에 해당하는 속성입니다.
+        example: vm_1
+      name:
+        type: string
+        description: 할당된 자원의 자원명에 해당하는 속성입니다.
+        example: WAS_1
+  regdate:
+    type: dateTime
+    description: 공인 IP의 등록일에 해당하는 속성입니다.
+    example: '2017-09-13 10:28:08'
+  updatedate:
+    type: dateTime
+    description: 공인 IP의 수정일에 해당하는 속성입니다.
+    example: 0000-00-00 00:00:00

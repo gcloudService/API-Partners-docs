@@ -1,0 +1,115 @@
+put:
+  summary: 서버 네트워크 차단
+  description: |
+    g클라우드 서버 트래픽을 차단하거나 재개할 수 있습니다.
+    - g클라우드 서버에 공인 IP가 할당되어 있다 하더라도, 네트워크를 차단할 경우 인터넷 망과 연결되지 않습니다.
+
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/servers/vm_1/network \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d action=start
+    ```
+
+    ### Error Code
+    - `-4181` : [API] 서버 네트워크 변경 오류. 서버 네트워크 차단 불가. 네트워크 [start] 상태의 서버만 네트워크 [stop] 가능합니다.
+    - `-4182` : [API] 서버 네트워크 변경 오류. 서버 네트워크 차단 불가. 부착된 공인 IP가 없기 때문에 현재 외부 네트워크를 이용하지 않는 상태입니다.
+    - `-4182` : [API] 서버 네트워크 변경 오류. 서버 네트워크 차단 불가. 부착된 공인 IP가 없기 때문에 현재 외부 네트워크를 이용하지 않는 상태입니다.
+    - `-4183` : [API] 서버 네트워크 변경 오류. 서버 네트워크 차단 불가. 이미 네트워크 차단 상태입니다.
+    - `-4184` : [API] 서버 네트워크 변경 오류. 서버 네트워크 차단 불가. 부착된 공인 IP가 없기 때문에 현재 외부 네트워크를 이용하지 않는 상태입니다.
+    - `-4185` : [API] 서버 네트워크 변경 오류. 서버 네트워크 허용 불가. 네트워크 [stop] 상태의 서버만 네트워크 [start] 가능합니다.
+    - `-4186` : [API] 서버 네트워크 변경 오류. 서버 네트워크 허용 불가. 이미 네트워크 허용 상태입니다.
+    - `-4187` : [API] 서버 네트워크 변경 오류. 서버 네트워크 허용 불가. 부착된 공인 IP가 있기 때문에 현재 외부 네트워크를 허용한 상태입니다.
+  tags:
+    - Servers
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - name: action
+      description: |
+        g클라우드 서버의 네트워크 차단 여부를 결정할 때 사용되는 매개변수로 start, stop 중 하나의 값을 입력할 수 있습니다.
+        - **start**: 네트워크 차단을 해제합니다.
+        - **stop**: 네트워크를 차단합니다.
+
+      in: formData
+      required: true
+      type: string
+      enum:
+        - start
+        - stop
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1/network",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "action=start",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'http://10.222.222.227:3000/v1/servers/vm_1/network',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'action': 'start'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: |
+        Created. 서버 네트워크 변경 성공
+      schema:
+        $ref: ../definitions/Servers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. svr_id 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. svr_id 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

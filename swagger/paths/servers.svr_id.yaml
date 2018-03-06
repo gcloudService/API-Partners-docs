@@ -6,7 +6,7 @@ get:
     ### cURL
     ```
     curl -X GET \
-      http://10.222.222.227:3000/v1/servers/vm_1 \
+      https://cpapi.gabia.com/v1/servers/vm_1 \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -25,7 +25,7 @@ get:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/servers/vm_1",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -49,7 +49,7 @@ get:
 
         var options = {
           method: 'GET',
-          url: 'http://10.222.222.227:3000/v1/servers/vm_1',
+          url: 'https://cpapi.gabia.com/v1/servers/vm_1',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',
@@ -91,7 +91,7 @@ put:
     ### cURL
     ```
     curl -X PUT \
-      http://10.222.222.227:3000/v1/servers/vm_1 \
+      https://cpapi.gabia.com/v1/servers/vm_1 \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -114,7 +114,7 @@ put:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/servers/vm_1",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -139,7 +139,7 @@ put:
 
         var options = {
             method: 'PUT',
-            url: 'http://10.222.222.227:3000/v1/servers/vm_1',
+            url: 'https://cpapi.gabia.com/v1/servers/vm_1',
             headers: {
                 'cache-control': 'no-cache',
                 'content-type': 'application/x-www-form-urlencoded',
@@ -194,7 +194,7 @@ delete:
     ### cURL
     ```
     curl -X DELETE \
-      http://10.222.222.227:3000/v1/servers/vm_1 \
+      https://cpapi.gabia.com/v1/servers/vm_1 \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -225,7 +225,7 @@ delete:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/servers/vm_1",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/servers/vm_1",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -249,7 +249,7 @@ delete:
 
         var options = {
             method: 'DELETE',
-            url: 'http://10.222.222.227:3000/v1/servers/vm_1',
+            url: 'https://cpapi.gabia.com/v1/servers/vm_1',
             headers: {
                 'cache-control': 'no-cache',
                 'content-type': 'application/x-www-form-urlencoded',

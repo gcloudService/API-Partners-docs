@@ -1,0 +1,17 @@
+description: |
+  **[토큰 발급](#tag/Token%2Fpaths%2F~1auth~1api%2Fpost)**
+  ```http
+  POST /v1/auth/api HTTP/1.1
+  Host: 10.222.222.227:3000
+  Content-Type: application/x-www-form-urlencoded
+  Cache-Control: no-cache
+
+  partner_id={YOUR-ID}&secret={YOUR-SECRET-KEY}
+  ```
+
+  **토큰**
+  ```http
+  Authorization: Bearer {YOUR-JWT-TOKEN}
+  ```
+name: bearer
+type: oauth

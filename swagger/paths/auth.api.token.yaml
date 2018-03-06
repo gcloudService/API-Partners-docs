@@ -7,7 +7,7 @@ get:
     ### cURL
     ```
     curl -X GET \
-      'http://10.222.222.227:3000/v1/auth/api/token?token=&secret=Y2YxZWUyY2UtMTk4OS01ZjNhLTlmMjktODdhOGM3YmMzY2Nk' \
+      'https://cpapi.gabia.com/v1/auth/api/token?token=&secret=Y2YxZWUyY2UtMTk4OS01ZjNhLTlmMjktODdhOGM3YmMzY2Nk' \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \

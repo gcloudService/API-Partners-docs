@@ -1,0 +1,298 @@
+version: 0.1.0
+title: 클라우드 파트너 API
+contact:
+  name: g클라우드
+  url: https://cloud.gabia.com/
+  email: cloud@gabia.com
+license:
+  name: g클라우드
+  url: https://cloud.gabia.com
+description: |
+  # API  INTRO 
+  클라우드 파트너 API는 g클라우드의 가상 인프라 자원을 파트너가 제어할 수 있게 해주는 HTTP 기반 RESTful API 서비스입니다.
+
+  이 페이지는 API에 대한 매뉴얼로 각 자원을 생성 및 제어하는 방법을 확인할 수 있습니다.
+
+  # API GUIDE
+  가이드를 통해 API를 이용할 때 미리 알아두어야 할 내용을 확인할 수 있습니다.
+
+  ## 파트너 신청
+  클라우드 파트너 API는 가비아 클라우드 파트너로 승인된 가비아 회원(기업 회원)으로 이용이 제한됩니다.
+  API 사용을 위해서는 아래 링크를 통해 가비아 회원 가입(기업 회원) 및 클라우드 파트너 신청을 먼저 진행해야 합니다.
+
+  [가비아 회원 가입](https://www.gabia.com/member/member_register.php)
+
+  [클라우드 파트너 신청](https://www.gabia.com/member/member_register.php)
+
+  파트너 신청이 승인될 경우, 파트너는 고유의 Secret key를 부여 받습니다. 파트너는 Secret key를 통해 API 서버에 파트너 인증 요청을 할 수 있습니다.
+
+  Secret 키를 통해 인증을 완료한 파트너는 JWT(JSON Web Token)를 발급 받으며, 클라우드 자원에 대한 모든 HTTP 요청은 Header에 JWT를 포함해야 합니다. 
+  JWT는 2시간 동안 유효하며, 만료 후에는 재발급 받을 수 있습니다.
+
+  ## 서버 정보
+  | Key                     | Value                         |
+  |-------------------------|-------------------------------|
+  | 프로토콜(Protocol)       | HTTPS                         |
+  | 호스트(Host)             | 10.222.222.2227               |
+  | 포트(Port)               | 3000                          |
+  | 버전(Version)            | v1                            |
+  | API URL(API request URL) | http://10.222.222.227:3000/v1 |
+
+  API URL은 API 서버에 요청을 보낼 때 기본이 되는 URL입니다. 
+  API URL에 Path, Query를 추가하거나 HTTP Body에 Formdata를 추가하여 가상 인프라 자원을 생성 및 제어하는 요청(HTTP Request)을 API 서버로 보낼 수 있습니다.
+
+  ## 제공 기능
+  클라우드 파트너 API는 다음과 같은 기능을 제공합니다.
+
+  - **[인증 및 토큰](#tag/Token)**
+    - [토큰발급](#tag/Token%2Fpaths%2F~1auth~1api%2Fpost)
+    - [토큰 확인]()
+  - **[이용자](#tag/Users)**
+    - [이용자 조회](#tag/Users%2Fpaths%2F~1users%2Fget)
+    - [이용자 등록](#tag/Users%2Fpaths%2F~1users%2Fpost)
+    - [이용자 삭제](#tag/Users%2Fpaths%2F~1users~1%7Buser_id%7D%2Fdelete)
+  - **[g클라우드 서버](#tag/Servers)**
+    - [서버 조회](#tag/Servers%2Fpaths%2F~1servers%2Fget)
+    - [서버 생성](#tag/Servers%2Fpaths%2F~1servers%2Fpost)
+    - [서버 상세 정보](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D%2Fget)
+    - [서버 정보 변경](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D%2Fput)
+    - [서버 삭제](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D%2Fdelete)
+    - [서버 사양 변경](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1spec%2Fput)
+    - [서버 상태 변경](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1action%2Fput)
+    - [서버 비밀번호 변경](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1password%2Fput)
+    - [서버 네트워크 차단](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1password%2Fput)
+    - [서버 스토리지 장착/추가](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1volumes~1%7BvoL_id%7D%2Fpost)
+    - [서버 스토리지 해제](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1volumes~1%7BvoL_id%7D%2Fdelete)
+    - [방화벽 정책 추가](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1fws%2Fpost)
+    - [방화벽 정책 삭제](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1fws%2Fdelete)
+    - [공인 IP 할당](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1ips~1%7Bip_id%7D%2Fpost)
+    - [공인 IP 해제](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1ips~1%7Bip_id%7D%2Fdelete)
+    - [스냅샷 생성](#tag/Servers%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1snapshots%2Fpost)
+    - [이미지 생성](#tag/Servers%2Fpaths%2F~1images%2Fpost)
+  - **[g클라우드 스토리지](#tag/Volumes)**
+    - [볼륨 스토리지 조회](#tag/Volumes%2Fpaths%2F~1volumes%2Fget)
+    - [볼륨 스토리지 생성](#tag/Volumes%2Fpaths%2F~1volumes%2Fpost)
+    - [볼륨 스토리지 상세 정보](#tag/Volumes%2Fpaths%2F~1volumes~1%7Bvol_id%7D%2Fget)
+    - [볼륨 스토리지 정보 변경](#tag/Volumes%2Fpaths%2F~1volumes~1%7Bvol_id%7D%2Fput)
+    - [볼륨 스토리지 삭제](#tag/Volumes%2Fpaths%2F~1volumes~1%7Bvol_id%7D%2Fdelete)
+    - [볼륨 스토리지 장착/추가](#tag/Volumes%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1volumes~1%7BvoL_id%7D%2Fpost)
+    - [볼륨 스토리지 해제](#tag/Volumes%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1volumes~1%7BvoL_id%7D%2Fdelete)
+  - **[공인 IP](#tag/PublicIps)**
+    - [공인 IP 조회](#tag/PublicIps%2Fpaths%2F~1ips%2Fpost)
+    - [공인 IP 생성](#tag/PublicIps%2Fpaths%2F~1ips%2Fpost)
+    - [공인 IP 상세 정보](#tag/PublicIps%2Fpaths%2F~1ips~1%7Bip_id%7D%2Fget)
+    - [공인 IP 삭제](#tag/PublicIps%2Fpaths%2F~1ips~1%7Bip_id%7D%2Fdelete)
+    - [공인 IP 할당](#tag/PublicIps%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1ips~1%7Bip_id%7D%2Fpost)
+    - [공인 IP 해제](#tag/PublicIps%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1ips~1%7Bip_id%7D%2Fdelete)
+  - **[로드밸런서](#tag/LoadBalancers)**
+    - [로드밸런서 조회](#tag/LoadBalancers%2Fpaths%2F~1lbs%2Fget)
+    - [로드밸런서 생성](#tag/LoadBalancers%2Fpaths%2F~1lbs%2Fpost)
+    - [로드밸런서 상세 정보](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D%2Fget)
+    - [로드밸런서 정보 변경](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D%2Fput)
+    - [로드밸런서 삭제](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D%2Fdelete)
+    - [로드밸런서 고급 설정 변경](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1setup%2Fput)
+    - [로드밸런서 네트워크 차단](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1network%2Fput)
+    - [로드밸런서 포트 추가](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1ports%2Fpost)
+    - [로드밸런서 포트 변경](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1ports%2Fput)
+    - [로드밸런서 포트 삭제](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1ports%2Fdelete)
+    - [연결 서버 추가](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1ports~1%7Bport%7D~1servers%2Fpost)
+    - [연결 서버 수정](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1ports~1%7Bport%7D~1servers%2Fput)
+    - [연결 서버 삭제](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1ports~1%7Bport%7D~1servers%2Fdelete)
+    - [로드밸런서 IP 변경](#tag/LoadBalancers%2Fpaths%2F~1lbs~1%7Blb_id%7D~1ips~1%7Bip_id%7D%2Fput)
+  - **[스냅샷](#tag/Snapshots)**
+    - [스냅샷 조회](#tag/Snapshots%2Fpaths%2F~1snapshots%2Fget)
+    - [스냅샷 생성](#tag/Snapshots%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1snapshots%2Fpost)
+    - [스냅샷 상세 정보](#tag/Snapshots%2Fpaths%2F~1snapshots~1%7Bsnap_id%7D%2Fget)
+    - [스냅샷 정보 변경](#tag/Snapshots%2Fpaths%2F~1snapshots~1%7Bsnap_id%7D%2Fput)
+    - [스냅샷 삭제](#tag/Snapshots%2Fpaths%2F~1snapshots~1%7Bsnap_id%7D%2Fdelete)
+  - **[이미지](#tag/Images)**
+    - [이미지 조회](#tag/Images%2Fpaths%2F~1images%2Fget)
+    - [이미지 생성](#tag/Images%2Fpaths%2F~1images%2Fpost)
+    - [이미지 상세 정보](#tag/Images%2Fpaths%2F~1images~1%7Bimg_id%7D%2Fget)
+    - [이미지 정보 변경](#tag/Images%2Fpaths%2F~1images~1%7Bimg_id%7D%2Fput)
+    - [이미지 삭제](#tag/Images%2Fpaths%2F~1images~1%7Bimg_id%7D%2Fdelete)
+
+  ## 요청 가이드
+  파트너는 API 서버에 요청을 보낼 때, 각 API 기능별로 정해진 HTTP Request Method(GET/POST/PUT/DELETE)와 매개 변수(Path, Query, Formdata)를 사용할 수 있습니다.
+
+  요청 시, HTTP Header의 Content-type은 application/x-www-form-urlencoded 혹은 application/json을 사용하고 Authorization은 Secret Key를 통해 발급 받은 JWT를 사용해야 합니다.
+
+  ```
+  curl -X GET/POST/PUT/DELETE
+    http://API URL/path/?Query
+    -H 'authorization: Bearer {YOUR-JWT-TOKEN}'
+    -H 'content-type: application/x-www-form-urlencoded'
+    -d 'FormData
+  ```
+
+  매개변수 입력 값에 대한 상세한 설명과 예시는 각 기능별 페이지에서 확인할 수 있습니다.
+
+  ### 요청 예시 1
+  파트너의 한 이용자가 소유한 g클라우드 서버의 목록을 조회하고 싶을 경우, API URL에 자원명(/servers)을 추가한 후, 해당 조건을 반영한 URL Query 매개변수(/?q=user_id=tester)를 추가할 수 있습니다.
+
+  ```
+  curl -X GET
+    http://API URL/servers?q=user_id=tester
+    -H 'authorization: Bearer {YOUR-JWT-TOKEN}'
+    -H 'cache-control: no-cache'
+    -H 'content-type: application/x-www-form-urlencoded'
+  ```
+
+  ### 요청 예시 2
+  파트너의 한 이용자가 소유한 g클라우드 서버의 이름과 설명을 바꾸길 원할 경우, API URL에 자원명(/servers)을 추가한 후, 해당 조건을 반영한 URL Path(/vm_1)와 Formdata(name=new-name&desc=new-desc) 매개변수를 추가하여 변경할 수 있습니다.
+
+  ```
+  curl -X PUT 
+    http://10.222.222.227:3000/v1/servers/vm_1 
+    -H 'authorization: Bearer {YOUR-JWT-TOKEN}' 
+    -H 'cache-control: no-cache' 
+    -H 'content-type: application/x-www-form-urlencoded' 
+    -d 'name=new-name&desc=new-desc
+  ```
+
+  ## 응답 가이드
+
+  API 요청에 대한 응답은 HTTP 상태 코드(Status Code)와 JSON을 통해 해석할 수 있습니다.
+
+  아래 내용은 API 응답에서 공통으로 사용되는 HTTP 상태 코드와 JSON 속성(Key)에 대한 내용입니다.
+
+  JSON 속성에 대한 상세한 설명과 예시는 각 기능별 페이지에서 확인할 수 있습니다.
+
+
+  ### HTTP 상태 코드
+  HTTP의 [Status Code](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C)를 통해 API를 통한 값 요청의 성공 여부를 확인할 수 있습니다.
+
+  <table><tr><th>Status Code</th><th>Status Text</th><th>Request Method</th><th>Status Description</th></tr><tr><td rowspan="3">200</td><td rowspan="3">OK</td><td>GET</td><td>조회 성공</td></tr><tr><td>PUT</td><td>기존 값과 동일한 수정 요청</td></tr><tr><td>DELETE</td><td>삭제 성공</td></tr><tr><td rowspan="2">201</td><td rowspan="2">Created</td><td>POST</td><td>생성 성공</td></tr><tr><td>PUT</td><td>변경 성공</td></tr><tr><td rowspan="3">202</td><td rowspan="3">Accepted</td><td>POST</td><td>생성 요청 승인(비동기)</td></tr><tr><td>PUT</td><td>변경 요청 승인(비동기)</td></tr><tr><td>DELETE</td><td>삭제 요청 승인(비동기)</td></tr><tr><td>204</td><td>No content</td><td>DELETE</td><td>삭제 성공</td></tr><tr><td>400</td><td>Bad Request</td><td>ALL</td><td>매개변수가 없거나 유효하지 않음</td></tr></table>
+
+  ### 에러 코드(Error Code)
+  HTTP 상태 코드가 400(Bad Request), 401(Unauthorized), 403(Forbidden), 404(Not Found)인 경우, JSON의 msg, code 속성을 통해 에러 발생 원인에 대해 확인할 수 있습니다. 
+  아래 표는 대표적으로 사용되는 에러 코드입니다.
+
+  **공통으로 사용되는 Error Code는 다음과 같습니다.**
+  | Error Code |                                                   Error Message                                                   |
+  |:----------:|:-----------------------------------------------------------------------------------------------------------------:|
+  | -621       | [Auth] REST API 오류. 필수값이 없거나 유효하지 않습니다.                                                          |
+  | -3011      | [API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.                                                  |
+  | -3012      | [API] 자원 접근 권한. 해당 자원이 입력된 파트너의 자원이 아님.                                                    |
+  | -3013      | [API] 자원 접근 권한. 해당 자원이 입력된 파트너의 자원이나, 사용자가 불일치.                                      |
+  | -3014      | [API] 자원 접근 권한. 해당 자원이 입력된 파트너의 자원이나, 기존 자원의 사용자와 요청으로 입력된 사용자가 불일치. |
+  | -3852      | [API] 사용자 오류. 등록되지 않은 사용자 입니다.                                                                   |
+
+  ## 비동기 작업
+  일부 클라우드 인프라 자원의 생성 및 삭제는 비동기로 이루어집니다.
+  비동기로 이루어지는 작업은 요청 시, HTTP 상태 코드가 202(Accepted)로 응답됩니다.
+
+  이 후 작업 성공 여부는 HATEOAS 방식과 Callback URL 방식으로 확인할 수 있습니다.
+
+  **비동기 작업은 오류가 발생하지 않는다면, 빠르면 1분 이내 늦어도 수분 이내에 완료됩니다.**
+
+  - **HATEOAS**
+    - 비동기 작업 요청 시, API 서버로부터 받은 JSON(HTTP 202 Code)의 links 속성을 통해 성공 여부를 확인할 수 있습니다.
+    ```json
+    // 서버 생성 요청 완료 후
+    // HTTP Status 202
+    // Response Body
+    {
+      //...
+      "links": [
+        {
+          "rel": "self",
+          "method": "GET",
+          "href": "http://10.222.222.227:3000/v1/servers/vm_1"
+        }
+      ]
+    }
+    ```
+  - **Callback URL 방식**
+    - 비동기 작업 완료 시, 파트너가 별도 등록한 Callback URL로 성공 여부를 전송합니다
+    - Callback URL 방식은 작업 완료 후 최초 1회만 성공 여부를 전송하며, 정보의 수신 성공 여부는 확인하지 않습니다. 성공 여부 수신을 받지 못한 경우, HATEOAS 방식을 통해 재확인할 수 있습니다.
+    - 서버 접속 비밀번호(OS 비밀번호)의 경우, Callback URL 방식으로만 확인할 수 있습니다.
+    - **Callback URL은 클라우드 파트너 승인 시, 별도의 과정을 통해 등록할 수 있습니다.**
+    ```json
+    // 서버 생성 완료 후
+    // 등록된 callback url로 전송한 데이터
+    {
+      "user_id": "company_777",
+      "timestamp": "2017-11-27 05:11:03",
+      "link": "http://10.222.222.227:3000/v1/servers/vm_1",
+      "resource_id": "vm_1",
+      "result": "Success",
+      "work": "servers.create"
+    }
+    ```
+    - Call back URL을 통해 전송된 JSON은 다음과 같은 속성과 속성값을 갖고 있습니다.
+      - **user_id:** 사용자 ID
+      - **timestamp:** callback 데이터 전송 시간(작업 완료 시간과 조금 차이가 있을 수 있습니다.)
+      - **link:** HATEOAS
+      - **resource_id:** 자원 ID
+      - **result:**
+        - **Success**: 성공
+        - **Error**: 실패
+        - **Working**: 진행중
+      - **work:**
+        | work             | description             |
+        |------------------|-------------------------|
+        | servers.create   | g클라우드 서버 생성      |
+        | servers.delete   | g클라우드 서버 삭제      |
+        | servers.password | g클라우드 서버 비밀번호 변경|
+        | volumes.create   | g클라우드 스토리지 생성   |
+        | volumes.delete   | g클라우드 스토리지 삭제   |
+        | snapshots.create | 스냅샷 생성              |
+        | snapshots.delete | 스냅샷 삭제              |
+        | images.create    | 이미지 생성              |
+        | images.delete    | 이미지 삭제              |
+        | servers.start    | g클라우드 서버 시작      |
+        | servers.stop     | g클라우드 서버 정지      |
+        | servers.kill     | g클라우드 서버 삭제      |
+        | servers.reboot   | g클라우드 서버 재시작    |
+
+  ## API 테스트
+  클라우드 파트너 API 테스트를 위해 Postman을 이용할 수 있습니다.
+
+  ### 1. Postman 다운로드 및 설치
+
+  ![postman1](https://user-images.githubusercontent.com/30248393/34400523-a397192e-ebd5-11e7-95ab-3a1da134e316.png)
+  Postman 공식 홈페이지를 통해, 테스트하려는 컴퓨터의 운영체제에 맞는 설치 파일을 다운로드 받고 실행합니다.
+
+  아래 링크를 통해 Postman 공식 홈페이지에 접속할 수 있습니다.
+
+  [Postman 다운로드](https://www.getpostman.com/)
+
+  ### 2. Postman 실행 및 회원 가입
+  ![postman2](https://user-images.githubusercontent.com/30248393/34400524-a3bce17c-ebd5-11e7-9a35-2a1f48a7c819.png)
+  설치한 Postman을 실행하고 회원가입 및 로그인을 진행합니다.
+
+  ### 3. API Collection 다운로드 및 적용
+  ![postman3](https://user-images.githubusercontent.com/30248393/34400525-a3e26898-ebd5-11e7-9126-8980d1267fe8.png)
+  Postman의 다양한 기능을 활용해 API 테스트를 진행할 수 있습니다.
+
+  이때, 가비아에서 제공하는 API Collection을 Postman에 적용하면 좀 더 편하게 API 테스트를 진행할 수 있습니다.
+
+  아래 링크를 통해 API Collection을 다운받을 수 있습니다.
+
+  [API Collection 다운로드](https://github.com/gcloudService/API-Partners/releases/download/1.3.0/gCloud-Partners-API-v1.3.0.json)
+
+  [API Collection 버전 관리(Github)](https://github.com/gcloudService/API-Partners/releases)
+
+  다운 받은 API Collection은 Postman 좌측 상단의 import 기능을 통해 적용할 수 있습니다.
+
+  ### 4. Environments 등록
+  ![postman4](https://user-images.githubusercontent.com/30248393/34400526-a40834d8-ebd5-11e7-978c-47f64b2292da.png)
+  Postman 우측 상단의 [눈 모양 버튼]과 [Add 버튼]을 통해 Environments를 등록할 수 있습니다. 
+  Environments 등록을 통해, API Collection에서 매개변수로 지정된 host, port 등의 값을 지정할 수 있습니다.
+
+  [눈 모양 버튼] 혹은 [Add 버튼]을 누르면 아래와 같은 레이어가 나옵니다.
+  ![postman5](https://user-images.githubusercontent.com/30248393/34400527-a42f226e-ebd5-11e7-89f9-139822155c98.png)
+  등록하려는 Environment의 이름을 정하고 Key와 Value에 아래와 같은 값을 넣어줍니다.
+
+  | key     | value                 |
+  |---------|-----------------------|
+  | host    | http://10.222.222.227 |
+  | port    | 3000                  |
+  | version | v1                    |
+  | jwt     | {YOUR-JWT}            |
+  - JWT 값은 이후에 Secret key를 통한 토큰 발급으로 얻을 수 있습니다.
+
+  ### 5. Environment 선택 및 시작
+  ![postman6](https://user-images.githubusercontent.com/30248393/34400528-a454d1bc-ebd5-11e7-9d7c-5cde7d671495.png)
+  우측 상단의 드랍 다운 박스에서 4단계(4. Environment 등록)에서 정한 Environment 이름을 선택하고, 3단계(3. API Collection 다운로드 및 적용)에서 등록한 좌측의 API Collection을 통해 API 테스트를 시작합니다.

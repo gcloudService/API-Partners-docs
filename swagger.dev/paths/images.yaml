@@ -1,0 +1,239 @@
+post:
+  summary: 이미지 생성
+  description: |
+    스냅샷 또는 g클라우드 서버(SSD)를 통해 이미지를 생성할 수 있습니다.
+    - g클라우드 서버(베이직/프리미엄)의 경우, 스냅샷을 생성한 후, 이미지를 생성할 수 있습니다.
+    - g클라우드 서버(베이직/프리미엄)의 경우, 이미지의 대상이 되는 스냅샷이 생성되고 있는 상태(status:0)이거나 삭제되고 있는 상태(status:2)인 경우에 이미지를 생성할 수 없습니다.
+    - g클라우드 서버(SSD)의 경우, 스냅샷 생성 과정 없이 바로 이미지를 생성할 수 있습니다.
+    - g클라우드 서버(SSD)의 경우, 이미지의 대상이 되는 g클라우드 서버가 다른 이미지를 생성 중일 때는 추가로 이미지를 생성할 수 없습니다.
+    - g클라우드 서버의 상태 값이 정지된 상태(status: 01)이거나 시작된 상태(status:03)일 때만 이미지를 생성할 수 있습니다.
+
+
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/images \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'user_id=company_777&name=image1&desc=test-image&snap_id=snap_1'
+    ```
+
+    ### Error Code
+    - `-4501` : [API] 이미지 생성 오류. 이미지명 중복
+    - `-4502` : [API] 이미지 생성 오류. 스냅샷을 통한 이미지 생성 오류. 스냅샷의 타입이 'SVR'이 아닙니다. 서버에 대한 스냅샷만 가능합니다.
+    - `-4503` : [API] 이미지 생성 오류. 스냅샷을 통한 이미지 생성 오류. 이미지 생성 불가 상태. 스냅샷이 '생성중' 혹은 '삭제중' 상태입니다.
+    - `-4504` : [API] 이미지 생성 오류. 스냅샷을 통한 이미지 생성 오류. 이미지 생성 불가 상태. 이미 스냅샷이 '생성중' 상태입니다.
+    - `-4505` : [API] 이미지 생성 오류. 서버를 통한 이미지 생성 오류. 존재하지 않는 서버입니다.
+    - `-4506` : [API] 이미지 생성 오류. 서버를 통한 이미지 생성 오류. '시작' 혹은 '정지' 상태의 서버만 가능합니다.
+    - `-4507` : [API] 이미지 생성 오류. 서버를 통한 이미지 생성 오류. 서버 타입이 ssd일 때만 가능합니다.
+    - `-4508` : [API] 이미지 생성 오류. 서버를 통한 이미지 생성 오류. 이미지 생성 불가 상태. 서버에 이미지가 생성중입니다.
+  tags:
+    - Images
+    - Servers
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/user_id
+    - $ref: ../parameters/index.yaml#/img_name
+    - $ref: ../parameters/index.yaml#/img_desc
+    - in: formData
+      name: svr_id
+      required: false
+      type: string
+      pattern: ^(vm_)+[1-9]{1}\d*$
+      example: vm_1
+      description: |
+        이미지를 생성하려는 g클라우드 서버(SSD)의 ID에 해당하는 매개변수입니다.
+        - g클라우드 서버(베이직/프리미엄)으로 만들어진 스냅샷을 통해 이미지를 생성하는 경우, 해당 매개변수는 입력할 수 없습니다.
+    - in: formData
+      name: snap_id
+      required: false
+      type: string
+      pattern: ^(snap_)+[1-9]{1}\d*$
+      example: snap_1
+      description: |
+        이미지를 생성하려는 스냅샷의 ID에 해당하는 매개변수입니다.
+        - g클라우드 서버(SSD)로 이미지를 생성하는 경우, 해당 매개변수는 입력할 수 없습니다.
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/images",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "user_id=company_777&name=image1&desc=test-image&snap_id=snap_1",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+            method: 'POST',
+            url: 'http://10.222.222.227:3000/v1/images',
+            headers: {
+              'cache-control': 'no-cache',
+              'content-type': 'application/x-www-form-urlencoded',
+              'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+            },
+            form: {
+            'user_id': company_777,
+            'name': image1,
+            'desc': test-image,
+            'snap_id': snap_1
+            }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    202:
+      description: Accepted. 이미지 생성 요청 성공
+      schema:
+        $ref: ../definitions/Images.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 요청한 서버 혹은 스냅샷으로 이미 이미지 생성을 요청한 경우
+    404:
+      description: Not Found. 넘어온 서버 혹은 스냅샷에 일치하는 자원이 없는 경우
+      schema:
+        $ref: ../definitions/NotFound.yaml
+get:
+  summary: 이미지 조회
+  description: |
+    이용자가 생성한 이미지와 기본으로 제공되는 이미지를 조회할 수 있습니다.
+    - 삭제된 이미지는 제외됩니다.
+
+    ### cURL
+    ```
+    curl -X GET \
+      http://10.222.222.227:3000/v1/images \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+  tags:
+    - Images
+  produces:
+    - application/json
+  parameters:
+    - name: q
+      in: query
+      type: string
+      description: |
+        조회 조건을 설정하는 매개변수 입니다.
+        - 사용할 수 있는 조건
+          - user_id: 이용자 ID
+          - img_id: 이미지 ID
+          - name: 이미지의 자원명
+          - status: 이미지의 현재 상태 값
+        - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
+        - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
+        - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
+        - 예시) /v1/images?q=user_id=company_777,status=9
+    - name: order
+      in: query
+      type: string
+      description: |
+        조회 결과에 대한 정렬 조건을 설정하는 매개변수 입니다.
+        - 정렬 가능 대상
+          - img_id: 이미지 ID
+          - user_id: 이용자 ID
+          - name: 이미지의 자원명
+          - desc: 이미지에 대한 설명
+          - img_cpu: 이미지로 생성할 수 있는 서버의 CPU 사양의 최소치
+          - img_memory: 이미지로 생성할 수 있는 서버의 Memory 사양의 최소치
+          - img_size: 이미지의 용량
+          - regdate: 이미지의 생성일
+          - updatedate: 이미지의 수정일
+        - 사용할 수 있는 정렬 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력할 수 있으며 앞에 입력된 조건의 우선 순위가 높습니다.
+        - 정렬의 기본 값은 오름차순 정렬입니다. 정렬 조건의 앞에 –를 붙일 경우, 내림차순으로 정렬할 수 있습니다.
+        - 예시) /v1/images?order=user_id,-img_cpu
+
+    # - $ref: ../parameters/index.yaml#/collectionPaging
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/images",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'GET',
+          url: 'http://10.222.222.227:3000/v1/images',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 이미지 조회 성공
+      schema:
+        type: array
+        description: 이미지 목록
+        items:
+          $ref: ../definitions/Images.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml

@@ -1,0 +1,61 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  snap_id:
+    type: string
+    description: 스냅샷의 ID에 해당하는 속성입니다.
+    example: snap_1
+    pattern: ^(snap_)+[1-9]{1}\d*$
+  name:
+    type: string
+    description: 스냅샷의 자원명에 해당하는 속성입니다.
+    example: backup-sna
+    minLength: 1
+    maxLength: 16
+    pattern: ^[\w\-]{1,16}$p
+  desc:
+    type: string
+    description: 스냅샷에 대한 설명에 해당하는 속성입니다.
+    example: 백업용 스냅샷
+    minLength: 0
+    maxLength: 100
+    pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  status:
+    type: string
+    description: |
+      스냅샷의 현재 상태값에 해당하는 속성입니다.
+      - 0: 스냅샷이 생성되고 있는 상태를 나타내는 속성값입니다.
+      - 9: 스냅샷이 생성된 상태를 나타내는 속성값입니다.
+      - 2: 스냅샷이 삭제되고 있는 상태를 나타내는 속성값입니다.
+      - D: 스냅샷이 삭제된 상태를 나타내는 속성값입니다.
+    example: '9'
+    enum: ["0","9","2",D]
+  type:
+    type: string
+    description: |
+      스냅샷의 대상이 된 자원의 종류에 해당하는 속성입니다.
+      - SVR: 스냅샷의 대상이 g클라우드 서버임을 나타내는 속성값입니다.
+    example: SVR
+    # enum: [SVR]
+  cloud_id:
+    type: string
+    description: 스냅샷의 대상이 된 자원의 ID에 해당하는 속성입니다.
+    example: vm_1
+  createdate:
+    type: dateTime
+    description: 스냅샷의 생성일에 해당하는 속성입니다.
+    example: 2017-09-14 05:14:26
+  deletedate:
+    type: dateTime
+    description: 스냅샷의 삭제일에 해당하는 속성입니다.
+    example: 2017-09-14 05:14:26

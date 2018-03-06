@@ -1,0 +1,16 @@
+type: object
+properties:
+  user_id:
+    type: string
+    description: 사용자 ID
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  cisf_id:
+    type: string
+    description: CIFS ID
+    example: mycifs
+    minLength: 1
+    maxLength: 16
+    pattern: ^[a-z0-9\-_]{1,16}$

@@ -9,7 +9,7 @@ post:
     ### cURL
     ```
     curl -X POST \
-      http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers \
+      https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -60,7 +60,7 @@ post:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -85,7 +85,7 @@ post:
 
         var options = {
           method: 'POST',
-          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers',
+          url: 'https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',
@@ -132,7 +132,7 @@ put:
     ### cURL
     ```
     curl -X PUT \
-      http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers \
+      https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -184,7 +184,7 @@ put:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -209,7 +209,7 @@ put:
 
         var options = {
           method: 'PUT',
-          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers',
+          url: 'https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',
@@ -256,7 +256,7 @@ delete:
     ### cURL
     ```
     curl -X DELETE \
-      http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2 \
+      https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2 \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -299,7 +299,7 @@ delete:
 
         curl_setopt_array($curl, array(
           CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -323,7 +323,7 @@ delete:
 
         var options = {
           method: 'DELETE',
-          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2',
+          url: 'https://cpapi.gabia.com/v1/lbs/lbg_1/ports/8080/servers?svr_ids=vm_2',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',

@@ -1,0 +1,213 @@
+post:
+  summary: NAS 생성
+  description: |
+    NAS를 생성합니다.
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/nas \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'user_id=company_777&name=image1&desc=test-image&snap_id=snap_1'
+      -d 'user_id=company_777&name=nas-test1&desc=nas-backup&mount_path=mount1&protocol=cifs&size=2'
+    ```
+
+    ### Error Code
+    - `-4711` : [API] NAS 생성 오류. NAS명 중복
+    - `-4712` : [API] NAS 생성 오류. NAS 마운트패쓰명 중복
+
+  tags:
+    - Nas
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/user_id
+    - $ref: ../parameters/index.yaml#/nas_name
+    - $ref: ../parameters/index.yaml#/nas_desc
+    - in: formData
+      name: mount_path
+      required: true
+      type: string
+      pattern: ^[a-z]{1}([\w]){0,15}$
+      example: mount1
+      description: |
+        NAS 마운트 패쓰
+        - 영문 소문자, 숫자, _ (언더바)를 조합하여 최대 16자까지 마운트패스를 설정할 수 있습니다.
+        - 마운트패스는 숫자나 ‘_’(언더바)로는 시작할 수 없습니다.
+    - in: formData
+      name: protocol
+      required: true
+      type: string
+      enum: [nfs, cifs]
+      example: cifs
+      description: |
+        NAS 프로토콜
+        - **nfs**: 리눅스 서버와 통신할 때 사용
+        - **cifs**: 윈도우 서버와 통신할 때 사용
+    - in: formData
+      name: size
+      required: true
+      type: float
+      minimum: 1.0
+      maximum: 10.0
+      example: 1.5
+      description: |
+        NAS 용량
+        - Tera Byte 단위
+        - e.g.) 1.5 -> 1500GB
+        - **1.0** <= size <= **10.0**
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/nas",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "user_id=company_777&name=nas-test1&desc=nas-backup&mount_path=mount1&protocol=cifs&size=2",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+            method: 'POST',
+            url: 'http://10.222.222.227:3000/v1/nas',
+            headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+            },
+            form: {
+              user_id: 'company_777',
+              name: 'nas-test',
+              desc: 'nas-backup',
+              mount_path: 'mount1',
+              protocol: 'cifs',
+              size: 2
+            }
+        };
+
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+  responses:
+    202:
+      description: Accepted. NAS 생성 요청 성공
+      schema:
+        $ref: ../definitions/Nas.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+get:
+  summary: NAS 목록
+  description: |
+    사용자의 모든 NAS 목록을 조회합니다.
+    - 삭제된 NAS 제외
+    - **Query** Parameters
+      - **`q`**
+        - **user_id**, **nas_id**, **name**, **protocol**, **size**, **status**, **mount_path**, **private_ip**
+        - e.g.) /nas?q=protocol=cifs,size=2
+      - **`order`**
+        - **nas_id**, **user_id**, **name**, **desc**, **size**, **protocol**, **regdate**, **updatedate**
+        - e.g.) /images?order=-size
+
+    ### cURL
+    ```
+    curl -X GET \
+      http://10.222.222.227:3000/v1/nas \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+  tags:
+    - Nas
+  produces:
+    - application/json
+  parameters:
+    - "$ref": ../parameters/index.yaml#/collectionQuery
+    - "$ref": ../parameters/index.yaml#/collectionPaging
+    - "$ref": ../parameters/index.yaml#/collectionOrder
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/nas",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+            method: 'GET',
+            url: 'http://10.222.222.227:3000/v1/nas',
+            headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+            }
+        };
+
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+  responses:
+    200:
+      description: OK. Nas 목록 조회 성공
+      schema:
+        type: array
+        description: Nas 목록
+        items:
+          $ref: ../definitions/Nas.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml

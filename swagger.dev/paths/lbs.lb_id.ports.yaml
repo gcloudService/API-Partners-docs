@@ -1,0 +1,348 @@
+post:
+  summary: 로드밸런서 포트 추가
+  description: |
+    로드밸런서 포트를 추가할 수 있습니다.
+    - 로드밸런서의 네트워크가 차단되었을 경우 포트를 추가할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X POST \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/ports \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'port=443&port_mode=http&port_desc=SSL'
+    ```
+
+    ### Error Code
+    - `-4611` : [API] 로드밸런서 포트 추가 오류. 로드밸런서 포트 추가 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4612` : [API] 로드밸런서 포트 추가 오류. 기존에 존재하는 포트에 대한 추가 요청
+  tags:
+    - LoadBalancers
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - in: formData
+      name: port
+      required: true
+      type: string
+      description: |
+        로드밸런서 포트의 번호에 해당하는 매개변수입니다.
+        - [1~65535] 사이 정수 값만 포트 번호로 입력할 수 있습니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 port_mode, port_desc와 동일해야 합니다.
+      example: 80,21,22
+    - in: formData
+      name: port_mode
+      required: true
+      type: string
+      description: |-
+        로드밸런서 포트의 모드(프로토콜)에 해당하는 매개변수입니다.
+        - [1~65535] 사이 정수 값만 포트 모드로 입력할 수 있습니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 port, port_desc와 동일해야 합니다.
+        - 매개변수 값으로 [HTTP, TCP] 중 하나를 입력할 수 있습니다.
+      example: http,tcp,tcp
+    - in: formData
+      name: port_desc
+      description: |
+        로드밸런서 포트에 대한 설명에 해당하는 매개변수입니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 port, port_mode와 동일해야 합니다.
+        - 포트에 대한 설명이 필요 없을 경우 공백으로 두거나 생략할 수 있습니다.
+        - 예시) 웹 서버용 포트, DB 서버용 포트 / 웹 서버용 포트, (공백) / 웹서버용 포트 / (공백), DB 서버용 포트 / (공백)
+      example: 이벤트 포트,파일 포트,외부 포트
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "port=443&port_mode=http&port_desc=SSL",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'POST',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            port: '443',
+            port_mode: 'http',
+            ort_desc: 'SSL'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: Created. 로드밸런서 생성 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+put:
+  summary: 로드밸런서 포트 변경
+  description: |
+    로드밸런서 포트 모드, 포트 번호, 포트 설명을 변경할 수 있습니다.
+    - 로드밸런서의 네트워크가 차단되었을 경우 포트를 변경할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X PUT \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/ports \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'port=443&port_mode=http&port_desc=SSL'
+    ```
+
+    ### Error Code
+    - `-4613` : [API] 로드밸런서 포트 수정 오류. 로드밸런서 포트 수정 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4614` : [API] 로드밸런서 포트 수정 오류. 존재하는 않는 포트에 대한 수정 요청
+  tags:
+    - LoadBalancers
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - in: formData
+      name: port
+      required: true
+      type: string
+      description: |
+        로드밸런서 포트의 번호에 해당하는 매개변수입니다.
+        - [1~65535] 사이 정수 값만 포트 번호로 입력할 수 있습니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 port_mode, port_desc와 동일해야 합니다.
+      example: 80,21,22
+    - in: formData
+      name: port_mode
+      required: true
+      type: string
+      description: |
+        로드밸런서 포트의 모드(프로토콜)에 해당하는 매개변수입니다.
+        - [1~65535] 사이 정수 값만 포트 모드로 입력할 수 있습니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 port, port_desc와 동일해야 합니다.
+        - 매개변수 값으로 [HTTP, TCP] 중 하나를 입력할 수 있습니다.
+      example: http,tcp,tcp
+    - in: formData
+      name: port_desc
+      description: |
+        로드밸런서 포트에 대한 설명에 해당하는 매개변수입니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다. 다만, 입력할 매개변수의 수와 순서는 port, port_mode와 동일해야 합니다.
+        - 포트에 대한 설명이 필요 없을 경우 공백으로 두거나 생략할 수 있습니다.
+        - 예시) 웹 서버용 포트, DB 서버용 포트 / 웹 서버용 포트, (공백) / 웹서버용 포트 / (공백), DB 서버용 포트 / (공백)
+      example: 이벤트 포트,파일 포트,외부 포트
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "port=443&port_mode=http&port_desc=SSL",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            port: '443',
+            port_mode: 'http',
+            ort_desc: 'SSL'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: Created. 로드밸런서 포트 변경 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+delete:
+  summary: 로드밸런서 포트 삭제
+  description: |
+    로드밸런서 포트를 삭제할 수 있습니다.
+    - 로드밸런서의 네트워크가 차단되었을 경우 포트를 삭제할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X DELETE \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/ports?port=443 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+
+    ### Error Code
+    - `-4615` : [API] 로드밸런서 포트 삭제 오류. 로드밸런서 포트 삭제 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4616` : [API] 로드밸런서 포트 삭제 추가 오류. 존재하는 않는 포트에 대한 삭제 요청
+    - `-4617` : [API] 로드밸런서 포트 삭제 추가 오류. 로드밸런서는 적어도 1개 이상의 포트가 필요합니다.
+  tags:
+    - LoadBalancers
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - in: query
+      name: port
+      required: true
+      type: string
+      description: |
+        로드밸런서 포트의 번호에 해당하는 매개변수입니다.
+        - [1~65535] 사이 정수 값만 포트 번호로 입력할 수 있습니다.
+        - 한 번에 여러 개의 매개변수를 입력할 수 있습니다.
+      example: 80,21,22
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/ports?port=443",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'DELETE',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/ports?port=443',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 로드밸런서 포트 삭제 성공
+      schema:
+        $ref: ../definitions/LoadBalancers.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

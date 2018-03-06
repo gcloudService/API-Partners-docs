@@ -1,0 +1,14 @@
+type: object
+properties:
+  msg:
+    type: string
+    description: 에러 메세지
+    example: "{RESOURCE-NAME} '{RESOURCE-ID}' does not exist."
+  code:
+    type: integer
+    description: 에러 코드
+    example: -3011
+  desc:
+    type: string
+    description: 에러 설명
+    example: "[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음."
