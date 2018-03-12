@@ -223,7 +223,7 @@ properties:
       properties:
         snap_id:
           type: string
-          description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+          description: 스냅샷의 ID에 해당하는 속성입니다.
           example: snap_1
           pattern: ^(snap_)+[1-9]{1}\d*$
         snap_name:

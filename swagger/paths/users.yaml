@@ -139,7 +139,6 @@ get:
   summary: 이용자 조회
   description: |
     이용자 목록을 조회할 수 있습니다.
-    - list
 
     ### cURL
     ```

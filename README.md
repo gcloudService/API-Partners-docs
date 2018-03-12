@@ -1,6 +1,6 @@
 # gcloud-partner-api-docs
 
-cpapi.gabia.com/docs
+https://cpapi.gabia.com/docs
 
 ## Infomation
 ### Apache Reverse Proxy
@@ -38,29 +38,15 @@ $ ps -aef|grep http
 ```
 
 ## Usage
-```
-$ npm start
-```
-
 > Docs on https://cpapi.gabia.com/docs
 
-> Internal server port: **9000**
-
-## Dev Server
 ```
-$ npm start:dev
+$ cd /home/node/cpapi/docs
+$ git clone https://gitlab.gabia.com/cloud/service/gcloud-partner-api-docs.git ./
+$ npm run build
 ```
-> Internal server port: **9000**
 
-## Deploy
-1. Check **version**
-1. Check **NODE_ENV**
-
-## Pm2
-
-### Production Server
-
-#### Working Directory
+### Dev
 ```
-/home/node/cpapi/docs/latest
+$ npm run build:dev
 ```
