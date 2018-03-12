@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # [0.8.1] - 2018-03-12
-
+`RELEASED` on [github](https://github.com/gcloudService/API-Partners-docs)
 
 # [0.8.0] - 2018-03-07
 **static file**
