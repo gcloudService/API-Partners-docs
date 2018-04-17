@@ -6,7 +6,9 @@ properties:
     example: biz_1004
   user_id:
     type: string
-    description: 이용자의 ID에 해당하는 속성입니다.
+    description: |
+      이용자의 ID에 해당하는 속성입니다.
+      - **cloud : 기본 제공 이미지를 나타내는 속성 값입니다.**
     example: company_777
     minLength: 3
     maxLength: 16

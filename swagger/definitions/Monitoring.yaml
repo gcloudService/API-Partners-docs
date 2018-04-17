@@ -1,0 +1,45 @@
+type: object
+properties:
+  svr_id:
+    type: string
+    description: g클라우드 서버의 ID에 해당하는 속성입니다.
+    example: vm_1
+    pattern: ^(vm_)+[1-9]{1}\d*$
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  type:
+    type: string
+    description: |
+      조회 대상에 해당하는 속성입니다.
+      - cpu: g클라우드 서버의 CPU 사용률에 해당하는 속성값입니다.
+      - memory: g클라우드 서버의 Memory 사용률에 해당하는 속성값입니다.
+      - storage_usage: g클라우드 서버의 Storage 사용률에 해당하는 속성값입니다.
+      - storage_iostat: g클라우드 서버의 Storage 입출력 정보에 해당하는 속성값입니다.
+    enum: [cpu, memory, storage_usage, storage_iostat]
+  range:
+    type: string
+    description: |
+      데이터 조회 범위에 해당하는 속성입니다.
+      - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 속성값입니다.
+      - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 속성값입니다.
+      - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 속성값입니다.
+      - year: 요청 시점을 기준으로 1년간의 데이터를 조회하는 속성값입니다.
+      - 요청 시, start, end 값이 입력된 경우, 해당 속성은 조회되지 않습니다.
+    example: day
+    enum: [day, week, month, year]
+  start:
+    type: string
+    format: dateTime
+    description: 조회 시작 시점에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+  end:
+    type: string
+    format: dateTime
+    description: 조회 종료 시점에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+  data:
+    type: array
+    description: 서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 

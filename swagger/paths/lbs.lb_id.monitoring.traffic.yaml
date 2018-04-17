@@ -1,0 +1,111 @@
+get:
+  summary: 로드밸런서 트래픽 사용량 조회
+  description: |
+    이용자의 로드밸런서 트래픽 사용량을 조회할 수 있습니다.
+
+    ### cURL
+    ```
+    curl -X GET \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/traffic \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+  tags:
+  - LoadBalancers
+  - Monitoring
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - name: range
+      description: |
+        요청 시점을 기준으로 데이터 조회 범위를 선택할 수 있는 매개변수입니다.
+        - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 입력 값입니다.
+        - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 입력 값입니다.
+        - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다.
+        - start 또는 end 값이 입력된 경우 range 값은 적용되지 않습니다.
+        - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+        - 예시) /v1/lbs/lbg_1/monitoring/traffic?range=day
+      in: query
+      enum: [day, week, month]
+      type: string
+      example: day
+    - name: end
+      description: |
+        데이터 조회 시작 시점을 선택할 수 있는 매개변수로 YYYY-MM-DD HH:mm:ss 형태의 입력 값을 갖습니다.
+        - end 값을 입력한 경우, range 값은 적용되지 않습니다.
+        - end 를 입력하고 start를 입력하지 않은 경우, start 값은 end 값의 하루 전 값으로 입력됩니다. 단, 이때 start 값이 서버 생성 시간보다 작은 값일 경우 start 값은 서버 생성 시간으로 입력됩니다.
+        - 현재 시간보다 큰 값으로 입력할 수 없습니다.
+        - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+        - 예시) /v1/lbs/lbg_1/monitoring/traffic?end=2018-01-01 00:00:00
+      in: query
+      type: string
+      format: dateTime
+      example: '2018-01-01 00:00:00'
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/traffic",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'GET',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/traffic',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 로드밸런서 트래픽 사용량 조회 성공
+      schema:
+        $ref: ../definitions/Monitoring.lb.traffic.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 서버가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

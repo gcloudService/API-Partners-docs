@@ -1,0 +1,96 @@
+type: object
+properties:
+  lb_id:
+    type: string
+    description: 로드밸런서의 ID에 해당하는 속성입니다.
+    example: lbg_1
+    pattern: ^(lbg_)+[1-9]{1}\d*$
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  lb_session_max:
+    type: integer
+    description: 로드밸런서의 최대 동시 세션 수에 해당하는 속성입니다.
+    example: 0
+  lb_session_cur:
+    type: integer
+    description: 로드밸런서의 현재 동시 세션 수에 해당하는 속성입니다.
+    example: 0
+  lb_session_total:
+    type: integer
+    description: 로드밸런서의 누적 세션 수에 해당하는 속성입니다.
+    example: 0
+  lb_rate_max:
+    type: integer
+    description: 로드밸런서의 최대 초당 세션 수에 해당하는 속성입니다.
+    example: 0
+  lb_rate_cur:
+    type: integer
+    description: 로드밸런서의 현재 초당 세션 수에 해당하는 속성입니다.
+    example: 0
+  port_session_list:
+    type: array
+    description: 로드밸런서 포트별 세션 정보에 해당하는 속성으로 배열로 제공됩니다.
+    items:
+      type: object
+      properties:
+        port:
+          type: integer
+          description: 로드밸런서 포트 번호에 해당하는 속성입니다.
+          example: 22
+        port_session_max:
+          type: integer
+          description: 로드밸런서 포트의 최대 동시 세션 수에 해당하는 속성입니다.
+          example: 0    
+        port_session_cur:
+          type: integer
+          description: 로드밸런서 포트의 현재 동시 세션 수에 해당하는 속성입니다.
+          example: 0
+        port_session_total:
+          type: integer
+          description: 로드밸런서 포트의 누적 세션 수에 해당하는 속성입니다.
+          example: 0
+        port_rate_max:
+          type: integer
+          description: 로드밸런서 포트의 최대 초당 세션 수에 해당하는 속성입니다.
+          example: 0    
+        port_rate_cur:
+          type: integer
+          description: 로드밸런서 포트의 현재 초당 세션 수에 해당하는 속성입니다.
+          example: 0
+        server_session_list:
+          type: array
+          description: 포트에 연결된 서버별 세션 정보에 해당하는 속성으로 배열로 제공됩니다.
+          items:
+            type: object
+            properties:
+              ip:
+                type: string
+                format: ipv4
+                description: 포트에 연결된 서버의 IP 주소에 해당하는 속성입니다.
+                example: 10.222.222.227
+              svr_session_max:
+                type: integer
+                description: 포트에 연결된 서버의 최대 동시 세션 수에 해당하는 속성입니다.
+                example: 0    
+              svr_session_cur:
+                type: integer
+                description: 포트에 연결된 서버의 현재 동시 세션 수에 해당하는 속성입니다.
+                example: 0
+              svr_session_total:
+                type: integer
+                description: 포트에 연결된 서버의 누적 세션 수에 해당하는 속성입니다.
+                example: 0    
+              svr_rate_max:
+                type: integer
+                description: 포트에 연결된 서버의 최대 초당 세션 수에 해당하는 속성입니다.
+                example: 0
+              svr_rate_cur:
+                type: integer
+                description: 포트에 연결된 서버의 현재 초당 세션 수에 해당하는 속성입니다.
+                example: 0
+        

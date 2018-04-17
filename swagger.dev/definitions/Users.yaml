@@ -50,16 +50,6 @@ properties:
               type: string
               description: 공인 IP의 ID에 해당하는 속성입니다.
               example: pubIp_1
-      fws:
-        type: array
-        description: 이용자가 소유한 자원 중 방화벽 정책에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              description: 방화벽 정책의 ID에 해당하는 속성입니다
-              example: fr_1
       lbs:
         type: array
         description: 이용자가 소유한 자원 중 로드밸런서에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.

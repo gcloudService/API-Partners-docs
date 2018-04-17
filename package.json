@@ -6,11 +6,14 @@
   "scripts": {
     "build": "cp ./index.prod.html ./index.html",
     "build:dev": "cp ./index.dev.html ./index.html",
+    "server": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "sanghak,lee <leesanghak@gabia.com>",
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "express": "^4.16.3"
+  }
 }

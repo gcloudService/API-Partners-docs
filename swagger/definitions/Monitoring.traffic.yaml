@@ -1,0 +1,49 @@
+type: object
+properties:
+  svr_id:
+    type: string
+    description: g클라우드 서버의 ID에 해당하는 속성입니다.
+    example: vm_1
+    pattern: ^(vm_)+[1-9]{1}\d*$
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  range:
+    type: string
+    description: |
+      데이터 조회 범위에 해당하는 속성입니다.
+      - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 속성값입니다.
+      - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 속성값입니다.
+      - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 속성값입니다.
+      - 요청 시, start, end 값이 입력된 경우, 해당 속성은 조회되지 않습니다.
+    example: day
+    enum: [day, week, month]
+  start:
+    type: string
+    format: dateTime
+    description: 조회 시작 시점에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+  end:
+    type: string
+    format: dateTime
+    description: 조회 종료 시점에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+  data:
+    type: array
+    description: 서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+          format: dateTime
+          description: 조회 시점에 해당하는 속성입니다.
+        in_traffic:
+          type: integer
+          description: Inbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+        out_traffic:
+          type: integer
+          description: Outbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+        

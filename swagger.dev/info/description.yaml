@@ -13,7 +13,7 @@ API 사용을 위해서는 아래 링크를 통해 가비아 회원 가입(기�
 
 [가비아 회원 가입](https://www.gabia.com/member/member_register.php)
 
-[클라우드 파트너 신청](https://www.gabia.com/member/member_register.php)
+[클라우드 파트너 신청](https://partnercenter.gabia.com/cloudpartner)
 
 파트너 신청이 승인될 경우, 파트너는 고유의 Secret key를 부여 받습니다. 파트너는 Secret key를 통해 API 서버에 파트너 인증 요청을 할 수 있습니다.
 
@@ -102,6 +102,16 @@ API URL에 Path, Query를 추가하거나 HTTP Body에 Formdata를 추가하여 
   - [이미지 상세 정보](#tag/Images%2Fpaths%2F~1images~1%7Bimg_id%7D%2Fget)
   - [이미지 정보 변경](#tag/Images%2Fpaths%2F~1images~1%7Bimg_id%7D%2Fput)
   - [이미지 삭제](#tag/Images%2Fpaths%2F~1images~1%7Bimg_id%7D%2Fdelete)
+- **[모니터링](#tag/Monitoring)**
+  - [서버 시스템 사용량 조회](#tag/Monitoring%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1monitoring~1%7Btype%7D%2Fget)
+  - [서버 트래픽 사용량 조회](#tag/Monitoring%2Fpaths%2F~1servers~1%7Bsvr_id%7D~1monitoring~1traffic%2Fget)
+  - [로드밸런서 트래픽 사용량 조회](#tag/Monitoring%2Fpaths%2F~1lbs~1%7Blb_id%7D~1monitoring~1traffic%2Fget)
+  - [로드밸런서 세션 사용량 조회](#tag/Monitoring%2Fpaths%2F~1lbs~1%7Blb_id%7D~1monitoring~1session%2Fget)
+- **[청구서](#tag/Bills)**
+  - [정산금 조회](#tag/Bills%2Fpaths%2F~1bills~1%7Bdate%7D%2Fget)
+  - [실시간 요금 현황 조회](#tag/Bills%2Fpaths%2F~1bills~1now%2Fget)
+  - [이용자별 정산금 조회](#tag/Bills%2Fpaths%2F~1bills~1%7Bdate%7D~1users~1%7Buser_id%7D%2Fget)
+  - [이용자별 실시간 요금 현황 조회](#tag/Bills%2Fpaths%2F~1bills~1now~1users~1%7Buser_id%7D%2Fget)
 
 ## 요청 가이드
 파트너는 API 서버에 요청을 보낼 때, 각 API 기능별로 정해진 HTTP Request Method(GET/POST/PUT/DELETE)와 매개 변수(Path, Query, Formdata)를 사용할 수 있습니다.
@@ -194,7 +204,7 @@ HTTP 상태 코드가 400(Bad Request), 401(Unauthorized), 403(Forbidden), 404(N
     ]
   }
   ```
-- **Callback URL 방식**
+- **Callback URL**
   - 비동기 작업 완료 시, 파트너가 별도 등록한 Callback URL로 성공 여부를 전송합니다
   - Callback URL 방식은 작업 완료 후 최초 1회만 성공 여부를 전송하며, 정보의 수신 성공 여부는 확인하지 않습니다. 성공 여부 수신을 받지 못한 경우, HATEOAS 방식을 통해 재확인할 수 있습니다.
   - 서버 접속 비밀번호(OS 비밀번호)의 경우, Callback URL 방식으로만 확인할 수 있습니다.

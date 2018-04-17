@@ -26,6 +26,10 @@
   $ref: ./servers.svr_id.ips.ip_id.yaml
 /servers/{svr_id}/snapshots:
   $ref: ./servers.svr_id.snapshots.yaml
+/servers/{svr_id}/monitoring/{type}:
+  $ref: ./servers.svr_id.monitoring.system.yaml
+/servers/{svr_id}/monitoring/traffic:
+  $ref: ./servers.svr_id.monitoring.traffic.yaml
 /volumes:
   $ref: ./volumes.yaml
 /volumes/{vol_id}:
@@ -48,6 +52,10 @@
   $ref: ./lbs.lb_id.ports.yaml
 /lbs/{lb_id}/ports/{port}/servers:
   $ref: ./lbs.lb_id.ports.port.servers.yaml
+/lbs/{lb_id}/monitoring/traffic:
+  $ref: ./lbs.lb_id.monitoring.traffic.yaml
+/lbs/{lb_id}/monitoring/session:
+  $ref: ./lbs.lb_id.monitoring.session.yaml
 /snapshots:
   $ref: ./snapshots.yaml
 /snapshots/{snap_id}:
@@ -56,6 +64,14 @@
   $ref: ./images.yaml
 /images/{img_id}:
   $ref: ./images.img_id.yaml
+/bills/{date}:
+  $ref: ./bills.date.yaml
+/bills/now:
+  $ref: ./bills.now.yaml
+/bills/{date}/users/{user_id}:
+  $ref: ./bills.date.users.user_id.yaml
+/bills/now/users/{user_id}:
+  $ref: ./bills.now.users.user_id.yaml
 # /nas:
 #   $ref: ./nas.yaml
 # /nas/{nas_id}:

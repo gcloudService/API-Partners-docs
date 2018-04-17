@@ -2,7 +2,6 @@ get:
   summary: 토큰 확인
   description: |
     JWT의 상태 및 정보를 확인할 수 있습니다.
-    - URL Query 매개변수 중 secret(Secret key)의 입력은 선택적입니다. 입력할 경우, 파트너 ID를 비롯한 중요 정보를 추가로 확인할 수 있습니다.
 
     ### cURL
     ```
@@ -30,13 +29,33 @@ get:
       name: secret
       required: false
       type: string
-      description: 파트너 승인 시 발급받은 Secret key에 해당하는 매개변수 입니다.
+      description: |
+        파트너 승인 시 발급받은 Secret key에 해당하는 매개변수 입니다.
+        - Secret Key 입력 여부를 선택할 수 있으며, 입력할 경우 토큰을 발행한 파트너 ID(partner_id)와 토큰의 용도(role) 및 적용 범위(scope)를 추가로 확인할 수 있습니다.
   responses:
     200:
       description: 200 OK. 토큰 확인 성공
       schema:
         type: object
         properties:
+          partner_id:
+            type: string
+            description: 토큰을 발행한 파트너의 ID에 해당하는 속성입니다.
+            example: biz_1004
+          role:
+            type: string
+            description: |
+              토큰의 용도에 해당하는 속성입니다.
+              - api: 클라우드 파트너 API 요청 용도임을 나타내는 속성값입니다.
+              - web: 가비아 제공 파트너용 관리콘솔 용도임을 나타내는 속성값입니다.
+              - api, web: 모든 권한을 가진 Master 토큰임을 나타내는 속성값입니다.
+            example: api
+          scope:
+            type: string
+            description: |
+              토큰의 적용 범위를 나타내는 속성입니다.
+              - 허용된 이용자 ID 목록을 확인할 수 있습니다.
+            example: user777,user888
           iat:
             type: integer
             description: 토큰 발급 시점(Unix Time 기준)에 해당하는 속성입니다.

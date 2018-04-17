@@ -4,14 +4,14 @@ schemes:
 host: 10.222.222.227:3000
 basePath: /v1
 info:
-  $ref: ./swagger/info/index.yaml
+  $ref: ./swagger.dev/info/index.yaml
 produces:
   - application/json
 tags:
-  $ref: ./swagger/tags/index.yaml
+  $ref: ./swagger.dev/tags/index.yaml
 parameters:
-  $ref: ./swagger/parameters/index.yaml
+  $ref: ./swagger.dev/parameters/index.yaml
 paths:
-  $ref: ./swagger/paths/index.yaml
+  $ref: ./swagger.dev/paths/index.yaml
 definitions:
-  $ref: ./swagger/definitions/index.yaml
+  $ref: ./swagger.dev/definitions/index.yaml

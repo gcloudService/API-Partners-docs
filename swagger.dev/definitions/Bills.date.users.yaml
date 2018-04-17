@@ -1,0 +1,366 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+  year:
+    type: string
+    description: 조회 대상 연도에 해당하는 속성으로 속성값의 단위는 년입니다.
+    example: 2018
+  month:
+    type: string
+    description: 조회 대상 월에 해당하는 속성으로 속성값의 단위는 월입니다.
+    example: 02
+  total_charge:
+    type: integer
+    description: 당월 파트너의 서비스 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+    example: 126852
+  charge_summary:
+    type: object
+    description: 당월 파트너의 각 자원별 총 이용금액에 해당하는 속성으로 객체로 제공됩니다.
+    properties:
+      svr_total_charge:
+        type: integer
+        description: 당월 파트너의 g클라우드 서버 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 88000
+      vol_total_charge:
+        type: integer
+        description: 당월 파트너의 g클라우드 스토리지 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 8052
+      ip_total_charge:
+        type: integer
+        description: 당월 파트너의 공인 IP 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 5500
+      lb_total_charge:
+        type: integer
+        description: 당월 파트너의 로드밸런서 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 16500
+      snap_total_charge:
+        type: integer
+        description: 당월 파트너의 스냅샷 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 2200  
+      img_total_charge:
+        type: integer
+        description: 당월 파트너의 이미지 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 6600
+      traffic_total_charge:
+        type: integer
+        description: 당월 파트너의 트래픽 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 0  
+      license_total_charge:
+        type: integer
+        description: 당월 파트너의 라이선스 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 0
+  charge_detail:
+    type: object
+    description: |
+      이용자가 사용한 서비스의 상세 이용 내역에 대한 속성으로 객체로 제공됩니다.
+      - 해당 값은 query parameters의 detail 값이 Y인 경우만 조회할 수 있습니다.
+    properties:
+      servers:
+        type: array
+        description: 이용자의 g클라우드 서버 상세 이용 내역에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            svr_id:
+              type: string
+              description: g클라우드 서버의 ID에 해당하는 속성입니다.
+              example: vm_1
+            name:
+              type: string
+              description: g클라우드 서버의 자원명에 해당하는 속성입니다.
+              example: test server
+            type:
+              type: string
+              description: g클라우드 서버의 종류를 나타내는 속성입니다.
+              example: basic
+              enum: [basic, premium, ssd]
+            os:
+              type: string
+              description: g클라우드 서버의 운영체제를 확인할 수 있는 속성입니다.
+              example: Linux
+              enum: [Linux, Windows]
+            cpu:
+              type: integer
+              description: g클라우드 서버의 CPU 사양을 확인하는 속성으로 속성값의 단위는 vCore입니다.
+              example: 1
+            memory:
+              type: integer
+              description: g클라우드 서버의 Memory 사양을 확인하는 속성으로 속성값의 단위는 GB입니다.
+              example: 1
+            root_storage:
+              type: integer
+              description: g클라우드 서버에 장착된 Root 스토리지를 나타내는 속성으로 속성값의 단위는 GB입니다.
+              example: 50
+            start:
+              type: dateTime
+              description: g클라우드 서버의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: g클라우드 서버의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: g클라우드 서버의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 33000
+      volumes:
+        type: array
+        description: 이용자의 g클라우드 스토리지(Data 영역) 상세 이용 내역에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            vol_id:
+              type: string
+              description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
+              example: vol_1
+            name:
+              type: string
+              description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
+              example: test volume
+            size:
+              type: integer
+              description: g클라우드 스토리지의 용량을 나타내는 속성으로 속성값의 단위는 GB입니다.
+              example: 50
+            start:
+              type: dateTime
+              description: g클라우드 스토리지의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: g클라우드 스토리지의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: g클라우드 스토리지의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 33000
+      ips:
+        type: array
+        description: 이용자의 공인 IP 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            ip_id:
+              type: string
+              description: 공인 IP의 ID에 해당하는 속성입니다.
+              example: pubIp_1
+            ip_addr:
+              type: string
+              format: ipv4
+              description: 공인 IP의 주소에 해당하는 속성입니다.
+              example: 10.222.222.153
+            start:
+              type: dateTime
+              description: 공인 IP의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: 공인 IP의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: 공인 IP의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 0
+      loadbalancers:
+        type: array
+        description: 이용자의 로드밸런서 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            lb_id:
+              type: string
+              description: 로드밸런서의 ID에 해당하는 속성입니다.
+              example: lbg_1
+            name:
+              type: string
+              description: 로드밸런서의 자원명에 해당하는 매개변수입니다.
+              example: test lb
+            start:
+              type: dateTime
+              description: 로드밸런서의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: 로드밸런서의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: 로드밸런서의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 16500
+      snapshots:
+        type: array
+        description: 이용자의 스냅샷 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            snap_id:
+              type: string
+              description: 스냅샷의 ID에 해당하는 속성입니다.
+              example: snap_1
+            name:
+              type: string
+              description: 스냅샷의 자원명에 해당하는 매개변수입니다.
+              example: test snap
+            svr_id:
+              type: string
+              description: 스냅샷의 대상이 된 서버의 ID에 해당하는 속성입니다.
+              example: vm_1
+            svr_ip:
+              type: string
+              format: ipv4
+              description: 스냅샷의 대상이 된 서버의 IP에 해당하는 속성입니다.
+              example: 10.222.222.145
+            date:
+              type: dateTime
+              description: 스냅샷의 생성일에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: 스냅샷의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 2200
+      images:
+        type: array
+        description: 이용자의 이미지 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            img_id:
+              type: string
+              description: 이미지의 ID에 해당하는 속성입니다.
+              example: img_1
+            name:
+              type: string
+              description: 이미지의 자원명에 해당하는 매개변수입니다.
+              example: test snap
+            img_os:
+              type: string
+              description: 이미지의 운영체제 종류를 나타내는 속성입니다.
+              example: Linux
+              enum: [Linux, Windows]
+            img_os_type:
+              type: string
+              description: 이미지의 상세한 운영체제 종류를 나타내는 속성입니다.
+              example: cent
+            date:
+              type: dateTime
+              description: 이미지의 생성일에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: 이미지의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 1100
+      images_storage:
+        type: array
+        description: 이용자의 이미지 저장을 위한 스토리지 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            img_id:
+              type: string
+              description: 이미지의 ID에 해당하는 속성입니다.
+              example: img_1
+            name:
+              type: string
+              description: 이미지의 자원명에 해당하는 매개변수입니다.
+              example: test snap
+            img_os:
+              type: string
+              description: 이미지의 운영체제 종류를 나타내는 속성입니다.
+              example: Linux
+              enum: [Linux, Windows]
+            img_os_type:
+              type: string
+              description: 이미지의 상세한 운영체제 종류를 나타내는 속성입니다.
+              example: cent
+            start:
+              type: dateTime
+              description: 이미지 저장을 위한 스토리지의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: 이미지 저장을 위한 스토리지의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: 이미지 저장을 위한 스토리지 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 5500
+      traffic:
+        type: array
+        description: 이용자의 트래픽 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              description: 트래픽이 발생된 자원의 종류를 나타내는 속성으로 속성값은 ‘svr’와 ‘lb’중 하나를 갖습니다.
+              example: svr
+              enum: [svr, lb]
+            cloud_id:
+              type: string
+              description: g클라우드 서버 또는 로드밸런서의 ID에 해당하는 속성입니다.
+              example: vm_1
+            start:
+              type: dateTime
+              description: g클라우드 서버 또는 로드밸런서의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: g클라우드 서버 또는 로드밸런서의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            in_traffic:
+              type: integer
+              description: Inbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+              example: 0
+            out_traffic:
+              type: integer
+              description: Outbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+              example: 0
+            charge:
+              type: integer
+              description: 트래픽 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 0
+      license:
+        type: array
+        description: 이용자가 사용한 라이선스(OS/DB)의 상세 내역에 해당하는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            img_id:
+              type: string
+              description: 라이선스가 적용된 이미지의 ID에 해당하는 속성입니다.
+              example: img_1
+            img_name:
+              type: string
+              description: 이미지의 자원명에 해당하는 속성으로 속성값을 통해 어떤 라이센스가 적용됐는지 확인할 수 있습니다.
+              example: centos-6.x-i686_TEST
+            svr_id:
+              type: string
+              description: 라이선스가 적용된 서버의 ID에 해당하는 속성입니다. 
+              example: vm_1
+            svr_name:
+              type: string
+              description: 라이선스가 적용된 서버의 ID의 자원명에 해당하는 속성입니다..
+              example: test server
+            svr_ip:
+              type: string
+              format: ipv4
+              description: 라이선스가 적용된 서버의 IP에 해당하는 속성입니다.
+              example: 10.222.222.145
+            start:
+              type: dateTime
+              description: 라이선스가 적용된 서버의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: 라이선스가 적용된 서버의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: 라이선스가 적용된 서버의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 5500

@@ -1,0 +1,54 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
+  year:
+    type: string
+    description: 조회 대상 연도에 해당하는 속성으로 속성값의 단위는 년입니다.
+    example: 2018
+  month:
+    type: string
+    description: 조회 대상 월에 해당하는 속성으로 속성값의 단위는 월입니다.
+    example: 02
+  total_charge:
+    type: integer
+    description: 당월 파트너의 서비스 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+    example: 79557
+  charge_summary:
+    type: object
+    description: 당월 파트너의 각 자원별 총 이용금액에 해당하는 속성으로 객체로 제공됩니다.
+    properties:
+      svr_total_charge:
+        type: integer
+        description: 당월 파트너의 g클라우드 서버 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 46238
+      vol_total_charge:
+        type: integer
+        description: 당월 파트너의 g클라우드 스토리지 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 13940
+      ip_total_charge:
+        type: integer
+        description: 당월 파트너의 공인 IP 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 11140
+      lb_total_charge:
+        type: integer
+        description: 당월 파트너의 로드밸런서 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 5802
+      snap_total_charge:
+        type: integer
+        description: 당월 파트너의 스냅샷 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 0  
+      img_total_charge:
+        type: integer
+        description: 당월 파트너의 이미지 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 2437
+      traffic_total_charge:
+        type: integer
+        description: 당월 파트너의 트래픽 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 0  
+      license_total_charge:
+        type: integer
+        description: 당월 파트너의 라이선스 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        example: 0

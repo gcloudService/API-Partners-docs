@@ -1,0 +1,89 @@
+get:
+  summary: 로드밸런서 세션 사용량 조회
+  description: |
+    로드밸런서의 세션 사용량을 조회할 수 있습니다.
+    - 로드밸런서에 연결된 서버가 없을 경우, 세션 사용량을 조회할 수 없습니다.
+    - 로드밸런서의 설정이 바뀌면, 조회 값이 초기화됩니다.
+
+
+    ### cURL
+    ```
+    curl -X GET \
+      http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/session \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/x-www-form-urlencoded' \
+    ```
+  tags:
+  - LoadBalancers
+  - Monitoring
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_PORT => "3000",
+          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/session",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/x-www-form-urlencoded",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'GET',
+          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/session',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 로드밸런서 세션 사용량 조회 성공
+      schema:
+        $ref: ../definitions/Monitoring.lb.session.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 서버가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

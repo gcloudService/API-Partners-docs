@@ -225,6 +225,16 @@ service_zone:
   enum: [zone_1, zone_2]
   pattern: ^(zone_)+[1-9]{1}\d*$
   example: zone_1
+bill_date:
+  name: date
+  description: |
+    조회 대상 연도와 월에 해당하는 매개변수입니다. 
+    - 입력 값은 YYYY-MM 형태(year-month)로만 입력할 수 있습니다.
+    - 사용 이력이 있는 기간만 조회할 수 있습니다.
+  in: path
+  required: true
+  type: string
+  example: 2018-01
 collectionQuery:
   name: q
   in: query
