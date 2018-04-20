@@ -1,4 +1,4 @@
-version: 0.8.2
+version: 1.0.0
 title: 클라우드 파트너 API
 contact:
   name: g클라우드
@@ -278,7 +278,7 @@ description: |
 
   아래 링크를 통해 API Collection을 다운받을 수 있습니다.
 
-  [API Collection 다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/0.8.2/gCloud.partner.API.0.8.2.postman_collection.json)
+  [API Collection 다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/1.0.0/gCloud.partner.API.1.0.0.postman_collection.json)
 
   [API Collection 버전 관리(Github)](https://github.com/gcloudService/API-Partners-docs/releases)
 
