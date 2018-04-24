@@ -3,6 +3,17 @@
 https://cpapi.gabia.com/docs
 
 ## Infomation
+
+### nightwatch
+http://nightwatchjs.org/
+
+https://github.com/dwyl/learn-nightwatch
+ 
+### Dependencies
+- https://www.npmjs.com/package/nightwatch
+- https://www.npmjs.com/package/chromedriver
+- https://www.npmjs.com/package/selenium-server
+
 ### Apache Reverse Proxy
 
 #### Edit Apache Config

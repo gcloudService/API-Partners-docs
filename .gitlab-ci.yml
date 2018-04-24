@@ -1,0 +1,36 @@
+image: node:latest
+
+stages:
+  - build
+  - test
+  # - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: build
+  script:
+    - npm install
+    
+swagger:
+  stage: build
+  script:
+    - npm run swagger-merge
+    
+
+nightwatch:
+  stage: test
+  script: 
+    - npm run cpapi.gabia.com/docs
+
+
+
+# publish:  
+#   stage: deploy
+#   only:
+#     - tags
+#     - triggers
+#   script:
+#     - npm publish

@@ -1,19 +1,34 @@
 {
   "name": "gcloud-partner-api-docs",
-  "version": "0.8.1",
+  "version": "1.1.0",
   "description": "",
   "main": "index.html",
   "scripts": {
-    "build": "cp ./index.prod.html ./index.html",
-    "build:dev": "cp ./index.dev.html ./index.html",
+    "e2e": "node_modules/.bin/nightwatch --config nightwatch/nightwatch.conf.BASIC.js",
+    "cpapi.gabia.com/docs": "node_modules/.bin/nightwatch --config nightwatch/nightwatch.conf.js",
+    "swagger-merge": "node_modules/.bin/swagger-merger -i yaml/api.prod.yaml -o api.yaml",
+    "build": "npm run swagger-merge && cp html/index.prod.html index.html",
+    "build:dev": "cp html/index.dev.html index.html",
     "server": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run cpapi.gabia.com/docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.gabia.com/cloud/service/gcloud-partner-api-docs.git"
+  },
+  "publishConfig": {
+    "registry": "http://182.162.104.10:4873"
   },
   "keywords": [],
   "author": "sanghak,lee <leesanghak@gabia.com>",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "express": "^4.16.3"
+    "chromedriver": "^2.38.0",
+    "env2": "^2.2.0",
+    "express": "^4.16.3",
+    "nightwatch": "^0.9.20",
+    "selenium-server": "^3.11.0",
+    "swagger-merger": "^1.3.1"
   }
 }
