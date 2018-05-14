@@ -521,9 +521,9 @@ parameters:
       - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
     in: formData
     required: false
-    minLength: 3
+    minLength: 1
     maxLength: 16
-    pattern: '^[\w\-]$'
+    pattern: '^[\w\-]{1,16}$'
     example: event-server
   svr_desc:
     name: desc
@@ -558,7 +558,7 @@ parameters:
     required: false
     minLength: 3
     maxLength: 16
-    pattern: '^[\w\-]$'
+    pattern: '^[\w\-]{1,16}$'
     example: backup-volume
   vol_desc:
     name: desc
@@ -601,7 +601,7 @@ parameters:
     required: false
     minLength: 3
     maxLength: 16
-    pattern: '^[\w\-]$'
+    pattern: '^[\w\-]{1,16}$'
     example: 80-lb
   lb_desc:
     name: desc
@@ -636,7 +636,7 @@ parameters:
     required: false
     minLength: 3
     maxLength: 16
-    pattern: '^[\w\-]$'
+    pattern: '^[\w\-]{1,16}$'
     example: backup-snap
   snap_desc:
     name: desc
@@ -671,7 +671,7 @@ parameters:
     required: false
     minLength: 3
     maxLength: 16
-    pattern: '^[\w\-]$'
+    pattern: '^[\w\-]{1,16}$'
     example: backup-image
   img_desc:
     name: desc
@@ -705,7 +705,7 @@ parameters:
     required: false
     minLength: 3
     maxLength: 16
-    pattern: '^[\w\-]$'
+    pattern: '^[\w\-]{1,16}$'
     example: backup-nas
   nas_desc:
     name: desc
@@ -2098,7 +2098,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -2116,7 +2116,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -2556,7 +2556,7 @@ paths:
                         maximum: 65535
                 images:
                   type: array
-                  description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                  description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                   items:
                     type: object
                     properties:
@@ -2574,7 +2574,7 @@ paths:
                         pattern: '^[\w\-]{1,16}$'
                 snaps:
                   type: array
-                  description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                  description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                   items:
                     type: object
                     properties:
@@ -2920,7 +2920,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -2938,7 +2938,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -3065,9 +3065,9 @@ paths:
             - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
           in: formData
           required: false
-          minLength: 3
+          minLength: 1
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w\-]{1,16}$'
           example: event-server
         - name: desc
           type: string
@@ -3371,7 +3371,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -3389,7 +3389,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -3648,7 +3648,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -3666,7 +3666,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -4072,7 +4072,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -4090,7 +4090,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -4528,7 +4528,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -4546,7 +4546,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -4805,7 +4805,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -4823,7 +4823,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -5271,7 +5271,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -5289,7 +5289,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -5708,7 +5708,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -5726,7 +5726,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -6176,7 +6176,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -6194,7 +6194,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -6622,7 +6622,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -6640,7 +6640,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -7065,7 +7065,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -7083,7 +7083,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -7642,7 +7642,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -7660,7 +7660,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -8083,7 +8083,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -8101,7 +8101,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -8531,7 +8531,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -8549,7 +8549,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -8973,7 +8973,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -8991,7 +8991,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -9136,7 +9136,7 @@ paths:
           required: false
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w\-]{1,16}$'
           example: backup-snap
         - name: desc
           type: string
@@ -10606,7 +10606,7 @@ paths:
                       maximum: 65535
               images:
                 type: array
-                description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -10624,7 +10624,7 @@ paths:
                       pattern: '^[\w\-]{1,16}$'
               snaps:
                 type: array
-                description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
                 items:
                   type: object
                   properties:
@@ -10753,7 +10753,7 @@ paths:
           required: false
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w\-]{1,16}$'
           example: backup-volume
         - name: desc
           type: string
@@ -13262,7 +13262,7 @@ paths:
           required: false
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w\-]{1,16}$'
           example: 80-lb
         - name: desc
           type: string
@@ -18390,7 +18390,7 @@ paths:
           required: false
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w\-]{1,16}$'
           example: backup-snap
         - name: desc
           type: string
@@ -18939,7 +18939,7 @@ paths:
           required: false
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w\-]{1,16}$'
           example: backup-image
         - name: desc
           type: string
@@ -19746,7 +19746,7 @@ paths:
           required: false
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w\-]{1,16}$'
           example: backup-image
         - name: desc
           type: string
@@ -22115,7 +22115,7 @@ definitions:
               maximum: 65535
       images:
         type: array
-        description: g클라우드 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+        description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
         items:
           type: object
           properties:
@@ -22133,7 +22133,7 @@ definitions:
               pattern: '^[\w\-]{1,16}$'
       snaps:
         type: array
-        description: g클라우드 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+        description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
         items:
           type: object
           properties:

@@ -30,9 +30,9 @@ svr_name:
     - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
   in: formData
   required: false
-  minLength: 3
+  minLength: 1
   maxLength: 16
-  pattern: ^[\w\-]$
+  pattern: ^[\w\-]{1,16}$
   example: event-server
 svr_desc:
   name: desc
@@ -65,7 +65,7 @@ vol_name:
   required: false
   minLength: 3
   maxLength: 16
-  pattern: ^[\w\-]$
+  pattern: ^[\w\-]{1,16}$
   example: backup-volume
 vol_desc:
   name: desc
@@ -106,7 +106,7 @@ lb_name:
   required: false
   minLength: 3
   maxLength: 16
-  pattern: ^[\w\-]$
+  pattern: ^[\w\-]{1,16}$
   example: 80-lb
 lb_desc:
   name: desc
@@ -139,7 +139,7 @@ snap_name:
   required: false
   minLength: 3
   maxLength: 16
-  pattern: ^[\w\-]$
+  pattern: ^[\w\-]{1,16}$
   example: backup-snap
 snap_desc:
   name: desc
@@ -172,7 +172,7 @@ img_name:
   required: false
   minLength: 3
   maxLength: 16
-  pattern: ^[\w\-]$
+  pattern: ^[\w\-]{1,16}$
   example: backup-image
 img_desc:
   name: desc
@@ -204,7 +204,7 @@ nas_name:
   required: false
   minLength: 3
   maxLength: 16
-  pattern: ^[\w\-]$
+  pattern: ^[\w\-]{1,16}$
   example: backup-nas
 nas_desc:
   name: desc
