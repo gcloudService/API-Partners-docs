@@ -725,7 +725,6 @@ parameters:
     type: string
     enum:
       - zone_1
-      - zone_2
     pattern: '^(zone_)+[1-9]{1}\d*$'
     example: zone_1
   bill_date:
@@ -1994,7 +1993,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -2452,7 +2450,6 @@ paths:
                   description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                   enum:
                     - zone_1
-                    - zone_2
                   pattern: '^(zone_)+[1-9]{1}\d*$'
                   example: zone_1
                 volumes:
@@ -2816,7 +2813,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -3267,7 +3263,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -3544,7 +3539,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -3968,7 +3962,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -4424,7 +4417,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -4701,7 +4693,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -5167,7 +5158,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -5604,7 +5594,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -6072,7 +6061,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -6518,7 +6506,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -6961,7 +6948,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -7538,7 +7524,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -7979,7 +7964,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -8427,7 +8411,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -8869,7 +8852,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -10502,7 +10484,6 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -11297,7 +11278,6 @@ paths:
           type: string
           enum:
             - zone_1
-            - zone_2
           pattern: '^(zone_)+[1-9]{1}\d*$'
           example: zone_1
       x-code-samples:
@@ -11396,7 +11376,6 @@ paths:
                 description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               attached:
@@ -11636,7 +11615,6 @@ paths:
                   description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                   enum:
                     - zone_1
-                    - zone_2
                   pattern: '^(zone_)+[1-9]{1}\d*$'
                   example: zone_1
                 attached:
@@ -11794,7 +11772,6 @@ paths:
                 description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               attached:
@@ -12207,7 +12184,6 @@ paths:
           type: string
           enum:
             - zone_1
-            - zone_2
           pattern: '^(zone_)+[1-9]{1}\d*$'
           example: zone_1
         - in: formData
@@ -12438,7 +12414,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -12509,7 +12484,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -12803,7 +12777,6 @@ paths:
                   description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                   enum:
                     - zone_1
-                    - zone_2
                   pattern: '^(zone_)+[1-9]{1}\d*$'
                   example: zone_1
                 lb_port:
@@ -12874,7 +12847,6 @@ paths:
                       description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                       enum:
                         - zone_1
-                        - zone_2
                       pattern: '^(zone_)+[1-9]{1}\d*$'
                       example: zone_1
         '401':
@@ -13081,7 +13053,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -13152,7 +13123,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -13445,7 +13415,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -13516,7 +13485,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '201':
@@ -13635,7 +13603,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -13706,7 +13673,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -14151,7 +14117,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -14222,7 +14187,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -14570,7 +14534,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -14641,7 +14604,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '201':
@@ -14760,7 +14722,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -14831,7 +14792,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -15119,7 +15079,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -15190,7 +15149,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -15509,7 +15467,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -15580,7 +15537,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -15898,7 +15854,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -15969,7 +15924,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -16252,7 +16206,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -16323,7 +16276,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -16639,7 +16591,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -16710,7 +16661,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -16992,7 +16942,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -17063,7 +17012,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -17328,7 +17276,6 @@ paths:
                 description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
-                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               lb_port:
@@ -17399,7 +17346,6 @@ paths:
                     description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
                     enum:
                       - zone_1
-                      - zone_2
                     pattern: '^(zone_)+[1-9]{1}\d*$'
                     example: zone_1
         '400':
@@ -22011,7 +21957,6 @@ definitions:
         description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
         enum:
           - zone_1
-          - zone_2
         pattern: '^(zone_)+[1-9]{1}\d*$'
         example: zone_1
       volumes:
@@ -22300,7 +22245,6 @@ definitions:
         description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
         enum:
           - zone_1
-          - zone_2
         pattern: '^(zone_)+[1-9]{1}\d*$'
         example: zone_1
       attached:
@@ -22437,7 +22381,6 @@ definitions:
         description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
         enum:
           - zone_1
-          - zone_2
         pattern: '^(zone_)+[1-9]{1}\d*$'
         example: zone_1
       lb_port:
@@ -22508,7 +22451,6 @@ definitions:
             description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
             enum:
               - zone_1
-              - zone_2
             pattern: '^(zone_)+[1-9]{1}\d*$'
             example: zone_1
   Snapshots:

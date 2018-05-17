@@ -29,7 +29,7 @@ post:
       in: formData
       required: true
       type: string
-      enum: [zone_1, zone_2]
+      enum: [zone_1]
       pattern: ^(zone_)+[1-9]{1}\d*$
       example: zone_1
   x-code-samples:

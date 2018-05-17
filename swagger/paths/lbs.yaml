@@ -137,7 +137,7 @@ post:
         - 로드밸런서에는 동일한 존에 생성된 공인 IP만 할당할 수 있습니다.
       required: true
       type: string
-      enum: [zone_1, zone_2]
+      enum: [zone_1]
       pattern: ^(zone_)+[1-9]{1}\d*$
       example: zone_1
     - in: formData

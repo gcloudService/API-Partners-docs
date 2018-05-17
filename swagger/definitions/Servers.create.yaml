@@ -77,7 +77,7 @@ properties:
   service_zone:
     type: string
     description: 서버 서비스존
-    enum: [zone_1, zone_2]
+    enum: [zone_1]
     pattern: ^(zone_)+[1-9]{1}\d*$
     example: zone_1
   password:
