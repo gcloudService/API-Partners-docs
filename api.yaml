@@ -448,6 +448,9 @@ tags:
   - name: Servers
     description: |
       g클라우드 서버는 가상 서버로 스토리지 종류와 사양에 따라 베이직, 프리미엄, SSD로 나뉩니다.
+  - name: Firewalls
+    description: |
+      TODO
   - name: Volumes
     description: |
       g클라우드 스토리지는 볼륨 스토리지로 g클라우드 서버에 장착하여 사용할 수 있습니다.
@@ -539,6 +542,14 @@ parameters:
     maxLength: 100
     pattern: '^((?![\/?;:|*<>@\\\''\"]).){0,100}$'
     example: 이벤트서버
+  fg_id:
+    name: fg_id
+    description: g클라우드 방화벽의 ID에 해당하는 매개변수입니다.
+    in: path
+    required: true
+    type: string
+    pattern: '^(fg_)+[1-9]{1}\d*$'
+    example: fg_1
   vol_id:
     name: vol_id
     description: g클라우드 스토리지의 ID에 해당하는 매개변수입니다.
@@ -1821,7 +1832,7 @@ paths:
               CURLOPT_HTTPHEADER => array(
                 "authorization: Bearer {YOUR-JWT-TOKEN}",
                 "cache-control: no-cache",
-                "content-type: application/x-www-form-urlencoded",
+                "content-type: application/json",
               ),
             ));
 
@@ -1838,7 +1849,7 @@ paths:
               url: 'https://cpapi.gabia.com/v1/servers',
               headers: {
                 'cache-control': 'no-cache',
-                'content-type': 'application/x-www-form-urlencoded',
+                'content-type': 'application/json',
                 'authorization': 'Bearer {YOUR-JWT-TOKEN}'
               },
               form: {
@@ -7163,6 +7174,7 @@ paths:
                 example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
   '/servers/{svr_id}/fws':
     post:
+      deprecated: true
       summary: 방화벽 정책 추가
       description: >
         g클라우드 서버에 방화벽 정책을 추가할 수 있습니다.
@@ -7738,6 +7750,7 @@ paths:
                 description: 에러 설명
                 example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
     delete:
+      deprecated: true
       summary: 방화벽 정책 삭제
       description: >
         g클라우드 서버에서 방화벽을 정책을 삭제할 수 있습니다.
@@ -8177,6 +8190,55 @@ paths:
                 type: string
                 description: 에러 설명
                 example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
+  '/servers/{svr_id}/firewalls/{fg_id}':
+    post:
+      summary: 방화벽 설정
+      operationId: attachFirewall
+      description: ''
+      tags:
+        - Servers
+        - Firewalls
+      parameters:
+        - name: svr_id
+          description: g클라우드 서버의 ID에 해당하는 매개변수입니다.
+          in: path
+          required: true
+          type: string
+          pattern: '^(vm_)+[1-9]{1}\d*$'
+          example: vm_1
+        - name: fg_id
+          description: g클라우드 방화벽의 ID에 해당하는 매개변수입니다.
+          in: path
+          required: true
+          type: string
+          pattern: '^(fg_)+[1-9]{1}\d*$'
+          example: fg_1
+      produces:
+        - application/json
+    delete:
+      summary: 방화벽 해제
+      operationId: detachFirewall
+      description: ''
+      tags:
+        - Servers
+        - Firewalls
+      parameters:
+        - name: svr_id
+          description: g클라우드 서버의 ID에 해당하는 매개변수입니다.
+          in: path
+          required: true
+          type: string
+          pattern: '^(vm_)+[1-9]{1}\d*$'
+          example: vm_1
+        - name: fg_id
+          description: g클라우드 방화벽의 ID에 해당하는 매개변수입니다.
+          in: path
+          required: true
+          type: string
+          pattern: '^(fg_)+[1-9]{1}\d*$'
+          example: fg_1
+      produces:
+        - application/json
   '/servers/{svr_id}/ips/{ip_id}':
     post:
       summary: 공인 IP 할당
@@ -9780,6 +9842,169 @@ paths:
                 type: string
                 description: 에러 설명
                 example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
+  /firewalls:
+    post:
+      summary: 방화벽 생성
+      operationId: createFirewall
+      description: ''
+      tags:
+        - Firewalls
+      parameters:
+        - in: body
+          name: firewall
+          schema:
+            type: object
+            required:
+              - user_id
+            properties:
+              user_id:
+                type: string
+                description: 이용자의 ID에 해당하는 매개변수입니다.
+                minLength: 3
+                maxLength: 16
+                pattern: '^[\w\-]{3,16}$'
+                example: company_777
+              name:
+                description: |
+                  g클라우드 방화벽의 자원명에 해당하는 매개변수입니다.
+                  - 이용자의 다른 g클라우드 방화벽의 자원명과 중복될 수 없습니다.
+                  - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+                type: string
+                minLength: 1
+                maxLength: 16
+                pattern: '^[\w\-]{1,16}$'
+                example: firewall-test
+              desc:
+                description: >
+                  g클라우드 방화벽에 대한 설명을 입력하는 매개변수입니다.
+
+                  - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상
+                  100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+                type: string
+                minLength: 0
+                maxLength: 100
+                pattern: '^((?![\/?;:|*<>@\\\''\"]).){0,100}$'
+                example: basic-f
+              rule:
+                description: ''
+                type: array
+                items:
+                  type: object
+                  properties:
+                    protocol:
+                      description: ''
+                      type: string
+                      enum:
+                        - TCP
+                        - UDP
+                        - ICMP
+                        - ALL
+                    chain:
+                      description: ''
+                      type: string
+                      enum:
+                        - IN
+                        - OUT
+                    start_port:
+                      description: ''
+                      type: integer
+                      minimum: 0
+                      maximum: 65535
+                    end_port:
+                      description: ''
+                      type: integer
+                      minimum: 0
+                      maximum: 65535
+                    ip_group:
+                      description: ''
+                      type: string
+                    service:
+                      description: ''
+                      type: string
+                    desc:
+                      description: ''
+                      type: string
+              foreign:
+                description: ''
+                type: object
+                properties:
+                  country_code:
+                    description: |
+                      **ALL**
+                      - 특수한 country_code입니다.
+                      - 전체 국가를 허용할 때 사용합니다.
+                      - 전체 국가를 허용할 때 ALL만 보냅니다.
+                        - ["ALL"] : 옳은 방법
+                        - ["ALL", "FR"] : 틀린 방법
+                    type: array
+                    enum:
+                      - FR
+                      - CN
+                    example:
+                      - FR
+                      - CN
+                  desc:
+                    description: ''
+                    type: string
+      produces:
+        - application/json
+      x-code-samples:
+        - lang: Node.js
+          source: |
+            var request = require("request");
+
+            var options = {
+              method: 'POST',
+              url: 'https://cpapi.gabia.com/v1/servers',
+              headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+              },
+              form: {
+                'user_id': 'company_777',
+                'name': 'firewall-test',
+                'desc': 'basic-f',
+                'rule': [
+                  {
+                    'protocol': 'TCP',
+                    'chain': 'IN',
+                    'start_port': 22,
+                    'end_port': 22,
+                    'ip_group': '0.0.0.0/0',
+                    'service': 'SSH',
+                    'desc': 'ssh'
+                  }
+                ],
+                'foreign': {
+                  'country_code': ['FR'],
+                  'desc': 'test'
+                }
+              }
+            };
+
+            request(options, function(error, response, body) {
+              if (error) throw new Error(error);
+
+              console.log(body);
+            });
+  '/firewalls/{fg_id}':
+    delete:
+      summary: 방화벽 삭제
+      operationId: deleteFirewall
+      description: ''
+      tags:
+        - Firewalls
+      parameters:
+        - name: fg_id
+          description: g클라우드 방화벽의 ID에 해당하는 매개변수입니다.
+          in: path
+          required: true
+          type: string
+          pattern: '^(fg_)+[1-9]{1}\d*$'
+          example: fg_1
+      produces:
+        - application/json
   /volumes:
     post:
       summary: 볼륨 스토리지 생성

@@ -22,6 +22,8 @@
   $ref: ./servers.svr_id.volumes.vol_id.yaml
 /servers/{svr_id}/fws:
   $ref: ./servers.svr_id.fws.yaml
+/servers/{svr_id}/firewalls/{fg_id}:
+  $ref: ./servers.svr_id.firewalls.fg_id.yaml
 /servers/{svr_id}/ips/{ip_id}:
   $ref: ./servers.svr_id.ips.ip_id.yaml
 /servers/{svr_id}/snapshots:
@@ -30,6 +32,11 @@
   $ref: ./servers.svr_id.monitoring.system.yaml
 /servers/{svr_id}/monitoring/traffic:
   $ref: ./servers.svr_id.monitoring.traffic.yaml
+
+/firewalls:
+  $ref: ./firewalls.yaml
+/firewalls/{fg_id}:
+  $ref: ./firewalls.fg_id.yaml
 /volumes:
   $ref: ./volumes.yaml
 /volumes/{vol_id}:

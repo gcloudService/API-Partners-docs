@@ -46,6 +46,14 @@ svr_desc:
   maxLength: 100
   pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
   example: 이벤트서버
+fg_id:
+  name: fg_id
+  description: g클라우드 방화벽의 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(fg_)+[1-9]{1}\d*$
+  example: fg_1
 vol_id:
   name: vol_id
   description: g클라우드 스토리지의 ID에 해당하는 매개변수입니다.

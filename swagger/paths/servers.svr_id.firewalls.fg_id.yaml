@@ -1,0 +1,25 @@
+post:
+  summary: 방화벽 설정
+  operationId: attachFirewall
+  description: |
+  tags:
+    - Servers
+    - Firewalls
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - $ref: ../parameters/index.yaml#/fg_id
+  produces:
+    - application/json
+
+delete:
+  summary: 방화벽 해제
+  operationId: detachFirewall
+  description: |
+  tags:
+    - Servers
+    - Firewalls
+  parameters:
+    - $ref: ../parameters/index.yaml#/svr_id
+    - $ref: ../parameters/index.yaml#/fg_id
+  produces:
+    - application/json

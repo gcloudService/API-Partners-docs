@@ -173,7 +173,7 @@ post:
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
-            "content-type: application/x-www-form-urlencoded",
+            "content-type: application/json",
           ),
         ));
 
@@ -190,7 +190,7 @@ post:
           url: 'https://cpapi.gabia.com/v1/servers',
           headers: {
             'cache-control': 'no-cache',
-            'content-type': 'application/x-www-form-urlencoded',
+            'content-type': 'application/json',
             'authorization': 'Bearer {YOUR-JWT-TOKEN}'
           },
           form: {
