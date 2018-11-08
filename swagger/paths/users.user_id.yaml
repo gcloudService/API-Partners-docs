@@ -1,5 +1,6 @@
 delete:
   summary: 이용자 삭제
+  operationId: deleteUser
   description: |
     이용자 계정을 삭제할 수 있습니다.
     - 이용자가 소유한 모든 자원은 함께 삭제됩니다.

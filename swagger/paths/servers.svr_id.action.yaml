@@ -1,5 +1,6 @@
 put:
   summary: 서버 상태 변경
+  operationId: updateServerAction
   description: |
     g클라우드 서버의 상태를 변경할 수 있습니다.
     | Status | Status Description                  |

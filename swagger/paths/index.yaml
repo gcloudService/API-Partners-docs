@@ -79,15 +79,15 @@
   $ref: ./bills.date.users.user_id.yaml
 /bills/now/users/{user_id}:
   $ref: ./bills.now.users.user_id.yaml
-# /nas:
-#   $ref: ./nas.yaml
-# /nas/{nas_id}:
-#   $ref: ./nas.nas_id.yaml
-# /nas/{nas_id}/size:
-#   $ref: ./nas.nas_id.size.yaml
-# /nas/{nas_id}/snapshots:
-#   $ref: ./nas.nas_id.snapshots.yaml
-# /nas/{nas_id}/snapshots/{snap_id}/recovery:
-#   $ref: ./nas.nas_id.snapshots.snap_id.recovery.yaml
-# /nas/cifs:
-#   $ref: ./nas.cifs.yaml
+/nas:
+  $ref: ./nas.yaml
+/nas/{nas_id}:
+  $ref: ./nas.nas_id.yaml
+/nas/{nas_id}/size:
+  $ref: ./nas.nas_id.size.yaml
+/nas/{nas_id}/snapshots:
+  $ref: ./nas.nas_id.snapshots.yaml
+/nas/{nas_id}/snapshots/{snap_id}/recovery:
+  $ref: ./nas.nas_id.snapshots.snap_id.recovery.yaml
+/nas/cifs:
+  $ref: ./nas.cifs.yaml

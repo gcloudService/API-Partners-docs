@@ -1,5 +1,6 @@
 get:
   summary: 서버 상세 정보
+  operationId: getServer
   description: |
     g클라우드 서버의 상세정보를 확인할 수 있습니다.
 
@@ -84,6 +85,7 @@ get:
         $ref: ../definitions/NotFound.yaml
 put:
   summary: 서버 정보 변경
+  operationId: updateServer
   description: |
     g클라우드 서버의 자원명과 설명을 변경할 수 있습니다.
 
@@ -181,6 +183,7 @@ put:
         $ref: ../definitions/NotFound.yaml
 delete:
   summary: 서버 삭제
+  operationId: deleteServer
   description: |
     g클라우드 서버를 삭제할 수 있습니다.
     - 서버가 정지된 상태(status:01)인 경우에만 삭제할 수 있습니다.

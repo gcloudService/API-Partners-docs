@@ -1,9 +1,8 @@
 get:
   summary: 공인 IP 상세 정보
+  operationId: getIp
   description: |
     공인 IP의 상세정보를 확인할 수 있습니다.
-
-
     ### cURL
     ```
     curl -X GET \
@@ -86,6 +85,7 @@ get:
         $ref: ../definitions/NotFound.yaml
 delete:
   summary: 공인 IP 삭제
+  operationId: deleteIp
   description: |-
     공인 IP를 삭제할 수 있습니다.
     - g클라우드 서버나 로드밸런서에 할당된 공인 IP는 해제 후 삭제할 수 있습니다.

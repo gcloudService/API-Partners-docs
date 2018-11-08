@@ -1,5 +1,6 @@
 post:
   summary: 로드밸런서 생성
+  operationId: createLb
   description: |
     로드밸런서를 생성할 수 있습니다.
     - 로드밸런서 포트 설정과 서버 포트 설정을 할 수 있습니다. 로드밸런서 포트는 외부망과 접하고 있는 로드밸런서의 포트이고, 서버 포트는 로드밸런서의 포트에 연결된 g클라우드 서버의 포트입니다.
@@ -252,6 +253,7 @@ post:
         $ref: ../definitions/NotFound.yaml
 get:
   summary: 로드밸런서 조회
+  operationId: getLbList
   description: |
     이용자가 소유한 로드밸런서를 조회할 수 있습니다.
     - 삭제된 로드밸런서는 제외됩니다.

@@ -1,5 +1,6 @@
 post:
   summary: 공인 IP 할당
+  operationId: attachServerIp
   description: |
     g클라우드 서버에 공인 IP를 할당할 수 있습니다.
     - 다른 자원에서 이미 사용 중인 공인 IP는 할당할 수 없습니다.
@@ -97,6 +98,7 @@ post:
         $ref: ../definitions/NotFound.yaml
 delete:
   summary: 공인 IP 해제
+  operationId: detachServerIp
   description: |
     g클라우드 서버에 할당된 공인 IP를 해제할 수 있습니다.
     - g클라우드 서버의 네트워크가 차단되었을 경우, 공인 IP를 해제할 수 없습니다.

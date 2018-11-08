@@ -1,5 +1,6 @@
 post:
   summary: 서버 생성
+  operationId: createServer
   description: |
     g클라우드 서버를 생성할 수 있습니다.
       - g클라우드 서버(베이직/프리미엄)는 HDD를 기반으로 하는 가상 서버로 아래 표와 같이 사양에 따라 베이직과 프리미엄으로 나뉩니다. CPU, Memory, 스토리지 사양에 대해 자유롭게 선택하여 구성할 수 있습니다.
@@ -235,6 +236,7 @@ post:
         $ref: ../definitions/NotFound.yaml
 get:
   summary: 서버 조회
+  operationId: getServerList
   description: |
    이용자가 소유한 g클라우드 서버를 조회할 수 있습니다.
     - 삭제된 g클라우드 서버는 제외됩니다.

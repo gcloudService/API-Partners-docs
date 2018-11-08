@@ -1,5 +1,6 @@
 put:
   summary: 로드밸런서 네트워크 차단
+  operationId: updateLbNetwork
   description: |
     로드밸런서 트래픽을 차단하거나 재개할 수 있습니다.
 

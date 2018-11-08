@@ -1,5 +1,6 @@
 put:
   summary: 서버 네트워크 차단
+  operationId: updateServerNetwork
   description: |
     g클라우드 서버 트래픽을 차단하거나 재개할 수 있습니다.
     - g클라우드 서버에 공인 IP가 할당되어 있다 하더라도, 네트워크를 차단할 경우 인터넷 망과 연결되지 않습니다.

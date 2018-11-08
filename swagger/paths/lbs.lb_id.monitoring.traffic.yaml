@@ -1,5 +1,6 @@
 get:
   summary: 로드밸런서 트래픽 사용량 조회
+  operationId: getLbTraffic
   description: |
     이용자의 로드밸런서 트래픽 사용량을 조회할 수 있습니다.
 

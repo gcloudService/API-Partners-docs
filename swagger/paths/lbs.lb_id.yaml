@@ -1,5 +1,6 @@
 get:
   summary: 로드밸런서 상세 정보
+  operationId: getLb
   description: |
     로드밸런서의 상세 정보를 확인할 수 있습니다.
 
@@ -84,6 +85,7 @@ get:
         $ref: ../definitions/NotFound.yaml
 put:
   summary: 로드밸런서 정보 변경
+  operationId: updateLb
   description: |
     로드밸런서의 자원명과 설명을 변경할 수 있습니다.
 
@@ -183,6 +185,7 @@ put:
         $ref: ../definitions/NotFound.yaml
 delete:
   summary: 로드밸런서 삭제
+  operationId: deleteLb
   description: |
     로드밸런서를 삭제할 수 있습니다.
     - 로드밸런서의 네트워크가 차단되었을 경우 삭제할 수 없습니다.

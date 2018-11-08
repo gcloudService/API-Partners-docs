@@ -1,5 +1,6 @@
 get:
   summary: 서버 시스템 사용량 조회
+  operationId: getServerSystem
   description: |
     g클라우드 서버의 시스템 사용량(CPU, Memory, Storage, Storage-IOStat)을 확인할 수 있습니다.
 
