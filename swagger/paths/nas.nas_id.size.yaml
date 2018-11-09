@@ -1,5 +1,6 @@
 put:
   summary: NAS 용량 변경
+  operationId: updateNasSize
   description: |
     NAS 용량을 변경합니다.
 

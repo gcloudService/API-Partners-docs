@@ -30,7 +30,7 @@ post:
   parameters:
     - $ref: ../parameters/index.yaml#/user_id
     - in: formData
-      name: cisf_id
+      name: cifs_id
       required: true
       type: string
       pattern: ^[a-z0-9\-_]{1,16}$
@@ -39,14 +39,14 @@ post:
       minLength: 1
       maxLength: 16
     - in: formData
-      name: cisf_pw
+      name: cifs_pw
       required: true
       type: string
       pattern: ^(?=.*[a-zA-Z]{1,})(?=.*[0-9]{1,})(?=.*[~!@#0^&*_\-+=`\\|()[\]:;"'<>,.?/]{1,}).{8,14}$
       example: cifs
       description: |
         CIFS 비밀번호
-        - **cisf_id**의 값이 포함될 수 없습니다.
+        - **cifs_id**의 값이 포함될 수 없습니다.
         - 영문자, 숫자, 특수문자를 포함해야 합니다.
       minLength: 8
       maxLength: 14
@@ -255,7 +255,7 @@ put:
     ### Error Code
     - `-4724` : [API] NAS CIFS 수정 오류. CIFS 정보 수정은 한 사용자씩 가능합니다.
     - `-4725` : [API] NAS CIFS 수정 오류. 존재하지 않는 사용자입니다.
-    - `-4726` : [API] NAS CIFS 수정 오류. 해당 사용자에 CISF 정보가 존재하지 않습니다.
+    - `-4726` : [API] NAS CIFS 수정 오류. 해당 사용자에 CIFS 정보가 존재하지 않습니다.
   tags:
     - Nas
   produces:
@@ -263,14 +263,14 @@ put:
   parameters:
     - $ref: ../parameters/index.yaml#/user_id
     - in: formData
-      name: cisf_pw
+      name: cifs_pw
       required: true
       type: string
       pattern: ^(?=.*[a-zA-Z]{1,})(?=.*[0-9]{1,})(?=.*[~!@#0^&*_\-+=`\\|()[\]:;"'<>,.?/]{1,}).{8,14}$
       example: cifs
       description: |
         CIFS 비밀번호
-        - **cisf_id**의 값이 포함될 수 없습니다.
+        - **cifs_id**의 값이 포함될 수 없습니다.
         - 영문자, 숫자, 특수문자를 포함해야 합니다.
       minLength: 8
       maxLength: 14
@@ -369,7 +369,7 @@ delete:
     ### Error Code
     - `-4727` : [API] NAS CIFS 삭제 오류. CIFS 정보 삭제는 한 사용자씩 가능합니다.
     - `-4728` : [API] NAS CIFS 삭제 오류. 존재하지 않는 사용자입니다.
-    - `-4729` : [API] NAS CIFS 삭제 오류. 해당 사용자에 CISF 정보가 존재하지 않습니다.
+    - `-4729` : [API] NAS CIFS 삭제 오류. 해당 사용자에 CIFS 정보가 존재하지 않습니다.
   tags:
     - Nas
   produces:

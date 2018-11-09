@@ -1,7 +1,13 @@
 post:
   summary: NAS 생성
+  operationId: createNas
   description: |
-    NAS를 생성합니다.
+    NAS를 생성할 수 있습니다.
+    - 네트워크를 통해 g클라우드 SSD, 베이직, 프리미엄 서버에 연결하여 사용하는 스토리지 서비스입니다.
+    - g클라우드 서버의 일반 스토리지보다 저렴한 단가와 대용량의 저장공간을 제공합니다.
+    - 한 대의 NAS에 여러 대의 서버를 연결하여 공유형 스토리지로 사용할 수 있습니다.
+    - 연결 기능을 통해 서버에 ‘NAS 접근권한부여(ACL설정)’가 이루어지는 방식으로 보안성이 뛰어납니다.
+    - 멀티 프로토콜(NFS, CIFS)을 지원합니다.
 
     ### cURL
     ```
@@ -56,7 +62,7 @@ post:
       description: |
         NAS 용량
         - Tera Byte 단위
-        - e.g.) 1.5 -> 1500GB
+        - e.g.) 1.5 -> 1500GB(1536GB)
         - **1.0** <= size <= **10.0**
   x-code-samples:
     - lang: PHP
@@ -125,17 +131,10 @@ post:
       schema:
         $ref: ../definitions/Unauthorized.yaml
 get:
-  summary: NAS 목록
+  summary: NAS 조회
+  operationId: geteNasList
   description: |
     사용자의 모든 NAS 목록을 조회합니다.
-    - 삭제된 NAS 제외
-    - **Query** Parameters
-      - **`q`**
-        - **user_id**, **nas_id**, **name**, **protocol**, **size**, **status**, **mount_path**, **private_ip**
-        - e.g.) /nas?q=protocol=cifs,size=2
-      - **`order`**
-        - **nas_id**, **user_id**, **name**, **desc**, **size**, **protocol**, **regdate**, **updatedate**
-        - e.g.) /images?order=-size
 
     ### cURL
     ```
@@ -150,9 +149,43 @@ get:
   produces:
     - application/json
   parameters:
-    - "$ref": ../parameters/index.yaml#/collectionQuery
-    - "$ref": ../parameters/index.yaml#/collectionPaging
-    - "$ref": ../parameters/index.yaml#/collectionOrder
+    - name: q
+      in: query
+      type: string
+      description: |
+        조회 조건을 설정하는 매개변수 입니다.
+        - 사용할 수 있는 조건
+          - user_id: 이용자 ID
+          - nas_id: NAS ID
+          - name: NAS 자원명
+          - protocol: NAS 프로토콜
+          - size: NAS 용량(TB)
+          - status: NAS 현재 상태 값
+          - mount_path: NAS 마운트패쓰
+          - private_ip: NAS IP
+        - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
+        - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
+        - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
+        - 예시) /v1/nas?q=user_id=company_777,protocol=cifs
+    - name: order
+      in: query
+      type: string
+      description: |
+        조회 결과에 대한 정렬 조건을 설정하는 매개변수 입니다.
+        - 정렬 가능 대상
+          - nas_id: g클라우드 서버 ID
+          - user_id: 이용자 ID
+          - name: NAS 자원명
+          - desc: NAS에 대한 설명
+          - size: NAS CPU 용량(TB)
+          - protocol: NAS 프로토콜
+          - regdate: NAS 생성일
+          - updatedate: NAS 수정일
+        - 사용할 수 있는 정렬 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력할 수 있으며 앞에 입력된 조건의 우선 순위가 높습니다.
+        - 정렬의 기본 값은 오름차순 정렬입니다. 정렬 조건의 앞에 –를 붙일 경우, 내림차순으로 정렬할 수 있습니다.
+        - 예시) /v1/nas?order=user_id,-protocol
+    # - $ref: ../parameters/index.yaml#/collectionPaging
+
   x-code-samples:
     - lang: PHP
       source: |
