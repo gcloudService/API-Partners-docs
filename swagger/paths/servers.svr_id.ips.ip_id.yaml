@@ -172,7 +172,7 @@ delete:
   responses:
     200:
       description: |
-        Created. 공인 IP 해제 성공
+        OK. 공인 IP 해제 성공
       schema:
         $ref: ../definitions/Servers.yaml
     400:

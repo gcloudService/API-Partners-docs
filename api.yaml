@@ -448,15 +448,17 @@ tags:
   - name: Servers
     description: |
       g클라우드 서버는 가상 서버로 스토리지 종류와 사양에 따라 베이직, 프리미엄, SSD로 나뉩니다.
-  - name: Firewalls
-    description: |
-      TODO
   - name: Volumes
     description: |
       g클라우드 스토리지는 볼륨 스토리지로 g클라우드 서버에 장착하여 사용할 수 있습니다.
   - name: PublicIps
     description: |
       공인 IP를 통해 g클라우드 서버나 로드밸런서를 인터넷망과 연결할 수 있습니다.
+  - name: Firewalls
+    description: |
+      방화벽 그룹을 통해 서버나 로드밸런서의 정책을 구성할 수 있습니다.
+      - 방화벽은 **공인 IP**가 부착된 서버만 추가할 수 있습니다.
+      - 추가된 방화벽은 수정 불가합니다.(삭제 후 다시 추가)
   - name: LoadBalancers
     description: |
       로드밸런서를 통해 트래픽 부하를 여러 개의 g클라우드 서버로 분산시킬 수 있습니다.
@@ -8211,12 +8213,23 @@ paths:
                 example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
   '/servers/{svr_id}/firewalls/{fg_id}':
     post:
-      summary: 방화벽 설정
-      operationId: attachFirewall
-      description: ''
+      summary: 서버 방화벽 그룹 설정
+      operationId: attachServerFirewall
+      description: |
+        g클라우드 서버의 방화벽 그룹을 설정합니다.
+
+        ### cURL
+        ```
+        curl -X POST \
+          https://cpapi.gabia.com/v1/servers/vm_1/firewalls/fg_1 \
+          -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+          -H 'cache-control: no-cache' \
+          -H 'content-type: application/x-www-form-urlencoded' \
+        ```
+        ### Error Code
       tags:
-        - Servers
         - Firewalls
+        - Servers
       parameters:
         - name: svr_id
           description: g클라우드 서버의 ID에 해당하는 매개변수입니다.
@@ -8234,13 +8247,414 @@ paths:
           example: fg_1
       produces:
         - application/json
+      x-code-samples:
+        - lang: PHP
+          source: |
+            <?php
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://cpapi.gabia.com/v1/servers/vm_1/firewalls/fg_1",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_HTTPHEADER => array(
+                "authorization: Bearer {YOUR-JWT-TOKEN}",
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+              ),
+            ));
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+        - lang: Node.js
+          source: |
+            var request = require("request");
+
+            var options = {
+              method: 'POST',
+              url: 'https://cpapi.gabia.com/v1/servers/vm_1/firewalls/fg_1',
+              headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+              }
+            };
+
+            request(options, function(error, response, body) {
+              if (error) throw new Error(error);
+
+              console.log(body);
+            });
+      responses:
+        '201':
+          description: Created. 서버 방화벽 그룹 설정 성공
+          schema:
+            type: object
+            properties:
+              partner_id:
+                type: string
+                description: 파트너의 ID에 해당하는 속성입니다.
+                example: biz_1004
+              user_id:
+                type: string
+                description: 이용자의 ID에 해당하는 속성입니다.
+                example: company_777
+                minLength: 3
+                maxLength: 16
+                pattern: '^[\w\-]{3,16}$'
+              svr_id:
+                type: string
+                description: g클라우드 서버의 ID에 해당하는 속성입니다.
+                example: vm_1
+                pattern: '^(vm_)+[1-9]{1}\d*$'
+              name:
+                type: string
+                description: g클라우드 서버의 자원명에 해당하는 속성입니다.
+                example: WAS_1
+                minLength: 1
+                maxLength: 16
+                pattern: '^[\w\-]{1,16}$'
+              desc:
+                type: string
+                description: g클라우드 서버에 대한 설명에 해당하는 속성입니다.
+                example: 사용자 관리용 WAS 서버
+                minLength: 0
+                maxLength: 100
+                pattern: '^((?![\/?;:|*<>@\\\''\"]).){0,100}$'
+              status:
+                type: string
+                description: |
+                  g클라우드 서버의 현재 상태 값을 나타내는 속성입니다.
+                  - 01: g클라우드 서버가 정지된 상태를 나타내는 속성값입니다.
+                  - 02: g클라우드 서버가 정지되고 있는 상태를 나타내는 속성값입니다.
+                  - 03: g클라우드 서버가 시작된 상태를 나타내는 속성값입니다.
+                  - 04: g클라우드 서버가 삭제된 상태를 나타내는 속성값입니다.
+                  - 05: g클라우드 서버가 시작되고 있는 상태를 나타내는 속성값입니다.
+                  - 06: g클라우드 서버가 삭제되고 있는 상태를 나타내는 속성값입니다.
+                  - 07: g클라우드 서버가 생성되고 있는 상태를 나타내는 속성값입니다.
+                example: '03'
+                enum:
+                  - '01'
+                  - '02'
+                  - '03'
+                  - '04'
+                  - '05'
+                  - '06'
+                  - '07'
+              regdate:
+                type: dateTime
+                description: g클라우드 서버의 등록일에 해당하는 속성입니다.
+                example: '2017-09-13 01:47:45'
+              os:
+                type: integer
+                description: >
+                  g클라우드 서버의 운영체제를 확인할 수 있는 속성입니다.
+
+                  - Linux: Linux 계열 운영체제(CentOS, Ubuntu, Debian, Fedora 등)를 나타내는
+                  속성값입니다.
+
+                  - Windows: Windows 계열 운영체제를 나타내는 속성값입니다.
+                example: Linux
+                enum:
+                  - Linux
+                  - Windows
+              cpu:
+                type: integer
+                format: int32
+                enum:
+                  - 1
+                  - 2
+                  - 4
+                  - 8
+                  - 16
+                description: g클라우드 서버의 CPU 사양을 확인하는 속성으로 속성값의 단위는 vCore입니다.
+                example: 1
+              memory:
+                type: integer
+                format: int32
+                enum:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 8
+                  - 16
+                  - 32
+                  - 64
+                  - 128
+                description: g클라우드 서버의 Memory 사양을 확인하는 속성으로 속성값의 단위는 GB입니다.
+                example: 2
+              type:
+                type: string
+                description: |
+                  g클라우드 서버의 종류를 나타내는 속성입니다.
+                  - basic: g클라우드 서버(베이직)을 나타내는 속성값입니다.
+                  - premium: g클라우드 서버(프리미엄)을 나타내는 속성값입니다.
+                  - ssd : g클라우드 서버(SSD)를 나타내는 속성값입니다.
+                example: basic
+                enum:
+                  - basic
+                  - premium
+                  - ssd
+              private_ip:
+                type: string
+                format: ipv4
+                description: g클라우드 서버에 기본으로 할당되는 사설 IP에 해당하는 속성입니다.
+                example: 192.168.248.2
+              img_id:
+                type: string
+                description: g클라우드 서버 생성 시 사용되는 이미지 ID에 해당하는 속성입니다.
+                example: img_131
+                pattern: '^(img_)+[1-9]{1}\d*$'
+              network:
+                type: string
+                description: "g클라우드 서버의 네트워크 차단 여부를 확인할 수 있는 속성입니다.\n- start: 네트워크가 차단되지 않았음을 나타내는 속성값입니다.\n- stop: 네트워크가 차단되었음을 나타내는 속성값입니다.\t\n"
+                example: start
+                enum:
+                  - stop
+                  - start
+              service_zone:
+                type: string
+                description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
+                enum:
+                  - zone_1
+                pattern: '^(zone_)+[1-9]{1}\d*$'
+                example: zone_1
+              volumes:
+                type: array
+                description: g클라우드 서버에 장착된 g클라우드 스토리지를 확인할 수 있는 속성으로 배열로 제공됩니다
+                items:
+                  type: object
+                  properties:
+                    vol_id:
+                      type: string
+                      description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
+                      example: vol_1
+                      pattern: '^(vol_)+[1-9]{1}\d*$'
+                    vol_name:
+                      type: string
+                      description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
+                      example: 서버 추가 볼륨
+                    vol_size:
+                      type: integer
+                      description: g클라우드 스토리지의 용량을 나타내는 속성으로 속성 값의 단위는 GB입니다.
+                      example: 50
+              ips:
+                type: array
+                description: g클라우드 서버에 할당된 공인 IP를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    ip_id:
+                      type: string
+                      description: 공인 IP의 ID에 해당하는 속성입니다.
+                      example: pubIp_1
+                      pattern: '^(pubIp_)+[1-9]{1}\d*$'
+                    ip_addr:
+                      type: string
+                      format: ipv4
+                      description: 공인 IP의 주소에 해당하는 속성입니다.
+                      example: 10.222.222.143
+              fws:
+                type: array
+                description: g클라우드 서버에 설정된 방화벽 정보를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    fw_id:
+                      type: string
+                      description: 방화벽의 ID에 해당하는 속성입니다.
+                      example: fr_1
+                      pattern: '^(fr_)+[1-9]{1}\d*$'
+                    service:
+                      type: string
+                      description: 방화벽의 각 정책의 응용 계층의 프로토콜에 해당하는 속성입니다.
+                      example: HTTP
+                    protocol:
+                      type: string
+                      description: 방화벽의 각 정책의 네트워크 및 전송 계층의 프로토콜에 해당하는 속성입니다.
+                      example: TCP
+                    start_port:
+                      type: integer
+                      description: 방화벽의 각 정책이 접속을 허용하는 port 구간의 시작 점에 해당하는 속성입니다.
+                      example: 80
+                      minimum: 1
+                      maximum: 65535
+                    end_port:
+                      type: integer
+                      description: 방화벽의 각 정책이 접속을 허용하는 port 구간의 종료 점에 해당하는 속성입니다.
+                      example: 80
+                      minimum: 1
+                      maximum: 65535
+                    ip_group:
+                      type: string
+                      description: >-
+                        방화벽이 접속을 허용하는 IP의 그룹에 해당하는 속성으로 속성 값은 CIDR
+                        방식(X.X.X.X/X)으로 표현됩니다.
+                      example: 0.0.0.0/0
+                    desc:
+                      type: string
+                      description: 방화벽의 각 정책에 대한 설명에 해당하는 속성입니다.
+                      example: apache 방화벽
+              lbs:
+                type: array
+                description: g클라우드 서버에 연결된 로드밸런서를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    lbg_id:
+                      type: string
+                      description: 로드밸런서의 ID에 해당하는 속성입니다.
+                      example: lbg_2
+                      pattern: '^(lbg_)+[1-9]{1}\d*$'
+                    lb_port:
+                      type: integer
+                      description: 로드밸런서의 포트 중 g클라우드 서버가 연결된 포트에 해당하는 속성입니다.
+                      example: 80
+                      minimum: 1
+                      maximum: 65535
+                    lb_svr_port:
+                      type: integer
+                      description: 로드밸런서와 연결된 g클라우드 서버의 포트에 해당하는 속성입니다.
+                      example: 8080
+                      minimum: 1
+                      maximum: 65535
+              images:
+                type: array
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    img_id:
+                      type: string
+                      description: 이미지의 ID에 해당하는 속성입니다.
+                      example: img_1
+                      pattern: '^(img_)+[1-9]{1}\d'
+                    img_name:
+                      type: string
+                      description: 이미지의 자원명에 해당하는 속성입니다.
+                      example: centos-6.x-i686_TEST
+                      minLength: 1
+                      maxLength: 16
+                      pattern: '^[\w\-]{1,16}$'
+              snaps:
+                type: array
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    snap_id:
+                      type: string
+                      description: 스냅샷의 ID에 해당하는 속성입니다.
+                      example: snap_1
+                      pattern: '^(snap_)+[1-9]{1}\d*$'
+                    snap_name:
+                      type: string
+                      description: 스냅샷의 자원명에 해당하는 속성입니다.
+                      example: backup-snap
+                      minLength: 1
+                      maxLength: 16
+                      pattern: '^[\w\-]{1,16}$p'
+              storage:
+                type: integer
+                description: >-
+                  g클라우드 서버에 장착된 Root 스토리지와 Data 스토리지의 용량 합계를 나타내는 속성으로 속성 값의 단위는
+                  GB입니다.
+                example: 100
+        '400':
+          description: Bad request. 파라미터 오류
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: '''{PARAMETER}'' is must required. Your input ''{PARAMETER}'': ''''.'
+              code:
+                type: integer
+                description: 에러 코드
+                example: -621
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[Auth] REST API 오류. 필수값이 없거나 유효하지 않습니다.'
+        '401':
+          description: Unauthorized. 인증 실패
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: 'invalid secret key. Your input : ''''.'
+              code:
+                type: integer
+                description: 에러 코드
+                example: -606
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[Auth] JWT 오류. 유효하지 않은 secret key'
+        '403':
+          description: 'Forbidden. svr_id, fg_id 파트너/사용자의 자원이 아닌 경우'
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: >-
+                  permission deny. {RESOURCE-NAME} '{RESOURCE-ID}' is not your
+                  resource.
+              code:
+                type: integer
+                description: 에러 코드
+                example: -3012
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[API] 자원 접근 권한. 해당 자원이 입력된 파트너의 자원이 아님.'
+        '404':
+          description: 'Not Found. svr_id, fg_id 존재하지 않음'
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: '{RESOURCE-NAME} ''{RESOURCE-ID}'' does not exist.'
+              code:
+                type: integer
+                description: 에러 코드
+                example: -3011
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
     delete:
-      summary: 방화벽 해제
-      operationId: detachFirewall
-      description: ''
+      summary: 서버 방화벽 그룹 해제
+      operationId: detachServerFirewall
+      description: |
+        g클라우드 서버의 방화벽 그룹을 해제합니다.
+
+        ### cURL
+        ```
+        curl -X DELETE \
+          https://cpapi.gabia.com/v1/servers/vm_1/firewalls/fg_1 \
+          -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+          -H 'cache-control: no-cache' \
+          -H 'content-type: application/x-www-form-urlencoded' \
+        ```
+        ### Error Code
       tags:
-        - Servers
         - Firewalls
+        - Servers
       parameters:
         - name: svr_id
           description: g클라우드 서버의 ID에 해당하는 매개변수입니다.
@@ -8258,6 +8672,396 @@ paths:
           example: fg_1
       produces:
         - application/json
+      x-code-samples:
+        - lang: PHP
+          source: |
+            <?php
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://cpapi.gabia.com/v1/servers/vm_1/firewalls/fg_1",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "DELETE",
+              CURLOPT_HTTPHEADER => array(
+                "authorization: Bearer {YOUR-JWT-TOKEN}",
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+              ),
+            ));
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+        - lang: Node.js
+          source: |
+            var request = require("request");
+
+            var options = {
+              method: 'DELETE',
+              url: 'https://cpapi.gabia.com/v1/servers/vm_1/firewalls/fg_1',
+              headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/x-www-form-urlencoded',
+                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+              }
+            };
+
+            request(options, function(error, response, body) {
+              if (error) throw new Error(error);
+
+              console.log(body);
+            });
+      responses:
+        '200':
+          description: OK. 서버 방화벽 그룹 해제 성공
+          schema:
+            type: object
+            properties:
+              partner_id:
+                type: string
+                description: 파트너의 ID에 해당하는 속성입니다.
+                example: biz_1004
+              user_id:
+                type: string
+                description: 이용자의 ID에 해당하는 속성입니다.
+                example: company_777
+                minLength: 3
+                maxLength: 16
+                pattern: '^[\w\-]{3,16}$'
+              svr_id:
+                type: string
+                description: g클라우드 서버의 ID에 해당하는 속성입니다.
+                example: vm_1
+                pattern: '^(vm_)+[1-9]{1}\d*$'
+              name:
+                type: string
+                description: g클라우드 서버의 자원명에 해당하는 속성입니다.
+                example: WAS_1
+                minLength: 1
+                maxLength: 16
+                pattern: '^[\w\-]{1,16}$'
+              desc:
+                type: string
+                description: g클라우드 서버에 대한 설명에 해당하는 속성입니다.
+                example: 사용자 관리용 WAS 서버
+                minLength: 0
+                maxLength: 100
+                pattern: '^((?![\/?;:|*<>@\\\''\"]).){0,100}$'
+              status:
+                type: string
+                description: |
+                  g클라우드 서버의 현재 상태 값을 나타내는 속성입니다.
+                  - 01: g클라우드 서버가 정지된 상태를 나타내는 속성값입니다.
+                  - 02: g클라우드 서버가 정지되고 있는 상태를 나타내는 속성값입니다.
+                  - 03: g클라우드 서버가 시작된 상태를 나타내는 속성값입니다.
+                  - 04: g클라우드 서버가 삭제된 상태를 나타내는 속성값입니다.
+                  - 05: g클라우드 서버가 시작되고 있는 상태를 나타내는 속성값입니다.
+                  - 06: g클라우드 서버가 삭제되고 있는 상태를 나타내는 속성값입니다.
+                  - 07: g클라우드 서버가 생성되고 있는 상태를 나타내는 속성값입니다.
+                example: '03'
+                enum:
+                  - '01'
+                  - '02'
+                  - '03'
+                  - '04'
+                  - '05'
+                  - '06'
+                  - '07'
+              regdate:
+                type: dateTime
+                description: g클라우드 서버의 등록일에 해당하는 속성입니다.
+                example: '2017-09-13 01:47:45'
+              os:
+                type: integer
+                description: >
+                  g클라우드 서버의 운영체제를 확인할 수 있는 속성입니다.
+
+                  - Linux: Linux 계열 운영체제(CentOS, Ubuntu, Debian, Fedora 등)를 나타내는
+                  속성값입니다.
+
+                  - Windows: Windows 계열 운영체제를 나타내는 속성값입니다.
+                example: Linux
+                enum:
+                  - Linux
+                  - Windows
+              cpu:
+                type: integer
+                format: int32
+                enum:
+                  - 1
+                  - 2
+                  - 4
+                  - 8
+                  - 16
+                description: g클라우드 서버의 CPU 사양을 확인하는 속성으로 속성값의 단위는 vCore입니다.
+                example: 1
+              memory:
+                type: integer
+                format: int32
+                enum:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 8
+                  - 16
+                  - 32
+                  - 64
+                  - 128
+                description: g클라우드 서버의 Memory 사양을 확인하는 속성으로 속성값의 단위는 GB입니다.
+                example: 2
+              type:
+                type: string
+                description: |
+                  g클라우드 서버의 종류를 나타내는 속성입니다.
+                  - basic: g클라우드 서버(베이직)을 나타내는 속성값입니다.
+                  - premium: g클라우드 서버(프리미엄)을 나타내는 속성값입니다.
+                  - ssd : g클라우드 서버(SSD)를 나타내는 속성값입니다.
+                example: basic
+                enum:
+                  - basic
+                  - premium
+                  - ssd
+              private_ip:
+                type: string
+                format: ipv4
+                description: g클라우드 서버에 기본으로 할당되는 사설 IP에 해당하는 속성입니다.
+                example: 192.168.248.2
+              img_id:
+                type: string
+                description: g클라우드 서버 생성 시 사용되는 이미지 ID에 해당하는 속성입니다.
+                example: img_131
+                pattern: '^(img_)+[1-9]{1}\d*$'
+              network:
+                type: string
+                description: "g클라우드 서버의 네트워크 차단 여부를 확인할 수 있는 속성입니다.\n- start: 네트워크가 차단되지 않았음을 나타내는 속성값입니다.\n- stop: 네트워크가 차단되었음을 나타내는 속성값입니다.\t\n"
+                example: start
+                enum:
+                  - stop
+                  - start
+              service_zone:
+                type: string
+                description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
+                enum:
+                  - zone_1
+                pattern: '^(zone_)+[1-9]{1}\d*$'
+                example: zone_1
+              volumes:
+                type: array
+                description: g클라우드 서버에 장착된 g클라우드 스토리지를 확인할 수 있는 속성으로 배열로 제공됩니다
+                items:
+                  type: object
+                  properties:
+                    vol_id:
+                      type: string
+                      description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
+                      example: vol_1
+                      pattern: '^(vol_)+[1-9]{1}\d*$'
+                    vol_name:
+                      type: string
+                      description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
+                      example: 서버 추가 볼륨
+                    vol_size:
+                      type: integer
+                      description: g클라우드 스토리지의 용량을 나타내는 속성으로 속성 값의 단위는 GB입니다.
+                      example: 50
+              ips:
+                type: array
+                description: g클라우드 서버에 할당된 공인 IP를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    ip_id:
+                      type: string
+                      description: 공인 IP의 ID에 해당하는 속성입니다.
+                      example: pubIp_1
+                      pattern: '^(pubIp_)+[1-9]{1}\d*$'
+                    ip_addr:
+                      type: string
+                      format: ipv4
+                      description: 공인 IP의 주소에 해당하는 속성입니다.
+                      example: 10.222.222.143
+              fws:
+                type: array
+                description: g클라우드 서버에 설정된 방화벽 정보를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    fw_id:
+                      type: string
+                      description: 방화벽의 ID에 해당하는 속성입니다.
+                      example: fr_1
+                      pattern: '^(fr_)+[1-9]{1}\d*$'
+                    service:
+                      type: string
+                      description: 방화벽의 각 정책의 응용 계층의 프로토콜에 해당하는 속성입니다.
+                      example: HTTP
+                    protocol:
+                      type: string
+                      description: 방화벽의 각 정책의 네트워크 및 전송 계층의 프로토콜에 해당하는 속성입니다.
+                      example: TCP
+                    start_port:
+                      type: integer
+                      description: 방화벽의 각 정책이 접속을 허용하는 port 구간의 시작 점에 해당하는 속성입니다.
+                      example: 80
+                      minimum: 1
+                      maximum: 65535
+                    end_port:
+                      type: integer
+                      description: 방화벽의 각 정책이 접속을 허용하는 port 구간의 종료 점에 해당하는 속성입니다.
+                      example: 80
+                      minimum: 1
+                      maximum: 65535
+                    ip_group:
+                      type: string
+                      description: >-
+                        방화벽이 접속을 허용하는 IP의 그룹에 해당하는 속성으로 속성 값은 CIDR
+                        방식(X.X.X.X/X)으로 표현됩니다.
+                      example: 0.0.0.0/0
+                    desc:
+                      type: string
+                      description: 방화벽의 각 정책에 대한 설명에 해당하는 속성입니다.
+                      example: apache 방화벽
+              lbs:
+                type: array
+                description: g클라우드 서버에 연결된 로드밸런서를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    lbg_id:
+                      type: string
+                      description: 로드밸런서의 ID에 해당하는 속성입니다.
+                      example: lbg_2
+                      pattern: '^(lbg_)+[1-9]{1}\d*$'
+                    lb_port:
+                      type: integer
+                      description: 로드밸런서의 포트 중 g클라우드 서버가 연결된 포트에 해당하는 속성입니다.
+                      example: 80
+                      minimum: 1
+                      maximum: 65535
+                    lb_svr_port:
+                      type: integer
+                      description: 로드밸런서와 연결된 g클라우드 서버의 포트에 해당하는 속성입니다.
+                      example: 8080
+                      minimum: 1
+                      maximum: 65535
+              images:
+                type: array
+                description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    img_id:
+                      type: string
+                      description: 이미지의 ID에 해당하는 속성입니다.
+                      example: img_1
+                      pattern: '^(img_)+[1-9]{1}\d'
+                    img_name:
+                      type: string
+                      description: 이미지의 자원명에 해당하는 속성입니다.
+                      example: centos-6.x-i686_TEST
+                      minLength: 1
+                      maxLength: 16
+                      pattern: '^[\w\-]{1,16}$'
+              snaps:
+                type: array
+                description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                items:
+                  type: object
+                  properties:
+                    snap_id:
+                      type: string
+                      description: 스냅샷의 ID에 해당하는 속성입니다.
+                      example: snap_1
+                      pattern: '^(snap_)+[1-9]{1}\d*$'
+                    snap_name:
+                      type: string
+                      description: 스냅샷의 자원명에 해당하는 속성입니다.
+                      example: backup-snap
+                      minLength: 1
+                      maxLength: 16
+                      pattern: '^[\w\-]{1,16}$p'
+              storage:
+                type: integer
+                description: >-
+                  g클라우드 서버에 장착된 Root 스토리지와 Data 스토리지의 용량 합계를 나타내는 속성으로 속성 값의 단위는
+                  GB입니다.
+                example: 100
+        '400':
+          description: Bad request. 파라미터 오류
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: '''{PARAMETER}'' is must required. Your input ''{PARAMETER}'': ''''.'
+              code:
+                type: integer
+                description: 에러 코드
+                example: -621
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[Auth] REST API 오류. 필수값이 없거나 유효하지 않습니다.'
+        '401':
+          description: Unauthorized. 인증 실패
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: 'invalid secret key. Your input : ''''.'
+              code:
+                type: integer
+                description: 에러 코드
+                example: -606
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[Auth] JWT 오류. 유효하지 않은 secret key'
+        '403':
+          description: 'Forbidden. svr_id, fg_id 파트너/사용자의 자원이 아닌 경우'
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: >-
+                  permission deny. {RESOURCE-NAME} '{RESOURCE-ID}' is not your
+                  resource.
+              code:
+                type: integer
+                description: 에러 코드
+                example: -3012
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[API] 자원 접근 권한. 해당 자원이 입력된 파트너의 자원이 아님.'
+        '404':
+          description: 'Not Found. svr_id, fg_id 존재하지 않음'
+          schema:
+            type: object
+            properties:
+              msg:
+                type: string
+                description: 에러 메세지
+                example: '{RESOURCE-NAME} ''{RESOURCE-ID}'' does not exist.'
+              code:
+                type: integer
+                description: 에러 코드
+                example: -3011
+              desc:
+                type: string
+                description: 에러 설명
+                example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
   '/servers/{svr_id}/ips/{ip_id}':
     post:
       summary: 공인 IP 할당
@@ -8804,7 +9608,7 @@ paths:
       responses:
         '200':
           description: |
-            Created. 공인 IP 해제 성공
+            OK. 공인 IP 해제 성공
           schema:
             type: object
             properties:
@@ -9868,108 +10672,11 @@ paths:
                 example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
   /firewalls:
     post:
-      summary: 방화벽 생성
+      summary: 방화벽 그룹 생성
       operationId: createFirewall
       description: ''
       tags:
         - Firewalls
-      parameters:
-        - in: body
-          name: firewall
-          schema:
-            type: object
-            required:
-              - user_id
-            properties:
-              user_id:
-                type: string
-                description: 이용자의 ID에 해당하는 매개변수입니다.
-                minLength: 3
-                maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
-                example: company_777
-              name:
-                description: |
-                  g클라우드 방화벽의 자원명에 해당하는 매개변수입니다.
-                  - 이용자의 다른 g클라우드 방화벽의 자원명과 중복될 수 없습니다.
-                  - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
-                type: string
-                minLength: 1
-                maxLength: 16
-                pattern: '^[\w\-]{1,16}$'
-                example: firewall-test
-              desc:
-                description: >
-                  g클라우드 방화벽에 대한 설명을 입력하는 매개변수입니다.
-
-                  - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상
-                  100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
-                type: string
-                minLength: 0
-                maxLength: 100
-                pattern: '^((?![\/?;:|*<>@\\\''\"]).){0,100}$'
-                example: basic-f
-              rule:
-                description: ''
-                type: array
-                items:
-                  type: object
-                  properties:
-                    protocol:
-                      description: ''
-                      type: string
-                      enum:
-                        - TCP
-                        - UDP
-                        - ICMP
-                        - ALL
-                    chain:
-                      description: ''
-                      type: string
-                      enum:
-                        - IN
-                        - OUT
-                    start_port:
-                      description: ''
-                      type: integer
-                      minimum: 0
-                      maximum: 65535
-                    end_port:
-                      description: ''
-                      type: integer
-                      minimum: 0
-                      maximum: 65535
-                    ip_group:
-                      description: ''
-                      type: string
-                    service:
-                      description: ''
-                      type: string
-                    desc:
-                      description: ''
-                      type: string
-              foreign:
-                description: ''
-                type: object
-                properties:
-                  country_code:
-                    description: |
-                      **ALL**
-                      - 특수한 country_code입니다.
-                      - 전체 국가를 허용할 때 사용합니다.
-                      - 전체 국가를 허용할 때 ALL만 보냅니다.
-                        - ["ALL"] : 옳은 방법
-                        - ["ALL", "FR"] : 틀린 방법
-                    type: array
-                    enum:
-                      - FR
-                      - CN
-                    example:
-                      - FR
-                      - CN
-                  desc:
-                    description: ''
-                    type: string
       produces:
         - application/json
       x-code-samples:
@@ -10014,7 +10721,7 @@ paths:
             });
   '/firewalls/{fg_id}':
     delete:
-      summary: 방화벽 삭제
+      summary: 방화벽 그룹 삭제
       operationId: deleteFirewall
       description: ''
       tags:
@@ -22383,14 +23090,6 @@ paths:
       operationId: geteNasList
       description: |
         사용자의 모든 NAS 목록을 조회합니다.
-        - 삭제된 NAS 제외
-        - **Query** Parameters
-          - **`q`**
-            - **user_id**, **nas_id**, **name**, **protocol**, **size**, **status**, **mount_path**, **private_ip**
-            - e.g.) /nas?q=protocol=cifs,size=2
-          - **`order`**
-            - **nas_id**, **user_id**, **name**, **desc**, **size**, **protocol**, **regdate**, **updatedate**
-            - e.g.) /images?order=-size
 
         ### cURL
         ```

@@ -1,5 +1,5 @@
 delete:
-  summary: 방화벽 삭제
+  summary: 방화벽 그룹 삭제
   operationId: deleteFirewall
   description: |
   tags:
