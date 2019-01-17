@@ -2,80 +2,90 @@ type: object
 properties:
   partner_id:
     type: string
-    description: 파트너 ID
+    description: 파트너의 ID에 해당하는 속성입니다.
     example: biz_1004
   user_id:
     type: string
-    description: 사용자 ID
+    description: 이용자의 ID에 해당하는 속성입니다.
     example: company_777
     minLength: 3
     maxLength: 16
     pattern: ^[\w\-]{3,16}$
   nas_id:
     type: string
-    description: NAS ID
+    description: NAS의 ID에 해당하는 속성입니다.
     example: nas_1
     pattern: ^(nas_)+[1-9]{1}\d*$
   name:
     type: string
-    description: NAS 이름
+    description: NAS의 자원명에 해당하는 속성입니다.
     example: nas-A
     minLength: 1
     maxLength: 16
     pattern: ^[\w\-]{1,16}$
   desc:
     type: string
-    description: NAS 설명
-    example: 백업용 나쓰
+    description: NAS에 대한 설명을 해당하는 속성입니다.
+    example: 백업용 나스
     minLength: 0
     maxLength: 100
     pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  mount_path:
+    type: string
+    description:  NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.
+    example: mount1
+    pattern: ^[a-z]{1}([\w]){0,15}$
   protocol:
     type: string
-    description: NAS 프로토콜
+    description: |
+      NAS가 사용하는 파일 시스템 프로토콜을 기준으로 NAS의 타입을 나타내는 속성입니다.
+      - NFS: OS가 Linux인 경우 서버에 연결할 수 있음을 나타내는 속성입니다.
+      - CIFS: OS가 Windows인 경우 서버에 연결할 수 있음을 나타내는 속성입니다.
     example: cifs
     enum: [nfs, cifs]
   size:
     type: float
-    description: NAS 용량, TB 단위
+    description: NAS의 용량에 해당하는 속성으로 속성값의 단위는 TB입니다.
     example: 1.2
   status:
     type: string
-    description: NAS 상태
+    description: |
+      - 0: NAS이 생성되고 있는 상태를 나타내는 속성값입니다.
+      - 9: NAS이 생성된 상태를 나타내는 속성값입니다.
+      - D: NAS이 삭제된 상태를 나타내는 속성값입니다.
     example: 9
     enum: ["0", "9", D]
-  mount_path:
-    type: string
-    description:  NAS 마운트 패쓰
-    example: mount1
-    pattern: ^[a-z]{1}([\w]){0,15}$
   private_ip:
     type: string
-    description: NAS 사설 IP
+    description: NAS의 사설 IP에 해당하는 속성입니다.
     example: 192.168.248.2
     format: ipv4
   regdate:
     type: dateTime
-    description: 생성일
+    description: NAS의 등록일에 해당하는 속성입니다.
     example: '2017-09-14 05:14:26'
   updatedate:
     type: dateTime
-    description: 수정일
+    description: NAS의 수정일에 해당하는 속성입니다.
     example: '2017-09-14 05:14:26'
   usage:
     type: integer
-    description: NAS 사용량, Byte 단위
+    description: NAS의 사용량을 나타내는 속성으로 속성값의 단위는 Byte입니다.
     example: 50000
   snapshots:
-    type: object
-    properties:
-      snap_id:
-        type: string
-        description: NAS 스냅샷 ID
-        example: nas_1
-        pattern: ^(nas_)+[1-9]{1}\d*$
-      name:
-        type: string
-        description: NAS 스냅샷 이름
-        example: snap-test
-        pattern: ^[\w\-]{1,16}$
+    description: |
+      NAS로 생성된 NAS 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+    type: array
+    items:
+      type: object
+      properties:
+        snap_id:
+          type: string
+          description: 스냅샷의 ID에 해당하는 속성입니다.
+          example: nas_1
+          pattern: ^(nas_)+[1-9]{1}\d*$
+        name:
+          type: string
+          description: 스냅샷의 자원명에 해당하는 속성입니다.
+          example: snap-test
+          pattern: ^[\w\-]{1,16}$

@@ -4,16 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.2.0] - 2018-xx-xx
+## [1.2.0] - 2019-01-17
+
+`RELEASED` on [github](https://github.com/gcloudService/API-Partners-docs/releases/tag/1.2.0)
+
 ### Added
-- NAS 
-- Firewall
+- [NAS](https://cpapi.gabia.com/docs/#tag/NAS)
+- [Firewalls](https://cpapi.gabia.com/docs/#tag/Firewalls)
 ### Changed
-[operationId](https://swagger.io/specification/#operationObject) 추가
+- [operationId](https://swagger.io/specification/#operationObject) 추가
+
+#### API
+- [createServer](https://cpapi.gabia.com/docs/#operation/createServer)
+    - `fg_id` 파라미터 추가
 
 #### deprecated
-- `POST` /servers/{svr_id}/fws
-- `DELETE` /servers/{svr_id}/fws
+
+> `방화벽 정책 추가`, `방화벽 정책 삭제` API는 더 이상 유효하지 않습니다.
+>
+> 기존 API와의 호환을 위해 2019.02.28 까지 유지하고 해당 API는 이용중지 됩니다.
+> 
+> 유지 기간 동안 해당 API를 이용 시 내부적으로 `서버 방화벽 그룹 설정`, `서버 방화벽 그룹 해제`를 호출합니다.
+
+
+- ~~`POST` /servers/{svr_id}/fws~~
+    - Use [**POST /servers/{svr_id}/firewalls/{fg_id}**](https://cpapi.gabia.com/docs/#operation/attachServerFirewall)
+- ~~`DELETE` /servers/{svr_id}/fws~~
+    - Use [**DELETE /servers/{svr_id}/firewalls/{fg_id}**](https://cpapi.gabia.com/docs/#operation/detachServerFirewall)
 
 ## [1.1.2] - 2018-05-15
 - `zone_2` 불가

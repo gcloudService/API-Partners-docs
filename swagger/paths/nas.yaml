@@ -3,11 +3,15 @@ post:
   operationId: createNas
   description: |
     NAS를 생성할 수 있습니다.
-    - 네트워크를 통해 g클라우드 SSD, 베이직, 프리미엄 서버에 연결하여 사용하는 스토리지 서비스입니다.
-    - g클라우드 서버의 일반 스토리지보다 저렴한 단가와 대용량의 저장공간을 제공합니다.
-    - 한 대의 NAS에 여러 대의 서버를 연결하여 공유형 스토리지로 사용할 수 있습니다.
-    - 연결 기능을 통해 서버에 ‘NAS 접근권한부여(ACL설정)’가 이루어지는 방식으로 보안성이 뛰어납니다.
-    - 멀티 프로토콜(NFS, CIFS)을 지원합니다.
+    - 네트워크를 통해 다수의 g클라우드 서버(베이직/프리미엄/SSD)에 연결하여 사용할 수 있습니다.
+    - 0.1TB 단위로 최소 1TB에서 최대 10TB까지 생성할 수 있습니다.
+    - 파일 시스템 프로토콜에 따라 2가지 타입으로 NAS를 생성할 수 있습니다.
+      - NFS: Linux를 OS로 사용하는 서버에 NAS를 연결하고자 할 경우 NFS 프로토콜을 사용하는 타입의 NAS를 생성할 수 있습니다. 
+      - CIFS: Windows를 OS로 사용하는 서버에 NAS를 연결하고자 경우 CIFS 프로토콜을 사용하는 타입의 NAS 생성할 수 있습니다.
+    - CIFS를 파일 시스템 프로토콜로 사용하는 NAS의 경우, [CIFS 인증정보 생성](#operation/createNasCifs)을 통해 접근 제어를 위한 CIFS 인증정보(ID, 비밀번호)를 생성할 수 있습니다.
+    - NAS 생성 이후, 서버에 원격 접속해 NAS를 서버에 마운트해야 NAS를 사용할 수 있습니다.
+      - [Linux 서버에 NAS 마운트 하기](https://customer.gabia.com/manuals/detail.php?seq_no=2703)
+      - [Windows 서버에 NAS 마운트 하기](https://customer.gabia.com/manuals/detail.php?seq_no=1857)
 
     ### cURL
     ```
@@ -25,7 +29,7 @@ post:
     - `-4712` : [API] NAS 생성 오류. NAS 마운트패쓰명 중복
 
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -39,9 +43,10 @@ post:
       pattern: ^[a-z]{1}([\w]){0,15}$
       example: mount1
       description: |
-        NAS 마운트 패쓰
-        - 영문 소문자, 숫자, _ (언더바)를 조합하여 최대 16자까지 마운트패스를 설정할 수 있습니다.
-        - 마운트패스는 숫자나 ‘_’(언더바)로는 시작할 수 없습니다.
+        NAS 마운트 시, 경로 지정에 사용될 마운트 패스 설정하는 매개변수입니다.
+        - 이용자의 다른 NAS의 마운트 패스와 중복될 수 없습니다.
+        - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+        - 마운트 패스는 언더바(_)로 시작할 수 없습니다.
     - in: formData
       name: protocol
       required: true
@@ -49,9 +54,9 @@ post:
       enum: [nfs, cifs]
       example: cifs
       description: |
-        NAS 프로토콜
-        - **nfs**: 리눅스 서버와 통신할 때 사용
-        - **cifs**: 윈도우 서버와 통신할 때 사용
+        파일 시스템 프로토콜을 기준으로 NAS의 타입을 설정하는 매개변수입니다.
+        - NFS: OS가 Linux인 서버와 연결해 사용할 수 있는 NAS 타입으로 설정하는 입력값입니다.
+        - CIFS: OS가 Windows인 서버와 연결해 사용할 수 있는 NAS 타입으로 설정하는 입력값입니다.
     - in: formData
       name: size
       required: true
@@ -60,10 +65,8 @@ post:
       maximum: 10.0
       example: 1.5
       description: |
-        NAS 용량
-        - Tera Byte 단위
-        - e.g.) 1.5 -> 1500GB(1536GB)
-        - **1.0** <= size <= **10.0**
+        NAS의 용량을 선택하는 매개변수로 입력값의 단위는 TB입니다.
+        - 1.0 이상 10.0 이하의 값 중에서 선택할 수 있으며, 입력 값은 소수점 첫번째 자리까지만 입력할 수 있습니다.
   x-code-samples:
     - lang: PHP
       source: |
@@ -134,7 +137,7 @@ get:
   summary: NAS 조회
   operationId: geteNasList
   description: |
-    사용자의 모든 NAS 목록을 조회합니다.
+    이용자가 소유한 NAS를 조회할 수 있습니다.
 
     ### cURL
     ```
@@ -145,7 +148,7 @@ get:
       -H 'content-type: application/x-www-form-urlencoded' \
     ```
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -158,11 +161,11 @@ get:
           - user_id: 이용자 ID
           - nas_id: NAS ID
           - name: NAS 자원명
-          - protocol: NAS 프로토콜
+          - protocol: NAS 파일 시스템 프로토콜
           - size: NAS 용량(TB)
           - status: NAS 현재 상태 값
-          - mount_path: NAS 마운트패쓰
-          - private_ip: NAS IP
+          - mount_path: NAS 마운트패스
+          - private_ip: NAS 사설 IP
         - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
         - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
         - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
@@ -177,8 +180,8 @@ get:
           - user_id: 이용자 ID
           - name: NAS 자원명
           - desc: NAS에 대한 설명
-          - size: NAS CPU 용량(TB)
-          - protocol: NAS 프로토콜
+          - size: NAS 용량(TB)
+          - protocol: NAS 파일 시스템 프로토콜
           - regdate: NAS 생성일
           - updatedate: NAS 수정일
         - 사용할 수 있는 정렬 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력할 수 있으며 앞에 입력된 조건의 우선 순위가 높습니다.

@@ -2,6 +2,14 @@ post:
   deprecated: true
   summary: 방화벽 정책 추가
   description: |
+    <div class="fw-deprecated">
+      <i>
+          이 API 사용은 권장되지 않습니다.(`19년 3월 3일 이후 사용 불가)<br>
+          API 사용 시, <a href="#operation/createFirewall">방화벽 그룹 생성</a>, <a href="#operation/attachServerFirewall">서버 방화벽 그룹 설정</a>으로 대체 적용되며 사용자의 의도와 다르게 작동할 수 있습니다.
+      </i>
+    </div>
+    <p></p>
+  
     g클라우드 서버에 방화벽 정책을 추가할 수 있습니다.
     - g클라우드 서버의 네트워크가 차단되었을 경우, 방화벽 정책을 추가할 수 없습니다.
     - 공인 IP가 할당된 g클라우드 서버에 대해서만 방화벽 정책을 추가할 수 있습니다.
@@ -218,6 +226,14 @@ delete:
   deprecated: true
   summary: 방화벽 정책 삭제
   description: |
+    <div class="fw-deprecated">
+      <i>
+          이 API 사용은 권장되지 않습니다.(`19년 3월 3일 이후 사용 불가)<br>
+          API 사용 시, <a href="#operation/updateFirewall">방화벽 그룹 정책 변경</a>으로 대체 적용되며 사용자의 의도와 다르게 작동할 수 있습니다.
+      </i>
+    </div>
+    <p></p>
+
     g클라우드 서버에서 방화벽을 정책을 삭제할 수 있습니다.
     - g클라우드 서버의 네트워크가 차단되었을 경우, 방화벽 정책을 삭제할 수 없습니다.
 

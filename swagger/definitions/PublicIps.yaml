@@ -56,4 +56,4 @@ properties:
   updatedate:
     type: dateTime
     description: 공인 IP의 수정일에 해당하는 속성입니다.
-    example: 0000-00-00 00:00:00
+    example: '2017-09-13 10:28:08'

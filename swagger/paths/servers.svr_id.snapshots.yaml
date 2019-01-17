@@ -1,5 +1,5 @@
 post:
-  summary: 스냅샷 생성
+  summary: 서버 스냅샷 생성
   operationId: createServerSnapshot
   description: |
     g클라우드 서버(베이직/프리미엄)의 현재 상태를 기록하는 스냅샷을 생성할 수 있습니다.

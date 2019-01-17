@@ -1,6 +1,6 @@
 get:
   summary: 토큰 확인
-  operationId: getUser
+  operationId: getToken
   description: |
     JWT의 상태 및 정보를 확인할 수 있습니다.
 
