@@ -42,8 +42,20 @@ properties:
           description: 조회 시점에 해당하는 속성입니다.
         in_traffic:
           type: integer
-          description: Inbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+          description: Inbound 트래픽의 사용량을 나타내는 속성으로 속성값의 단위는 Byte입니다.
         out_traffic:
           type: integer
-          description: Outbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+          description: Outbound 트래픽의 사용량을 나타내는 속성으로 속성값의 단위는 Byte입니다.
+        in_traffic_domestic:
+          type: integer
+          description: Inbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+        out_traffic_domestic:
+          type: integer
+          description: Outbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+        in_traffic_foreign:
+          type: integer
+          description: Inbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+        out_traffic_foreign:
+          type: integer
+          description: Outbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
         

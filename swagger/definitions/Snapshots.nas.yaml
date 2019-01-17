@@ -31,9 +31,12 @@ properties:
     maxLength: 100
     pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
   size:
-    type: float
-    description: 스냅샷의 대상이 된 자원의 용량을 나타내는 속성으로 속성값의 단위는 GB입니다.
+    type: string
+    description: 스냅샷에 대한 설명에 해당하는 속성입니다.
     example: 백업용 스냅샷
+    minLength: 0
+    maxLength: 100
+    pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
   status:
     type: string
     description: |
@@ -48,14 +51,13 @@ properties:
     type: string
     description: |
       스냅샷의 대상이 된 자원의 종류에 해당하는 속성입니다.
-      - SVR: 스냅샷의 대상이 g클라우드 서버임을 나타내는 속성값입니다.
-      - NAS: 스냅샷의 대상이 NAS임을 나타내는 속성값입니다.
-    example: SVR
-    enum: [SVR, NAS]
+      - NAS: 스냅샷의 대상이 g클라우드 서버임을 나타내는 속성값입니다.
+    example: NAS
+    # enum: [NAS]
   cloud_id:
     type: string
     description: 스냅샷의 대상이 된 자원의 ID에 해당하는 속성입니다.
-    example: vm_1
+    example: nas-1
   createdate:
     type: dateTime
     description: 스냅샷의 생성일에 해당하는 속성입니다.

@@ -4,6 +4,7 @@ post:
   description: |
     g클라우드 서버에 공인 IP를 할당할 수 있습니다.
     - 다른 자원에서 이미 사용 중인 공인 IP는 할당할 수 없습니다.
+    - g클라우드 서버에 공인 IP를 할당할 경우, 방화벽 그룹을 서버에 연결할 수 있으며 방화벽 그룹이 허용하는 정책에 대해서만 공인망 통신이 가능합니다. 방화벽 그룹을 연결하지 않을 경우, 원격접속(SSH, RDP)를 비롯한 모든 공인망 통신이 차단됩니다.
     - 동일한 서비스 존을 사용하고 있는 자원에 대해서만 공인 IP를 할당할 수 있습니다.
 
 
@@ -30,6 +31,19 @@ post:
   parameters:
     - $ref: ../parameters/index.yaml#/svr_id
     - $ref: ../parameters/index.yaml#/ip_id
+    - in: body
+      name: ip
+      schema:
+        type: object
+        properties:
+          fg_id: 
+            type: string
+            description: |
+              로드밸런서에 할당할 공인 IP에 해당하는 매개변수입니다.
+              - 다른 자원에 이미 할당된 공인 IP를 입력할 수 없습니다.
+              - 방화벽 그룹을 연결하지 않을 경우, 원격 접속(SSH, RDP)를 비롯한 모든 공인망 통신이 차단됩니다.
+            example: fg_1
+            pattern: ^(fg_)+[1-9]{1}\d*$
   x-code-samples:
     - lang: PHP
       source: |
@@ -102,6 +116,8 @@ delete:
   description: |
     g클라우드 서버에 할당된 공인 IP를 해제할 수 있습니다.
     - g클라우드 서버의 네트워크가 차단되었을 경우, 공인 IP를 해제할 수 없습니다.
+    - 공인 IP 해제 시, 서버에 연결된 방화벽 그룹도 해제됩니다.
+
 
     ### cURL
     ```
@@ -114,8 +130,6 @@ delete:
 
     ### Error Code
     - `-4165` : [API] 서버 IP 해제 오류. IP 해제 불가 상태. IP가 서버에 부착된 상태가 아닙니다.
-    - `-4166` : [API] 서버 IP 해제 오류. IP 해제 불가 상태. IP에 연결된 방화벽이 존재합니다.
-    - `-4167` : [API] 서버 IP 부착 오류. IP 부착 불가 상태. 서버에 부착된 IP가 존재합니다.
     - `-4168` : [API] 서버 IP 해제 오류. IP 해제 불가 상태. 서버 네크워크 차단 상태입니다. 네트워크 허용 후 다시 시도해주세요.
   tags:
     - Servers
@@ -172,7 +186,7 @@ delete:
   responses:
     200:
       description: |
-        Created. 공인 IP 해제 성공
+        OK. 공인 IP 해제 성공
       schema:
         $ref: ../definitions/Servers.yaml
     400:

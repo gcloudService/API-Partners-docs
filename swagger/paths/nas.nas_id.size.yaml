@@ -1,8 +1,8 @@
 put:
-  summary: NAS 용량 변경
+  summary: NAS 사양 변경
   operationId: updateNasSize
   description: |
-    NAS 용량을 변경합니다.
+    NAS 사양을 변경할 수 있습니다.
 
     ### cURL
     ```
@@ -18,7 +18,7 @@ put:
     - `-4714` : [API] NAS 수정 오류. NAS 용량 변경 불가. 현재 사용중인 용량보다 작은 용량으로 변경할 수 없습니다.
 
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -31,10 +31,8 @@ put:
       maximum: 10.0
       example: 1.5
       description: |
-        NAS 용량
-        - Tera Byte 단위
-        - e.g.) 1.5 -> 1500GB
-        - **1.0** <= size <= **10.0**
+        NAS의 용량을 선택하는 매개변수로 입력값의 단위는 TB입니다.
+        - 1.0 이상 10.0 이하의 값 중에서 선택할 수 있으며, 입력 값은 소수점 첫번째 자리까지만 입력할 수 있습니다.
   x-code-samples:
     - lang: PHP
       source: |

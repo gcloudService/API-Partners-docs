@@ -18,7 +18,7 @@ post:
     - `-4731` : [API] NAS 스냅샷 생성 오류. 스냅샷명 중복
 
   tags:
-    - Nas
+    - NAS
     - Snapshots
   produces:
     - application/json

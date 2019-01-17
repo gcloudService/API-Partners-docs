@@ -1,5 +1,6 @@
 put:
   summary: 로드밸런서 고급 설정 변경
+  operationId: updateLbSetup
   description: |
     로드밸런서의 밸런스 모드, 세션 타임아웃, 스티키 세션 정보를 수정할 수 있습니다..
     - 로드밸런서의 네트워크가 차단되었을 경우 설정을 변경 할 수 없습니다.

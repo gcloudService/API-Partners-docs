@@ -1,5 +1,6 @@
 post:
   summary: 연결 서버 추가
+  operationId: addLbServer
   description: |-
     로드밸런서 포트에 g클라우드 서버를 연결하고 서버의 포트를 설정할 수 있습니다.
     - 로드밸런서의 네트워크가 차단되었을 경우 연결 서버를 추가할 수 없습니다.
@@ -124,6 +125,7 @@ post:
         $ref: ../definitions/NotFound.yaml
 put:
   summary: 연결 서버 수정
+  operationId: updateLbServer
   description: |
     로드밸런서 포트에 연결된 g클라우드 서버의 서버 포트를 수정할 수 있습니다.	
     - 로드밸런서의 네트워크가 차단되었을 경우 연결 서버를 수정할 수 없습니다.
@@ -247,6 +249,7 @@ put:
         $ref: ../definitions/NotFound.yaml
 delete:
   summary: 연결 서버 삭제
+  operationId: deleteLbServer
   description: |-
     로드밸런서 포트에 연결된 g클라우드 서버를 삭제(연결 해제)할 수 있습니다.	
     - 로드밸런서의 네트워크가 차단되었을 경우 연결 서버를 삭제할 수 없습니다.

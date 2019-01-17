@@ -148,7 +148,7 @@ properties:
           pattern: ^(fr_)+[1-9]{1}\d*$
         service:
           type: string
-          description: 방화벽의 각 정책의 응용 계층의 프로토콜에 해당하는 속성입니다.	
+          description: 방화벽의 각 정책의 응용 계층의 프로토콜에 해당하는 속성입니다.
           example: HTTP
         protocol:
           type: string

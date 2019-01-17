@@ -1,14 +1,13 @@
 post:
-  summary: NAS CIFS 생성
+  summary: NAS CIFS 인증정보 생성
   operationId: createNasCifs
   description: |
-    NAS CIFS를 생성합니다.
-    - 설정한 CIFS 인증 정보는 CIFS 프로토콜을 사용하는 모든 NAS에 공통으로 적용됩니다.
-    - CIFS 타입의 NAS가 1개 이상 있어야 생성 가능합니다.
-    - 생성 후에 cifs_pw 정보는 다시 확인할 수 없습니다.
-      - cifs_pw는 CIFS를 설정하는 용도로만 사용되며, 해당 정보를 gCloud 팀에서 저장하지 않습니다.
-      - 파트너 측에서 따로 관리해야 합니다.
-      - cifs_pw 분실시 기존 CIFS 삭제 후 다시 생성해야 합니다.
+    CIFS를 파일 시스템 프로토콜로 사용하는 NAS의 경우, 접근 제어를 위한 CIFS 인증정보(ID, 비밀번호)를 생성할 수 있습니다.
+    - CIFS 인증정보는 사용자 별로 지정하며, 사용자의 모든 CIFS 타입의 NAS는 동일한 인증정보를 공유합니다.
+    - 사용자가 1개 이상의 CIFS 타입의 NAS를 소유한 경우에만, CIFS 인증정보를 생성할 수 있습니다.
+    - CIFS 인증 비밀번호는 CIFS 인증정보를 생성한 이후에는 조회할 수 없습니다. 비밀번호가 기억나지 않을 경우, [NAS CIFS 인증 비밀번호 변경](/#operation/updateNasCifsPassword) 기능을 사용할 수 있습니다.
+    - CIFS 인증 ID는 CIFS 인증정보 생성 후에 변경할 수 없습니다. CIFS 인증 ID 변경을 원할 경우, [NAS CIFS 인증정보 삭제](/#operation/deleteNasCifs) 기능을 통해 CIFS 인증정보를 삭제하고 다시 등록해 변경할 수 있습니다.
+
 
     ### cURL
     ```
@@ -25,7 +24,7 @@ post:
     - `-4722` : [API] NAS CIFS 생성 오류. 해당 사용자는 이미 CIFS 정보가 존재합니다.
 
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -36,19 +35,21 @@ post:
       type: string
       pattern: ^[a-z0-9\-_]{1,16}$
       example: mycifs
-      description: CIFS ID
+      description: |
+        NAS CIFS 인증 ID에 해당하는 매개변수입니다.
+        - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
       minLength: 1
       maxLength: 16
     - in: formData
       name: cifs_pw
       required: true
       type: string
-      pattern: ^(?=.*[a-zA-Z]{1,})(?=.*[0-9]{1,})(?=.*[~!@#0^&*_\-+=`\\|()[\]:;"'<>,.?/]{1,}).{8,14}$
+      pattern: ^(?=.*[a-zA-Z]{2,})(?=.*[0-9])(?=.*[~!@#^*_\-=`|()[\]:;"'<>,.?/])[a-zA-Z0-9~!@#^*_\-=`|()[\]:;"'<>,.?/]{8,14}$
       example: cifs
       description: |
-        CIFS 비밀번호
-        - **cifs_id**의 값이 포함될 수 없습니다.
-        - 영문자, 숫자, 특수문자를 포함해야 합니다.
+        NAS 인증 비밀번호에 해당하는 매개변수입니다.
+        - 비밀번호에 cifs_id 입력값이 포함될 수 없습니다.
+        - 최소 2개의 알파벳, 최소 1개의 숫자, 최소 1개의 특수문자(? ! [ \ / ? ; : | * < > @ \ ' " ] ))를 포함하여 8자 이상 14자 이하로 입력할 수 있습니다.
       minLength: 8
       maxLength: 14
   x-code-samples:
@@ -121,11 +122,11 @@ post:
       schema:
         $ref: ../definitions/NotFound.yaml
 get:
-  summary: NAS CIFS 조회
+  summary: NAS CIFS 인증정보 조회
   operationId: getNasCifs
   description: |
-    모든 사용자의 cifs 정보를 조회합니다.
-
+    CIFS 인증정보를 조회할 수 있습니다.
+    - CIFS 인증 비밀번호는 CIFS 인증정보를 생성한 이후에는 조회할 수 없습니다. 비밀번호가 기억나지 않을 경우, [NAS CIFS 인증 비밀번호 변경](/#operation/updateNasCifsPassword) 기능을 사용해 변경할 수 있습니다.
 
     ### cURL
     ```
@@ -139,7 +140,7 @@ get:
     ### Error Code
     - `-4721` : [API] NAS CIFS 조회 오류. 존재하지 않는 사용자입니다.
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -147,31 +148,8 @@ get:
       in: query
       type: string
       description: |
-        특정 사용자 검색
-        - 예시) /v1//nas/cifs?user_id=company_777,company_666
-        - 존재하지 않는 사용자로 조회하면 오류.
-
-        Query Parameter로 user_id를 보내지 않으면, 파트너의 모든 사용자 정보를 가져옵니다.
-        이때, cifs 정보가 있을 때와 없을 때 리턴하는 객체가 다릅니다.
-        - **CIFS 정보 있는 경우**
-        ```json
-        [
-            {
-                "user_id": "company_777",
-                "cifs_id": "mycifs"
-            },
-            // ...
-        ]
-        ```
-        - **CIFS 정보 없는 경우**
-        ```json
-        [
-            {
-                "user_id": "company_666"
-            },
-            // ...
-        ]
-        ```
+        이용자의 ID에 해당하는 매개변수입니다.
+        - 해당 매개변수를 입력하지 않을 경우, 모든 이용자의 CIFS 인증정보가 조회됩니다.
   x-code-samples:
     - lang: PHP
       source: |
@@ -223,20 +201,36 @@ get:
         type: array
         description: Nas 목록
         items:
-          $ref: ../definitions/Cifs.yaml
+          type: object
+          properties:
+            user_id:
+              type: string
+              description: 이용자의 ID에 해당하는 속성입니다.
+              example: company_777
+              minLength: 3
+              maxLength: 16
+              pattern: ^[\w\-]{3,16}$
+            cifs_id:
+              type: string
+              description: |
+                CIFS 인증정보 ID에 해당하는 속성입니다.
+                - CIFS 인증정보가 입력되지 않았거나 삭제된 경우, 속성값은 null로 표기됩니다.
+              example: mycifs
+              minLength: 1
+              maxLength: 16
+              pattern: ^[a-z0-9\-_]{1,16}$
     401:
       description: Unauthorized. 인증 실패
       schema:
         $ref: ../definitions/Unauthorized.yaml
 put:
-  summary: NAS CIFS 수정
-  operationId: updateNasCifs
+  summary: NAS CIFS 인증 비밀번호 변경
+  operationId: updateNasCifsPassword
   description: |
-    CIFS 비밀번호를 변경합니다.
-    - CIFS 비밀번호를 재설정하면 마운트 되어 있던 CIFS 프로토콜의 NAS가 모두 해제됩니다.
-    - 관리콘솔에서 CIFS 비밀번호를 재설정한 경우, 반드시 윈도우 OS에 변경된 CIFS 인증정보를 직접 업데이트해야 합니다.
-      - [윈도우 OS에서 CIFS 인증정보 업데이트 매뉴얼](https://customer.gabia.com/manuals/detail_pop?seq_no=1869)
-    - CIFS ID는 수정 불가합니다. CIFS ID 변경을 위해선 CIFS를 삭제 후 다시 생성합니다.
+    CIFS 인증 비밀번호를 변경할 수 있습니다.
+    - CIFS 인증 비밀번호 변경 시, 모든 CIFS 타입의 NAS가 즉시 마운트 해제됩니다. 해제된 NAS를 재사용하기 위해서는 변경된 인증정보를 활용해 NAS를 다시 마운트해야 합니다.
+    - 변경된 CIFS 인증 비밀번호를 서버가 인식하는데 최대 30초가 소요될 수 있습니다. 지속적으로 인식하지 못할 경우, 서버를 재부팅해 문제를 해결할 수 있습니다.
+
 
     ### cURL
     ```
@@ -254,7 +248,7 @@ put:
     - `-4725` : [API] NAS CIFS 수정 오류. 존재하지 않는 사용자입니다.
     - `-4726` : [API] NAS CIFS 수정 오류. 해당 사용자에 CIfs 정보가 존재하지 않습니다.
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -263,12 +257,12 @@ put:
       name: cifs_pw
       required: true
       type: string
-      pattern: ^(?=.*[a-zA-Z]{1,})(?=.*[0-9]{1,})(?=.*[~!@#0^&*_\-+=`\\|()[\]:;"'<>,.?/]{1,}).{8,14}$
+      pattern: ^(?=.*[a-zA-Z]{2,})(?=.*[0-9])(?=.*[~!@#^*_\-=`|()[\]:;"'<>,.?/])[a-zA-Z0-9~!@#^*_\-=`|()[\]:;"'<>,.?/]{8,14}$
       example: cifs
       description: |
-        CIFS 비밀번호
-        - **cifs_id**의 값이 포함될 수 없습니다.
-        - 영문자, 숫자, 특수문자를 포함해야 합니다.
+        NAS 인증 비밀번호에 해당하는 매개변수입니다.
+        - 비밀번호에 cifs_id 입력값이 포함될 수 없습니다.
+        - 최소 2개의 알파벳, 최소 1개의 숫자, 최소 1개의 특수문자(? ! [ \ / ? ; : | * < > @ \ ' " ] ))를 포함하여 8자 이상 14자 이하로 입력할 수 있습니다.
       minLength: 8
       maxLength: 14
   x-code-samples:
@@ -321,10 +315,10 @@ put:
             console.log(body);
         });
   responses:
-    200:
-      description: OK.기존과 CIFS 비밀번호이기 때문에 기존 정보 반환
-      schema:
-        $ref: ../definitions/Cifs.yaml
+    # 200:
+    #   description: OK.기존과 CIFS 비밀번호이기 때문에 기존 정보 반환
+    #   schema:
+    #     $ref: ../definitions/Cifs.yaml
     201:
       description: Created. Nas CIFS 비밀번호 변경 성공
       schema:
@@ -344,13 +338,13 @@ put:
       schema:
         $ref: ../definitions/NotFound.yaml
 delete:
-  summary: NAS CIFS 삭제
+  summary: NAS CIFS 인증정보 삭제
   operationId: deleteNasCifs
   description: |
-    CIFS 정보를 삭제합니다.
+    CIFS 인증정보를 삭제할 수 있습니다
     - CIFS 비밀번호를 재설정하면 마운트 되어 있던 CIFS 프로토콜의 NAS가 모두 해제됩니다.
     - 관리콘솔에서 CIFS 비밀번호를 재설정한 경우, 반드시 윈도우 OS에 변경된 CIFS 인증정보를 직접 업데이트해야 합니다.
-      - [윈도우 OS에서 CIFS 인증정보 업데이트 매뉴얼](https://customer.gabia.com/manuals/detail_pop?seq_no=1869)
+      - [윈도우 OS에서 CIFS 인증정보 업데이트 매뉴얼](https://customer.gabia.com/manuals/detail.php?seq_no=1869)
     - CIFS ID는 수정 불가합니다. CIFS ID 변경을 위해선 CIFS를 삭제 후 다시 생성합니다.
 
     ### cURL
@@ -368,14 +362,14 @@ delete:
     - `-4728` : [API] NAS CIFS 삭제 오류. 존재하지 않는 사용자입니다.
     - `-4729` : [API] NAS CIFS 삭제 오류. 해당 사용자에 CIfs 정보가 존재하지 않습니다.
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
     - in: query
       name: user_id
       type: string
-      description: 사용자 ID
+      description: 이용자의 ID에 해당하는 매개변수입니다.
       required: true
       minLength: 3
       maxLength: 16

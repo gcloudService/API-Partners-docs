@@ -1,5 +1,5 @@
 get:
-  summary: NAS 상세정보
+  summary: NAS 상세 정보
   operationId: getNas
   description: |
     NAS의 상세 정보를 확인할 수 있습니다.
@@ -13,7 +13,7 @@ get:
       -H 'content-type: application/x-www-form-urlencoded' \
     ```
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -102,7 +102,7 @@ put:
     ### Error Code
     - `-4713` : [API] NAS 수정 오류. NAS명 중복
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -188,7 +188,8 @@ delete:
   operationId: deleteNas
   description: |
     NAS를 삭제할 수 있습니다.
-    - NAS가 생성된 상태(Status:9)인 경우에만 삭제할 수 있습니다.
+    - NAS 삭제 시, 해당 NAS를 대상으로 생성한 NAS 스냅샷도 모두 삭제됩니다.
+    - NAS를 삭제할 때, 해당 NAS가 사용자의 유일한 CIFS 타입의 NAS일 경우, CIFS 인증정보도 모두 삭제됩니다. 
 
     ### cURL
     ```
@@ -202,7 +203,7 @@ delete:
     ### Error Code
     - `-4715` : [API] NAS 삭제 오류. NAS 삭제 불가 상태. 운영중인 NAS만 삭제 가능합니다.
   tags:
-    - Nas
+    - NAS
   produces:
     - application/json
   parameters:
@@ -252,8 +253,8 @@ delete:
             console.log(body);
         });
   responses:
-    202:
-      description: Accepted. NAS 삭제 요청 성공
+    204:
+      description: Accepted. NAS 삭제 성공
       schema:
         $ref: ../definitions/Nas.yaml
     400:

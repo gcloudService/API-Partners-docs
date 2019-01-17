@@ -8,20 +8,15 @@ tags:
   - name: Servers
     description: |
       g클라우드 서버는 가상 서버로 스토리지 종류와 사양에 따라 베이직, 프리미엄, SSD로 나뉩니다.
-  - name: Firewalls
-    description: |
-      TODO
   - name: Volumes
     description: |
       g클라우드 스토리지는 볼륨 스토리지로 g클라우드 서버에 장착하여 사용할 수 있습니다.
   - name: PublicIps
     description: |
       공인 IP를 통해 g클라우드 서버나 로드밸런서를 인터넷망과 연결할 수 있습니다.
-  # - name: Firewall
-  #   description: |
-  #     서버에 방화벽을 추가합니다.
-  #     - 방화벽은 **공인 IP**가 부착된 서버만 추가할 수 있습니다.
-  #     - 추가된 방화벽은 수정 불가합니다.(삭제 후 다시 추가)
+  - name: Firewalls
+    description: |
+      방화벽 그룹은 IP 대역 및 포트 번호를 기반으로 공인망 통신에 대한 트래픽을 제어하는 보안 서비스입니다.
   - name: LoadBalancers
     description: |
       로드밸런서를 통해 트래픽 부하를 여러 개의 g클라우드 서버로 분산시킬 수 있습니다.
@@ -32,10 +27,9 @@ tags:
     description: |
       이미지를 관리하는 API 입니다.
       - 스냅샷을 생성한 시점(g클라우드 서버(SSD)의 경우 이미지를 생성한 시점)과 동일한 서버 환경을 가진 새로운 g클라우드 서버를 생성할 수 있습니다.
-  - name: Nas
+  - name: NAS
     description: |
-      NAS를 활용해 대용량 스토리지 데이터를 안전하고 편리하게 관리할 수 있습니다.
-
+      네트워크를 통해 다수의 g클라우드에 연결하여 사용할 수 있는 대용량 스토리지 서비스입니다. 
   - name: Monitoring
     description: |
       이용자가 사용하는 자원의 시스템 및 네트워크 사용량을 확인할 수 있습니다.
