@@ -33,7 +33,7 @@ properties:
   size:
     type: float
     description: 스냅샷의 대상이 된 자원의 용량을 나타내는 속성으로 속성값의 단위는 GB입니다.
-    example: 백업용 스냅샷
+    example: 50
   status:
     type: string
     description: |
