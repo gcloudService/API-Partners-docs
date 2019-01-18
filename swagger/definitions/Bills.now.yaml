@@ -15,7 +15,7 @@ properties:
   total_charge:
     type: integer
     description: 당월 파트너의 서비스 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
-    example: 79557
+    example: 82757
   charge_summary:
     type: object
     description: 당월 파트너의 각 자원별 총 이용금액에 해당하는 속성으로 객체로 제공됩니다.
@@ -28,6 +28,14 @@ properties:
         type: integer
         description: 당월 파트너의 g클라우드 스토리지 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
         example: 13940
+      nas_total_charge:
+        type: integer
+        description: 당월 파트너의 NAS 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 2200
+      nas_snapshot_total_charge:
+        type: integer
+        description: 당월 파트너의 NAS 스냅샷 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 1000
       ip_total_charge:
         type: integer
         description: 당월 파트너의 공인 IP 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
@@ -38,7 +46,7 @@ properties:
         example: 5802
       snap_total_charge:
         type: integer
-        description: 당월 파트너의 스냅샷 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        description: 당월 파트너의 서버 스냅샷 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 0  
       img_total_charge:
         type: integer

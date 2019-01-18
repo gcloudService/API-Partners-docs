@@ -19,6 +19,14 @@ get:
   produces:
     - application/json
   parameters:
+    - $ref: ../parameters/index.yaml#/bill_date
+    - name: user_id
+      description: 이용자의 ID에 해당하는 속성입니다.
+      in: path
+      required: true
+      type: string
+      pattern: ^[\w\-]{3,16}$
+      example: company_777
     - name: detail
       description: |
         서비스 상세 이용 내역 조회 여부를 선택할 수 있는 매개 변수입니다.

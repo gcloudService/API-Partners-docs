@@ -10,7 +10,7 @@ properties:
     example: "2017-09-12 08:53:12"
   resources:
     type: object
-    description: 이용자가 소유한 자원에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+    description: 이용자가 소유한 자원에 대해 확인할 수 있는 속성으로 객체로 제공됩니다.
     properties:
       servers:
         type: array
@@ -40,6 +40,34 @@ properties:
               type: string
               description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
               example: 추가 스토리지
+      nas:
+        type: array
+        description: 이용자가 소유한 자원 중 NAS에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: NAS의 ID에 해당하는 속성입니다.
+              example: nas_1
+            name:
+              type: string
+              description: NAS의 자원명에 해당하는 속성입니다.
+              example: 백업용 NAS
+      nas_snapshots:
+        type: array
+        description: 이용자가 소유한 자원 중 NAS 스냅샷에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: NAS 스냅샷의 ID에 해당하는 속성입니다.
+              example: snap_1
+            name:
+              type: string
+              description: NAS 스냅샷의 자원명에 해당하는 속성입니다.
+              example: 백업용 NAS 스탭샷
       ips:
         type: array
         description: 이용자가 소유한 자원 중 공인 IP에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
@@ -66,17 +94,17 @@ properties:
               example: 이벤트 로드밸런서
       snapshots:
         type: array
-        description: 이용자가 소유한 자원 중 스냅샷에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        description: 이용자가 소유한 자원 중 서버 스냅샷에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
         items:
           type: object
           properties:
             id:
               type: string
-              description: 스냅샷의 ID에 해당하는 속성입니다.
+              description: 서버 스냅샷의 ID에 해당하는 속성입니다.
               example: snap_1
             name:
               type: string
-              description: 스냅샷의 자원명에 해당하는 속성입니다.
+              description: 서버 스냅샷의 자원명에 해당하는 속성입니다.
               example: 백업용 스냅샷
       images:
         type: array
@@ -92,3 +120,17 @@ properties:
               type: string
               description: 이미지의 자원명에 해당하는 속성입니다.
               example: 스케일아웃 이미지
+      firewalls:
+        type: array
+        description: 이용자가 소유한 자원 중 방화벽 그룹에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 방화벽 그룹의 ID에 해당하는 속성입니다.
+              example: fg_1
+            name:
+              type: string
+              description: 방화벽 그룹의 자원명에 해당하는 속성입니다.
+              example: 기본 방화벽

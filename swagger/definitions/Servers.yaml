@@ -137,7 +137,16 @@ properties:
           example: 10.222.222.143
   fws:
     type: array
-    description: g클라우드 서버에 설정된 방화벽 정보를 확인할 수 있는 속성으로 배열로 제공됩니다.
+    description: |
+      g클라우드 서버에 설정된 방화벽 정보를 확인할 수 있는 속성으로 배열로 제공됩니다.
+
+      <div class="fw-deprecated">
+        <div>
+          <span>deprecated</span>
+        </div>
+        <i>이 속성의 사용은 권장되지 않습니다.(`19년 3월 3일 이후 사용 불가)<br></i>
+      </div>
+      
     items:
       type: object
       properties:
@@ -230,6 +239,24 @@ properties:
           type: string
           description: 스냅샷의 자원명에 해당하는 속성입니다.
           example: backup-snap
+          minLength: 1
+          maxLength: 16
+          pattern: ^[\w\-]{1,16}$p
+  firewalls:
+    type: array
+    description: g클라우드 서버에 설정된 방화벽 그룹을 확인할 수 있는 속성으로 배열로 제공됩니다.
+    items:
+      type: object
+      properties:
+        fg_id :
+          type: string
+          description: 방화벽 그룹의 ID에 해당하는 속성입니다.
+          example: fg_1
+          pattern: ^(fg_)+[1-9]{1}\d*$
+        name:
+          type: string
+          description: 방화벽 그룹의 자원명에 해당하는 속성입니다.
+          example: basic-firewall
           minLength: 1
           maxLength: 16
           pattern: ^[\w\-]{1,16}$p

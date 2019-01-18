@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.1] - 2019-01-18
+### Changed
+- [Servers](https://cpapi.gabia.com/docs/#tag/Servers)
+    - Responses
+        - added `firewalls` 
+        - deprecated `fws` 
+
+- [Users](https://cpapi.gabia.com/docs/#tag/Users)
+    - Responses
+        - added `nas` 
+        - added `nas_snapshots` 
+        - added `firewalls` 
+
+- [Bills](https://cpapi.gabia.com/docs/#tag/Bills)
+    - Path Parameters
+        - added `bill_date`
+        - added `user_id`
+    - Responses
+        - added `nas_total_charge` 
+        - added `nas_snapshot_total_charge` 
+        - added `nas` 
+        - added `nas_snapshots` 
+
 ## [1.2.0] - 2019-01-17
 
 `RELEASED` on [github](https://github.com/gcloudService/API-Partners-docs/releases/tag/1.2.0)

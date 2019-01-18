@@ -138,3 +138,7 @@ header a {
     border-radius:5px;
     padding:20px
 }
+
+.fw-deprecated div {margin-bottom:20px}
+
+.fw-deprecated div span {color:white;background-color:#f1c400;padding:5px;border-radius:2px}

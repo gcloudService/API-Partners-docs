@@ -18,43 +18,51 @@ properties:
     example: 02
   total_charge:
     type: integer
-    description: 당월 파트너의 서비스 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+    description: 당월 이용자의 서비스 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
     example: 126852
   charge_summary:
     type: object
-    description: 당월 파트너의 각 자원별 총 이용금액에 해당하는 속성으로 객체로 제공됩니다.
+    description: 당월 이용자의 각 자원별 총 이용금액에 해당하는 속성으로 객체로 제공됩니다.
     properties:
       svr_total_charge:
         type: integer
-        description: 당월 파트너의 g클라우드 서버 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        description: 당월 이용자의 g클라우드 서버 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 88000
       vol_total_charge:
         type: integer
-        description: 당월 파트너의 g클라우드 스토리지 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        description: 당월 이용자의 g클라우드 스토리지 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
         example: 8052
+      nas_total_charge:
+        type: integer
+        description: 당월 이용자의 NAS 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 2200
+      nas_snapshot_total_charge:
+        type: integer
+        description: 당월 이용자의 NAS 스냅샷 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
+        example: 1000
       ip_total_charge:
         type: integer
-        description: 당월 파트너의 공인 IP 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        description: 당월 이용자의 공인 IP 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
         example: 5500
       lb_total_charge:
         type: integer
-        description: 당월 파트너의 로드밸런서 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        description: 당월 이용자의 로드밸런서 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 16500
       snap_total_charge:
         type: integer
-        description: 당월 파트너의 스냅샷 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        description: 당월 이용자의 서버 스냅샷 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 2200  
       img_total_charge:
         type: integer
-        description: 당월 파트너의 이미지 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
+        description: 당월 이용자의 이미지 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 6600
       traffic_total_charge:
         type: integer
-        description: 당월 파트너의 트래픽 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        description: 당월 이용자의 트래픽 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
         example: 0  
       license_total_charge:
         type: integer
-        description: 당월 파트너의 라이선스 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
+        description: 당월 이용자의 라이선스 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
         example: 0
   charge_detail:
     type: object
@@ -140,6 +148,62 @@ properties:
               type: integer
               description: g클라우드 스토리지의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
               example: 33000
+      nas:
+        type: array
+        description: 이용자의 NAS 상세 이용 내역에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            nas_id:
+              type: string
+              description: NAS의 ID에 해당하는 속성입니다.
+              example: nas_1
+            name:
+              type: string
+              description: NAS의 자원명에 해당하는 속성입니다.
+              example: test nas
+            size:
+              type: float
+              description: NAS의 용량에 해당하는 속성으로 속성값의 단위는 TB입니다.
+              example: 1.0
+            start:
+              type: dateTime
+              description: NAS의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            end:
+              type: dateTime
+              description: NAS의 해당월 서비스 종료일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: NAS의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 33000
+      nas_snapshots:
+        type: array
+        description: 이용자의 NAS 스냅샷 상세 이용 내역에 대한 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            snap_id:
+              type: string
+              description: NAS스냅샷의 ID에 해당하는 속성입니다.
+              example: snap_1
+            name:
+              type: string
+              description: NAS 스냅샷의 자원명에 해당하는 속성입니다.
+              example: test nas snapshot
+            nas_id:
+              type: string
+              description: NAS 스냅샷의 ID에 해당하는 속성입니다.
+              example: nas_1
+            date:
+              type: dateTime
+              description: NAS 스냅샷의 생성일에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              example: '2018-02-01 00:00:00'
+            charge:
+              type: integer
+              description: NAS 스냅샷의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              example: 33000
       ips:
         type: array
         description: 이용자의 공인 IP 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
@@ -195,34 +259,34 @@ properties:
               example: 16500
       snapshots:
         type: array
-        description: 이용자의 스냅샷 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
+        description: 이용자의 서버 스냅샷 사용 내역과 서비스 이용료에 대한 속성으로 배열로 제공됩니다.
         items:
           type: object
           properties:
             snap_id:
               type: string
-              description: 스냅샷의 ID에 해당하는 속성입니다.
+              description: 서버 스냅샷의 ID에 해당하는 속성입니다.
               example: snap_1
             name:
               type: string
-              description: 스냅샷의 자원명에 해당하는 매개변수입니다.
+              description: 서버 스냅샷의 자원명에 해당하는 매개변수입니다.
               example: test snap
             svr_id:
               type: string
-              description: 스냅샷의 대상이 된 서버의 ID에 해당하는 속성입니다.
+              description: 서버 스냅샷의 대상이 된 서버의 ID에 해당하는 속성입니다.
               example: vm_1
             svr_ip:
               type: string
               format: ipv4
-              description: 스냅샷의 대상이 된 서버의 IP에 해당하는 속성입니다.
+              description: 서버 스냅샷의 대상이 된 서버의 IP에 해당하는 속성입니다.
               example: 10.222.222.145
             date:
               type: dateTime
-              description: 스냅샷의 생성일에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
+              description: 서버 스냅샷의 생성일에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
               example: '2018-02-01 00:00:00'
             charge:
               type: integer
-              description: 스냅샷의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
+              description: 서버 스냅샷의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
               example: 2200
       images:
         type: array
