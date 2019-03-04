@@ -135,54 +135,6 @@ properties:
           format: ipv4
           description: 공인 IP의 주소에 해당하는 속성입니다.
           example: 10.222.222.143
-  fws:
-    type: array
-    description: |
-      g클라우드 서버에 설정된 방화벽 정보를 확인할 수 있는 속성으로 배열로 제공됩니다.
-
-      <div class="fw-deprecated">
-        <div>
-          <span>deprecated</span>
-        </div>
-        <i>이 속성의 사용은 권장되지 않습니다.(`19년 3월 3일 이후 사용 불가)<br></i>
-      </div>
-      
-    items:
-      type: object
-      properties:
-        fw_id:
-          type: string
-          description: 방화벽의 ID에 해당하는 속성입니다.
-          example: fr_1
-          pattern: ^(fr_)+[1-9]{1}\d*$
-        service:
-          type: string
-          description: 방화벽의 각 정책의 응용 계층의 프로토콜에 해당하는 속성입니다.
-          example: HTTP
-        protocol:
-          type: string
-          description: 방화벽의 각 정책의 네트워크 및 전송 계층의 프로토콜에 해당하는 속성입니다.
-          example: TCP
-        start_port:
-          type: integer
-          description: 방화벽의 각 정책이 접속을 허용하는 port 구간의 시작 점에 해당하는 속성입니다.
-          example: 80
-          minimum: 1
-          maximum: 65535
-        end_port:
-          type: integer
-          description: 방화벽의 각 정책이 접속을 허용하는 port 구간의 종료 점에 해당하는 속성입니다.
-          example: 80
-          minimum: 1
-          maximum: 65535
-        ip_group:
-          type: string
-          description: 방화벽이 접속을 허용하는 IP의 그룹에 해당하는 속성으로 속성 값은 CIDR 방식(X.X.X.X/X)으로 표현됩니다.
-          example: 0.0.0.0/0
-        desc:
-          type: string
-          description: 방화벽의 각 정책에 대한 설명에 해당하는 속성입니다.
-          example: apache 방화벽
   lbs:
     type: array
     description: g클라우드 서버에 연결된 로드밸런서를 확인할 수 있는 속성으로 배열로 제공됩니다.

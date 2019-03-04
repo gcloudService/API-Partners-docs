@@ -8,6 +8,12 @@ post:
     - g클라우드 서버(SSD)의 경우, 스냅샷 생성 과정 없이 바로 이미지를 생성할 수 있습니다.
     - g클라우드 서버(SSD)의 경우, 이미지의 대상이 되는 g클라우드 서버가 다른 이미지를 생성 중일 때는 추가로 이미지를 생성할 수 없습니다.
     - g클라우드 서버의 상태 값이 정지된 상태(status: 01)이거나 시작된 상태(status:03)일 때만 이미지를 생성할 수 있습니다.
+    - 기본 이미지는 가비아 클라우드사업부에 의해 관리 및 배포되며, 파트너가 생성할 수 없습니다.
+    - 파트너 이미지는 파트너 ID와 동일한 이용자 ID를 사용해 생성할 수 있습니다. 해당 ID는 파트너 승인 시, 자동으로 생성됩니다.
+    - 파트너 이미지는 생성과 동시에 파트너의 모든 이용자가 해당 이미지에 대한 접근 권한을 갖습니다.
+    - 이용자 이미지는 이용자 ID를 사용해 생성할 수 있습니다.
+    - 이용자 이미지는 해당 이미지를 생성한 이용자만 접근 권한을 갖습니다.
+
 
 
 
@@ -36,7 +42,17 @@ post:
   produces:
     - application/json
   parameters:
-    - $ref: ../parameters/index.yaml#/user_id
+    - in: formData
+      name: user_id
+      type: string
+      description: |
+        이용자의 ID에 해당하는 매개변수입니다.
+        - 파트너 ID와 동일한 입력 값을 사용할 경우, 파트너 이미지가 생성됩니다.
+      required: true
+      minLength: 3
+      maxLength: 16
+      pattern: ^[\w\-]{3,16}$
+      example: company_777
     - $ref: ../parameters/index.yaml#/img_name
     - $ref: ../parameters/index.yaml#/img_desc
     - in: formData
@@ -161,8 +177,10 @@ get:
         - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
         - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
           - 예시) /v1/images?q=user_id=company_777,status=9
-        - **기본 제공 이미지는 이용자 ID(user_id)에 cloud를 입력해 조회할 수 있습니다.**
+        - **기본 이미지는 이용자 ID(user_id)에 cloud를 입력해 조회할 수 있으며, 다른 조회 조건을 통해서는 조회할 수 없습니다.**
           - 예시) /v1/images?q=user_id=cloud
+        - **파트너 이미지는 이용자 ID(user_id)에 파트너 ID를 입력해 조회할 수 있습니다.**
+          - 예시) /v1/images?q=user_id=biz_1004
     - name: order
       in: query
       type: string

@@ -20,8 +20,6 @@
   $ref: ./servers.svr_id.network.yaml
 /servers/{svr_id}/volumes/{voL_id}:
   $ref: ./servers.svr_id.volumes.vol_id.yaml
-/servers/{svr_id}/fws:
-  $ref: ./servers.svr_id.fws.yaml
 /servers/{svr_id}/firewalls/{fg_id}:
   $ref: ./servers.svr_id.firewalls.fg_id.yaml
 /servers/{svr_id}/ips/{ip_id}:

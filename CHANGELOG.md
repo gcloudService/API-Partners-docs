@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2019-03-04
+### Changed
+- [Users](https://cpapi.gabia.com/docs/#tag/Users)
+    - `cloud`라는 사용자 생성 불가
+    - 파트너 ID와 동일한 사용자 생성 불가
+
+- [Servers](https://cpapi.gabia.com/docs/#tag/Servers)
+    - removed `POST /servers/:svr_id/fws`
+    - removed `DELETE /servers/:svr_id/fws`
+    - Responses
+        - removed `fws`
+
+- [Images](https://cpapi.gabia.com/docs/#tag/Images)
+    - 파트너 ID와 동일한 사용자가 만든 이미지 자동으로 파트너의 모든 사용자에게 공유
+        - 이미지 생성 후 추가되는 사용자도 자동으로 공유 가능
+
 ## [1.2.1] - 2019-01-18
 ### Changed
 - [Servers](https://cpapi.gabia.com/docs/#tag/Servers)
@@ -45,7 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 > `방화벽 정책 추가`, `방화벽 정책 삭제` API는 더 이상 유효하지 않습니다.
 >
-> 기존 API와의 호환을 위해 2019.02.28 까지 유지하고 해당 API는 이용중지 됩니다.
+> 기존 API와의 호환을 위해 2019.03.03 까지 유지하고 해당 API는 이용중지 됩니다.
 > 
 > 유지 기간 동안 해당 API를 이용 시 내부적으로 `서버 방화벽 그룹 설정`, `서버 방화벽 그룹 해제`를 호출합니다.
 
