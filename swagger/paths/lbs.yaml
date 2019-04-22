@@ -1,4 +1,5 @@
 post:
+  deprecated: true
   summary: 로드밸런서 생성
   operationId: createLb
   description: |
@@ -252,6 +253,7 @@ post:
       schema:
         $ref: ../definitions/NotFound.yaml
 get:
+  deprecated: true
   summary: 로드밸런서 조회
   operationId: getLbList
   description: |

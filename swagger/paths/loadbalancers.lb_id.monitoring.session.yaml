@@ -1,34 +1,27 @@
-put:
-  deprecated: true
-  summary: 로드밸런서 IP 변경
-  operationId: updateLbIp
+get:
+  summary: 로드밸런서 세션 사용량 조회
+  operationId: getLoadbalancerSession
   description: |
-    로드밸런서에 할당된 공인 IP를 다른 공인 IP로 변경할 수 있습니다.
-    - 로드밸런서의 네트워크가 차단되었을 경우 공인 IP를 변경할 수 없습니다.
-    - 동일한 존에 생성된 공인 IP로만 변경할 수 있습니다.
-    - 다른 자원에 할당되지 않은 공인 IP로만 변경할 수 있습니다.
+    로드밸런서의 세션 사용량을 조회할 수 있습니다.
+    - 로드밸런서에 연결된 서버가 없을 경우, 세션 사용량을 조회할 수 없습니다.
+    - 로드밸런서의 설정이 바뀌면, 조회 값이 초기화됩니다.
+
 
     ### cURL
     ```
-    curl -X PUT \
-      https://cpapi.gabia.com/v1/lbs/lbg_1/ips/pubIp_1 \
+    curl -X GET \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1/monitoring/session \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
     ```
-
-    ### Error Code
-    - `-4624` : [API] 로드밸런서 IP 변경 오류. 로드밸런서 IP 삭제 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
-    - `-4625` : [API] 로드밸런서 IP 변경 오류. 현재 로드밸런스의 IP와 다른 IP만 변경 가능.
-    - `-4626` : [API] 로드밸런서 IP 변경 오류. 로드밸런서의 서비스존과 IP의 서비스존이 다릅니다.
-    - `-4627` : [API] 로드밸런서 IP 변경 오류. 선택한 IP가 다른 서비스에 부착되어 있습니다.
   tags:
-    - LoadBalancers
-  produces:
-    - application/json
+  - LoadBalancers
+  - Monitoring
   parameters:
     - $ref: ../parameters/index.yaml#/lb_id
-    - $ref: ../parameters/index.yaml#/ip_id
+  produces:
+    - application/json
   x-code-samples:
     - lang: PHP
       source: |
@@ -36,13 +29,13 @@ put:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://cpapi.gabia.com/v1/lbs/ips/pubIp_1",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/lbg_1/monitoring/session",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_CUSTOMREQUEST => "GET",
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
@@ -59,8 +52,8 @@ put:
         var request = require("request");
 
         var options = {
-          method: 'PUT',
-          url: 'https://cpapi.gabia.com/v1/lbs/ips/pubIp_1',
+          method: 'GET',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/lbg_1/monitoring/session',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',
@@ -74,10 +67,10 @@ put:
           console.log(body);
         });
   responses:
-    201:
-      description: Created. 로드밸런서 IP 변경 성공
+    200:
+      description: OK. 로드밸런서 세션 사용량 조회 성공
       schema:
-        $ref: ../definitions/LoadBalancersNew.yaml
+        $ref: ../definitions/Monitoring.lb.session.yaml
     400:
       description: Bad request. 파라미터 오류
       schema:
@@ -87,7 +80,7 @@ put:
       schema:
         $ref: ../definitions/Unauthorized.yaml
     403:
-      description: Forbidden. lb_id,ip_id 파트너/사용자의 자원이 아닌 경우
+      description: Forbidden. 파트너/사용자의 자원이 아닌 경우
       schema:
         $ref: ../definitions/PermissionDeny.yaml
     404:

@@ -134,3 +134,17 @@ properties:
               type: string
               description: 방화벽 그룹의 자원명에 해당하는 속성입니다.
               example: 기본 방화벽
+      certificates:
+        type: array
+        description: 이용자가 소유한 자원 중 SSL 인증서에 대해 확인할 수 있는 속성으로 배열로 제공됩니다.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: SSL 인증서의 ID 에 해당하는 속성입니다.
+              example: crt_1
+            name:
+              type: string
+              description: SSL 인증서명에 해당하는 속성입니다.
+              example: evt_site-cert

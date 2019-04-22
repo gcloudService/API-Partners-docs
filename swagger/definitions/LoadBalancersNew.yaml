@@ -1,0 +1,240 @@
+type: object
+properties:
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w\-]{3,16}$
+  lb_id:
+    type: string
+    description: 로드밸런서의 ID에 해당하는 속성입니다.
+    example: lbg_1
+    pattern: ^(lbg_)+[1-9]{1}\d*$
+  name:
+    type: string
+    description: 로드밸런서의 자원명에 해당하는 속성입니다.
+    example: lb-test
+    minLength: 1
+    maxLength: 16
+    pattern: ^[\w\-]{1,16}$
+  desc:
+    type: string
+    description: 로드밸런서에 대한 설명에 해당하는 속성입니다.
+    example: basic-lb
+    minLength: 0
+    maxLength: 100
+    pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  regdate:
+    type: dateTime
+    description: 로드밸런서의 생성일에 해당하는 속성입니다.
+    example: 2017-09-14 05:14:26
+  status:
+    type: string
+    description: |
+      로드밸런서의 현재 상태값을 나타내는 속성입니다.
+      - 9: 로드밸런서가 생성된 상태를 나타내는 속성값입니다.
+      - D: 로드밸런서가 삭제된 상태를 나타내는 속성값입니다.
+    example: '9'
+    enum: ['9', D]
+  network:
+    type: string
+    description: 로드밸런서의 네트워크 차단 여부를 확인할 수 있는 속성입니다.
+    example: start
+    enum: [start, stop]
+  service_zone:
+    type: string
+    description: 로드밸런서의 서비스 존을 확인할 수 있는 속성입니다.
+    enum: [zone_1]
+    pattern: ^(zone_)+[1-9]{1}\d*$
+    example: zone_1
+  network_type:
+    type: string
+    description: |
+      로드밸런서의 네트워크 타입에 해당하는 속성입니다.
+      - E: External 타입을 의미하는 값입니다. private_ip 속성이 null 로 표시됩니다.
+      - I: Internal 타입을 의미하는 값입니다. 
+    example: E
+    enum: [E, I]
+  private_ip:
+    type: string
+    description: |
+      로드밸런서에 기본으로 할당되는 사설 IP에 해당하는 속성입니다.
+      - 로드밸런서의 네트워크 타입이 External 인 경우 null 로 표시됩니다.
+    example: null
+    format: ipv4
+  balance_mode:
+    type: string
+    description: |
+      밸런스 모드에 해당하는 속성입니다.
+      - r: 밸런스 모드로 라운드로빈을 선택했음을 나타내는 속성값입니다.
+      - l: 밸런스 모드로 리스트 커넥션을 선택했음을 나타내는 속성값입니다.
+      - h: 밸런스 모드로 해쉬-소스 IP를 선택했음을 나타내는 속성값입니다.
+    enum: [r, l, h]
+    example: r
+  session_time:
+    type: integer
+    description: 세션 타임아웃에 해당하는 속성으로 속성값의 단위는 초입니다.
+    example: 180
+    minimum: 1
+    maximum: 300
+  session_cookie:
+    type: string
+    description: 세션 쿠키 사용 여부에 해당하는 속성입니다.
+    example: Y
+    enum: [Y, N]
+  xff:
+    type: string
+    description: X-Forwarded-For 설정에 해당하는 속성입니다.
+    example: Y
+    enum: [Y, N]
+  sticky_session:
+    type: integer
+    description: 스티키세션 사용 여부에 해당하는 속성입니다.
+    example: Y
+    enum: [Y, N]
+  program:
+    type: string
+    description: |
+      스티키세션 사용 시 등록한 서버 개발언어에 해당하는 속성입니다.
+      - php: 서버개발 언어로 PHP를 선택했음을 나타내는 속성값입니다.
+      - asp: 서버개발 언어로 ASP를 선택했음을 나타내는 속성값입니다.
+      - net: 서버개발 언어로 ASP.NET을 선택했음을 나타내는 속성값입니다.
+      - jsp: 서버개발 언어로 JSP를 선택했음을 나타내는 속성값입니다.
+    example: php
+    enum: [php, asp, net, jsp]
+  token_length:
+    type: integer
+    description: 스티키세션의 토큰 길이에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+    example: 64
+    minimum: 1
+    maximum: 256
+  sticky_time:
+    type: integer
+    description: |
+      스티키세션의 세션 유효시간에 해당하는 속성으로 속성값의 단위는 초입니다.
+    example: 10800
+    minimum: 1
+    maximum: 86400
+  ports:
+    type: array
+    description: 로드밸런서 포트를 확인할 수 있는 속성으로 배열로 제공됩니다.
+    items:
+      type: object
+      description: 로드밸런서 포트를 확인할 수 있는 속성으로 배열로 제공됩니다.
+      properties:
+        port:
+          type: integer
+          description: 로드밸런서 포트의 번호에 해당하는 속성입니다.
+          example: 80
+          minimum: 1
+          maximum: 65535
+        protocol:
+          type: string
+          description: |
+            로드밸런서 포트의 프로토콜(모드)에 해당하는 속성값입니다.
+            - HTTP: 포트의 프로토콜(모드)를 HTTP로 선택했음을 나타내는 속성값입니다.
+            - HTTPS: 포트의 프로토콜(모드)를 HTTPS로 선택했음을 나타내는 속성값입니다.
+            - TCP: 포트의 프로토콜(모드)를 TCP로 선택했음을 나타내는 속성값입니다.
+          example: HTTPS
+          enum: [HTTP, HTTPS, TCP]
+        offloading:
+          type: string
+          description: |
+            로드밸런서 포트의 Offloading 설정 사용 여부에 해당하는 속성값입니다.
+            - 로드밸런서 포트의 프로토콜이 HTTPS인 경우에만 표시됩니다.
+          example: Y
+          enum: [Y, N]
+        desc:
+          type: string
+          description: 로드밸런서 포트에 대한 설명에 해당하는 속성입니다.
+          example: 'HTTPS port 80'
+          minLength: 0
+          maxLength: 100
+          pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+        servers:
+          type: array
+          description: 로드밸런서 포트에 연결된 서버에 해당하는 속성으로 배열로 제공됩니다.
+          items:
+            type: object
+            properties:
+              svr_id:
+                type: string
+                description: 로드밸런서 포트에 연결된 서버의 ID에 해당하는 속성입니다.
+                example: vm_1
+                pattern: ^(vm_)+[1-9]{1}\d*$
+              name:
+                type: string
+                description: 로드밸런서 포트에 연결된 서버 이름에 해당하는 속성입니다.
+                example: my-server
+                pattern: ^[\w\-]{1,16}$
+              port:
+                type: integer
+                description: 로드밸런서 포트에 연결된 서버의 포트에 해당하는 속성입니다.
+                example: 80
+                minimum: 1
+                maximum: 65535
+        certificates:
+          type: array
+          description: |
+            로드밸런서 포트에 연결된 SSL 인증서 해당하는 속성으로 배열로 제공됩니다.
+            - 로드밸런서 포트의 프로토콜이 HTTPS인 경우에만 표시됩니다.
+          items:
+            type: object
+            properties:
+              crt_id:
+                type: string
+                description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
+                example: crt_1
+                pattern: ^(crt_)+[1-9]{1}\d*$
+              name:
+                type: string
+                description: 로드밸런서 포트에 연결된 SSL 인증서의 이름에 해당하는 속성입니다.
+                example: my_ssl_crt
+                pattern: ^[\w\-]{1,16}$
+  ips:
+    type: array
+    description: |
+      로드밸런서에 할당된 공인 IP를 확인할 수 있는 속성으로 배열로 제공됩니다.
+    items:
+      type: object
+      properties:
+        ip_id:
+          type: string
+          description: 로드밸런서의 할당된 공인 IP의 ID에 해당하는 속성입니다.
+          example: pubIp_1
+          pattern: ^(pubIp_)+[1-9]{1}\d*$
+        ip_addr:
+          type: string
+          format: ipv4
+          description: 로드밸런서의 할당된 공인 IP의 주소에 해당하는 속성입니다.
+          example: 10.222.222.148
+        service_zone:
+          type: string
+          description: 로드밸런서에 할당된 공인 IP가 생성된 서비스 존에 해당하는 속성입니다.
+          enum: [zone_1]
+          pattern: ^(zone_)+[1-9]{1}\d*$
+          example: zone_1
+  firewalls:
+    type: array
+    description: 로드밸런서에 설정된 방화벽 그룹을 확인할 수 있는 속성으로 배열로 제공됩니다.
+    items:
+      type: object
+      properties:
+        fg_id :
+          type: string
+          description: 방화벽 그룹의 ID에 해당하는 속성입니다.
+          example: fg_1
+          pattern: ^(fg_)+[1-9]{1}\d*$
+        name:
+          type: string
+          description: 방화벽 그룹의 자원명에 해당하는 속성입니다.
+          example: basic-firewall
+          minLength: 1
+          maxLength: 16
+          pattern: ^[\w\-]{1,16}$p

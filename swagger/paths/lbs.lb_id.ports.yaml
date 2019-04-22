@@ -1,4 +1,5 @@
 post:
+  deprecated: true
   summary: 로드밸런서 포트 추가
   operationId: addLbPort
   description: |
@@ -123,6 +124,7 @@ post:
       schema:
         $ref: ../definitions/NotFound.yaml
 put:
+  deprecated: true
   summary: 로드밸런서 포트 변경
   operationId: updateLbPort
   description: |
@@ -247,6 +249,7 @@ put:
       schema:
         $ref: ../definitions/NotFound.yaml
 delete:
+  deprecated: true
   summary: 로드밸런서 포트 삭제
   operationId: deleteLbPort
   description: |

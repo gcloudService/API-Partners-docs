@@ -270,3 +270,11 @@ collectionOrder:
     목록의 정렬(내림차순의 정렬은 **-**를 앞에 붙입니다.)
     - e.g.) /v1/servers?order=-name,cpu
       - 이름의 내림차순, cpu의 오름차순
+crt_id:
+  name: crt_id
+  description: SSL 인증서 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: string
+  pattern: ^(crt_)+[1-9]{1}\d*$
+  example: crt_1
