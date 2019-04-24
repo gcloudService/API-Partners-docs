@@ -105,5 +105,5 @@
   $ref: ./nas.cifs.yaml
 /certificates:
   $ref: ./certificates.yaml
-/certificates/{crt_id}:
-  $ref: ./certificates.crt_id.yaml
+/certificates/{ssl_id}:
+  $ref: ./certificates.ssl_id.yaml

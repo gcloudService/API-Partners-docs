@@ -187,7 +187,7 @@ properties:
           items:
             type: object
             properties:
-              crt_id:
+              ssl_id:
                 type: string
                 description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                 example: crt_1

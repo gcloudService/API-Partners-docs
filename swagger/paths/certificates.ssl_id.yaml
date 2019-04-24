@@ -16,7 +16,7 @@ get:
   tags:
     - Certificates
   parameters:
-    - $ref: ../parameters/index.yaml#/crt_id
+    - $ref: ../parameters/index.yaml#/ssl_id
   produces:
     - application/json
   x-code-samples:
@@ -264,7 +264,7 @@ delete:
   tags:
     - Certificates
   parameters:
-    - $ref: ../parameters/index.yaml#/crt_id
+    - $ref: ../parameters/index.yaml#/ssl_id
   produces:
     - application/json
   x-code-samples:

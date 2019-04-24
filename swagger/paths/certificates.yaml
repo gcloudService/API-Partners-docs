@@ -206,7 +206,7 @@ get:
       description: |
         조회 결과에 대한 정렬 조건을 설정하는 매개변수 입니다.
         - 정렬 가능 대상
-          - crt_id: SSL 인증서 ID
+          - ssl_id: SSL 인증서 ID
           - user_id: 이용자 ID
           - status: SSL 인증서의 현재 상태 값
           - regdate: SSL 인증서의 등록일

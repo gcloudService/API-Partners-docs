@@ -807,8 +807,8 @@ parameters:
       목록의 정렬(내림차순의 정렬은 **-**를 앞에 붙입니다.)
       - e.g.) /v1/servers?order=-name,cpu
         - 이름의 내림차순, cpu의 오름차순
-  crt_id:
-    name: crt_id
+  ssl_id:
+    name: ssl_id
     description: SSL 인증서 ID에 해당하는 매개변수입니다.
     in: path
     required: true
@@ -16820,7 +16820,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -17265,7 +17265,7 @@ paths:
                         items:
                           type: object
                           properties:
-                            crt_id:
+                            ssl_id:
                               type: string
                               description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                               example: crt_1
@@ -17623,7 +17623,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -18538,7 +18538,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -19143,7 +19143,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -19589,7 +19589,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -20027,7 +20027,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -20478,7 +20478,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -23298,7 +23298,7 @@ paths:
                       items:
                         type: object
                         properties:
-                          crt_id:
+                          ssl_id:
                             type: string
                             description: 로드밸런서 포트에 연결된 SSL 인증서의 ID에 해당하는 속성입니다.
                             example: crt_1
@@ -34270,7 +34270,7 @@ paths:
                 minLength: 3
                 maxLength: 16
                 pattern: '^[\w\-]{3,16}$'
-              crt_id:
+              ssl_id:
                 type: string
                 description: SSL 인증서 ID에 해당하는 속성입니다.
                 example: crt_1
@@ -34415,7 +34415,7 @@ paths:
             조회 결과에 대한 정렬 조건을 설정하는 매개변수 입니다.
 
             - 정렬 가능 대상
-              - crt_id: SSL 인증서 ID
+              - ssl_id: SSL 인증서 ID
               - user_id: 이용자 ID
               - status: SSL 인증서의 현재 상태 값
               - regdate: SSL 인증서의 등록일
@@ -34492,7 +34492,7 @@ paths:
                   minLength: 3
                   maxLength: 16
                   pattern: '^[\w\-]{3,16}$'
-                crt_id:
+                ssl_id:
                   type: string
                   description: SSL 인증서 ID에 해당하는 속성입니다.
                   example: crt_1
@@ -34564,7 +34564,7 @@ paths:
                 type: string
                 description: 에러 설명
                 example: '[Auth] JWT 오류. 유효하지 않은 secret key'
-  '/certificates/{crt_id}':
+  '/certificates/{ssl_id}':
     get:
       summary: SSL 인증서 상세 정보
       operationId: getCertificate
@@ -34583,7 +34583,7 @@ paths:
       tags:
         - Certificates
       parameters:
-        - name: crt_id
+        - name: ssl_id
           description: SSL 인증서 ID에 해당하는 매개변수입니다.
           in: path
           required: true
@@ -34653,7 +34653,7 @@ paths:
                 minLength: 3
                 maxLength: 16
                 pattern: '^[\w\-]{3,16}$'
-              crt_id:
+              ssl_id:
                 type: string
                 description: SSL 인증서 ID에 해당하는 속성입니다.
                 example: crt_1
@@ -34958,7 +34958,7 @@ paths:
                 minLength: 3
                 maxLength: 16
                 pattern: '^[\w\-]{3,16}$'
-              crt_id:
+              ssl_id:
                 type: string
                 description: SSL 인증서 ID에 해당하는 속성입니다.
                 example: crt_1
@@ -35122,7 +35122,7 @@ paths:
       tags:
         - Certificates
       parameters:
-        - name: crt_id
+        - name: ssl_id
           description: SSL 인증서 ID에 해당하는 매개변수입니다.
           in: path
           required: true
