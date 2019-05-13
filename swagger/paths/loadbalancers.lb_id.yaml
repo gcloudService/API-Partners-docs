@@ -353,9 +353,6 @@ put:
                   description: |
                     변경 후 로드밸런서 포트 설정에 해당하는 속성입니다.
                   type: object
-                  required:
-                    - port
-                    - protocol
                   properties:
                     port:
                       description: |
