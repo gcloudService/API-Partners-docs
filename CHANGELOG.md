@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.1] - 2019-05-14
+### Changed
+- Snapshots, Images, Server(삭제) 관련 문구 수정
+
 ## [1.3.0] - 2019-03-04
 ### Changed
 - [Users](https://cpapi.gabia.com/docs/#tag/Users)
