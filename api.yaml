@@ -23748,7 +23748,6 @@ paths:
                             maximum: 65535
               network:
                 type: string
-<<<<<<< HEAD
                 description: 로드밸런서의 네트워크 차단 여부를 확인할 수 있는 속성입니다.
                 example: start
               lp:
@@ -23774,103 +23773,6 @@ paths:
                     example: zone_1
         '201':
           description: Created. 로드밸런서 고급 설정 변경 성공
-=======
-                description: 에러 설명
-                example: '[API] 자원 접근 권한. 입력된 값과 일치하는 자원이 존재하지 않음.'
-    delete:
-      summary: 스냅샷 삭제
-      operationId: deleteSnapshot
-      description: >
-        스냅샷을 삭제할 수 있습니다.
-
-        - 삭제할 스냅샷과 연결된 서버가 다른 스냅샷을 생성 중이거나 삭제 중일 경우에는 삭제할 수 없습니다.
-
-        - 이미지를 생성 중인 경우에는 스냅샷을 삭제할 수 없습니다.
-
-        - 삭제할 스냅샷과 연결된 서버가 시작, 정지 상태가 아닐 때는 스냅샷을 삭제할 수 없습니다.
-
-
-        ### cURL
-
-        ```
-
-        curl -X DELETE \
-          https://cpapi.gabia.com/v1/snapshots/snap_1 \
-          -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
-          -H 'cache-control: no-cache' \
-          -H 'content-type: application/x-www-form-urlencoded' \
-        ```
-
-
-        ### Error Code
-
-        - `-4421` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 스냅샷 삭제하려는 서버에 스냅샷이 '생성중' 혹은
-        '삭제중' 상태입니다.
-
-        - `-4422` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 스냅샷 삭제하려는 서버에 이미지가 생성중입니다.
-
-        - `-4423` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 스냅샷 삭제하려는 서버가 '시작', '정지' 상태일
-        때만 스냅샷 삭제 가능합니다.
-      tags:
-        - Snapshots
-      produces:
-        - application/json
-      parameters:
-        - name: snap_id
-          description: 스냅샷의 ID에 해당하는 매개변수입니다.
-          in: path
-          required: true
-          type: string
-          pattern: '^(snap_)+[1-9]{1}\d*$'
-          example: vm_1
-      x-code-samples:
-        - lang: PHP
-          source: |
-            <?php
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => "https://cpapi.gabia.com/v1/snapshots/snap_1",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "DELETE",
-              CURLOPT_HTTPHEADER => array(
-                "authorization: Bearer {YOUR-JWT-TOKEN}",
-                "cache-control: no-cache",
-                "content-type: application/x-www-form-urlencoded",
-              ),
-            ));
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-
-            curl_close($curl);
-        - lang: Node.js
-          source: |
-            var request = require("request");
-
-            var options = {
-              method: 'DELETE',
-              url: 'https://cpapi.gabia.com/v1/snapshots/snap_1',
-              headers: {
-                'cache-control': 'no-cache',
-                'content-type': 'application/x-www-form-urlencoded',
-                'authorization': 'Bearer {YOUR-JWT-TOKEN}'
-              }
-            };
-
-            request(options, function(error, response, body) {
-              if (error) throw new Error(error);
-
-              console.log(body);
-            });
-      responses:
-        '202':
-          description: Accepted. 스냅샷 삭제 요청(비동기) 성공
->>>>>>> 5205e9a5fa80e274edd09b687b26d0767f583d7a
           schema:
             type: object
             properties:
@@ -24133,37 +24035,7 @@ paths:
       summary: 로드밸런서 네트워크 차단
       operationId: updateLbNetwork
       description: >
-<<<<<<< HEAD
         로드밸런서 트래픽을 차단하거나 재개할 수 있습니다.
-=======
-        스냅샷 또는 g클라우드 서버(SSD)를 통해 이미지를 생성할 수 있습니다.
-
-        - g클라우드 서버(베이직/프리미엄)의 경우, 스냅샷을 생성한 후, 이미지를 생성할 수 있습니다.
-
-        - g클라우드 서버(베이직/프리미엄)의 경우, 이미지의 대상이 되는 스냅샷이 생성되고 있는 상태(status:0)이거나 삭제되고
-        있는 상태(status:2)인 경우에 이미지를 생성할 수 없습니다.
-
-        - g클라우드 서버(SSD)의 경우, 스냅샷 생성 과정 없이 바로 이미지를 생성할 수 있습니다.
-
-        - 이미지의 대상이 되는 g클라우드 서버가 다른 이미지를 생성 중일 때는 추가로 이미지를 생성할 수 없습니다.
-
-        - g클라우드 서버의 상태 값이 정지된 상태(status: 01)이거나 시작된 상태(status:03)일 때만 이미지를 생성할 수
-        있습니다.
-
-        - 기본 이미지는 가비아 클라우드사업부에 의해 관리 및 배포되며, 파트너가 생성할 수 없습니다.
-
-        - 파트너 이미지는 파트너 ID와 동일한 이용자 ID를 사용해 생성할 수 있습니다. 해당 ID는 파트너 승인 시, 자동으로
-        생성됩니다.
-
-        - 파트너 이미지는 생성과 동시에 파트너의 모든 이용자가 해당 이미지에 대한 접근 권한을 갖습니다.
-
-        - 이용자 이미지는 이용자 ID를 사용해 생성할 수 있습니다.
-
-        - 이용자 이미지는 해당 이미지를 생성한 이용자만 접근 권한을 갖습니다.
-
-
-
->>>>>>> 5205e9a5fa80e274edd09b687b26d0767f583d7a
 
 
         ### cURL
@@ -27942,13 +27814,20 @@ paths:
     delete:
       summary: 스냅샷 삭제
       operationId: deleteSnapshot
-      description: |
+      description: >
         스냅샷을 삭제할 수 있습니다.
+
         - 삭제할 스냅샷과 연결된 서버가 다른 스냅샷을 생성 중이거나 삭제 중일 경우에는 삭제할 수 없습니다.
-        - 이미지를 생성 중이거나 삭제 중일 경우에는 스냅샷을 삭제할 수 없습니다.
+
+        - 이미지를 생성 중인 경우에는 스냅샷을 삭제할 수 없습니다.
+
+        - 삭제할 스냅샷과 연결된 서버가 시작, 정지 상태가 아닐 때는 스냅샷을 삭제할 수 없습니다.
+
 
         ### cURL
+
         ```
+
         curl -X DELETE \
           https://cpapi.gabia.com/v1/snapshots/snap_1 \
           -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
@@ -27956,9 +27835,16 @@ paths:
           -H 'content-type: application/x-www-form-urlencoded' \
         ```
 
+
         ### Error Code
-        - `-4421` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 스냅샷이 '생성중' 혹은 '삭제중' 상태입니다.
-        - `-4422` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 서버에 이미지가 생성중입니다.
+
+        - `-4421` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 스냅샷 삭제하려는 서버에 스냅샷이 '생성중' 혹은
+        '삭제중' 상태입니다.
+
+        - `-4422` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 스냅샷 삭제하려는 서버에 이미지가 생성중입니다.
+
+        - `-4423` : [API] 스냅샷 삭제 오류. 스냅샷 삭제 불가 상태. 스냅샷 삭제하려는 서버가 '시작', '정지' 상태일
+        때만 스냅샷 삭제 가능합니다.
       tags:
         - Snapshots
       produces:
@@ -28175,8 +28061,7 @@ paths:
 
         - g클라우드 서버(SSD)의 경우, 스냅샷 생성 과정 없이 바로 이미지를 생성할 수 있습니다.
 
-        - g클라우드 서버(SSD)의 경우, 이미지의 대상이 되는 g클라우드 서버가 다른 이미지를 생성 중일 때는 추가로 이미지를 생성할
-        수 없습니다.
+        - 이미지의 대상이 되는 g클라우드 서버가 다른 이미지를 생성 중일 때는 추가로 이미지를 생성할 수 없습니다.
 
         - g클라우드 서버의 상태 값이 정지된 상태(status: 01)이거나 시작된 상태(status:03)일 때만 이미지를 생성할 수
         있습니다.
