@@ -20263,8 +20263,8 @@ paths:
               console.log(body);
             });
       responses:
-        '200':
-          description: Ok. 로드밸런서 네트워크 변경 성공
+        '201':
+          description: Created. 로드밸런서 네트워크 변경 성공
           schema:
             type: object
             properties:
