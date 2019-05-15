@@ -138,6 +138,7 @@ post:
               - network_type 이 E인 경우, 꼭 입력해야 하는 값입니다.
               - 다른 자원에 이미 할당된 공인 IP를 입력할 수 없습니다.
             pattern: ^(pubIp_)+[1-9]{1}\d*$
+            type: string
             example: pubIp_1
           fg_id:
             description: |
