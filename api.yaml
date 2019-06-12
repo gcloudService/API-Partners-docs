@@ -20772,6 +20772,18 @@ paths:
                       type: integer
                       description: Outbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
                       example: 0
+                    in_traffic_domestic:
+                      type: integer
+                      description: Inbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+                    out_traffic_domestic:
+                      type: integer
+                      description: Outbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+                    in_traffic_foreign:
+                      type: integer
+                      description: Inbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+                    out_traffic_foreign:
+                      type: integer
+                      description: Outbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
         '400':
           description: Bad request. 파라미터 오류
           schema:
@@ -26768,6 +26780,18 @@ paths:
                       type: integer
                       description: Outbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
                       example: 0
+                    in_traffic_domestic:
+                      type: integer
+                      description: Inbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+                    out_traffic_domestic:
+                      type: integer
+                      description: Outbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+                    in_traffic_foreign:
+                      type: integer
+                      description: Inbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+                    out_traffic_foreign:
+                      type: integer
+                      description: Outbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
         '400':
           description: Bad request. 파라미터 오류
           schema:
@@ -30563,32 +30587,24 @@ paths:
                           description: >
                             Inbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                           example: 0
                         out_traffic_domestic:
                           type: integer
                           description: >
                             Outbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                           example: 0
                         in_traffic_foreign:
                           type: integer
                           description: >
                             Inbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                           example: 0
                         out_traffic_foreign:
                           type: integer
                           description: >
                             Outbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                         charge:
                           type: integer
                           description: 트래픽 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
@@ -31222,32 +31238,24 @@ paths:
                           description: >
                             Inbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                           example: 0
                         out_traffic_domestic:
                           type: integer
                           description: >
                             Outbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                           example: 0
                         in_traffic_foreign:
                           type: integer
                           description: >
                             Inbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                           example: 0
                         out_traffic_foreign:
                           type: integer
                           description: >
                             Outbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는
                             Byte입니다.
-
-                            - type 속성의 속성값이 svr인 경우에만 확인할 수 있습니다.
                         charge:
                           type: integer
                           description: 트래픽 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
