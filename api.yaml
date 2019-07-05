@@ -331,7 +331,7 @@ info:
           {
             "rel": "self",
             "method": "GET",
-            "hresf": "http://cpapi.gabia.com/v1/servers/vm_1"
+            "href": "https://cpapi.gabia.com/v1/servers/vm_1"
           }
         ]
       }
@@ -347,7 +347,7 @@ info:
       {
         "user_id": "company_777",
         "timestamp": "2017-11-27 05:11:03",
-        "linsk": "http://cpapi.gabia.com/v1/servers/vm_1",
+        "link": "https://cpapi.gabia.com/v1/servers/vm_1",
         "resource_id": "vm_1",
         "result": "Success",
         "work": "servers.create"
@@ -370,14 +370,15 @@ info:
           | servers.password | g클라우드 서버 비밀번호 발급/변경|
           | volumes.create   | g클라우드 스토리지 생성   |
           | volumes.delete   | g클라우드 스토리지 삭제   |
-          | snapshots.create | 스냅샷 생성              |
-          | snapshots.delete | 스냅샷 삭제              |
+          | snapshots.create | 스냅샷, NAS 스냅샷 생성   |
+          | snapshots.delete | 스냅샷, NAS스냅샷 삭제    |
           | images.create    | 이미지 생성              |
           | images.delete    | 이미지 삭제              |
-          | servers.start    | g클라우드 서버 시작      |
-          | servers.stop     | g클라우드 서버 정지      |
-          | servers.kill     | g클라우드 서버 삭제      |
-          | servers.reboot   | g클라우드 서버 재시작    |
+          | servers.start    | g클라우드 서버 시작       |
+          | servers.stop     | g클라우드 서버 정지       |
+          | servers.kill     | g클라우드 서버 삭제       |
+          | servers.reboot   | g클라우드 서버 재시작     |
+          | nas.create       | NAS 생성                 |
 
     ## API 테스트
 
