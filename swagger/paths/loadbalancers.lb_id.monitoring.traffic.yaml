@@ -1,14 +1,13 @@
 get:
-  deprecated: true
   summary: 로드밸런서 트래픽 사용량 조회
-  operationId: getLbTraffic
+  operationId: getLoadbalancerTraffic
   description: |
     이용자의 로드밸런서 트래픽 사용량을 조회할 수 있습니다.
 
     ### cURL
     ```
     curl -X GET \
-      http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/traffic \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1/monitoring/traffic \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
@@ -26,7 +25,7 @@ get:
         - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다.
         - start 또는 end 값이 입력된 경우 range 값은 적용되지 않습니다.
         - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
-        - 예시) /v1/lbs/lbg_1/monitoring/traffic?range=day
+        - 예시) /v1/loadbalancers/lbg_1/monitoring/traffic?range=day
       in: query
       enum: [day, week, month]
       type: string
@@ -38,7 +37,7 @@ get:
         - end 를 입력하고 start를 입력하지 않은 경우, start 값은 end 값의 하루 전 값으로 입력됩니다. 단, 이때 start 값이 서버 생성 시간보다 작은 값일 경우 start 값은 서버 생성 시간으로 입력됩니다.
         - 현재 시간보다 큰 값으로 입력할 수 없습니다.
         - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
-        - 예시) /v1/lbs/lbg_1/monitoring/traffic?end=2018-01-01 00:00:00
+        - 예시) /v1/loadbalancers/lbg_1/monitoring/traffic?end=2018-01-01 00:00:00
       in: query
       type: string
       format: dateTime
@@ -52,8 +51,7 @@ get:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_PORT => "3000",
-          CURLOPT_URL => "http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/traffic",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/lbg_1/monitoring/traffic",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -77,7 +75,7 @@ get:
 
         var options = {
           method: 'GET',
-          url: 'http://10.222.222.227:3000/v1/lbs/lbg_1/monitoring/traffic',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/lbg_1/monitoring/traffic',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',
@@ -104,7 +102,7 @@ get:
       schema:
         $ref: ../definitions/Unauthorized.yaml
     403:
-      description: Forbidden. 서버가 파트너/사용자의 자원이 아닌 경우
+      description: Forbidden. 파트너/사용자의 자원이 아닌 경우
       schema:
         $ref: ../definitions/PermissionDeny.yaml
     404:

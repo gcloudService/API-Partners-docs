@@ -4,6 +4,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.0] - 2019-07-05
+### Added
+- [Certificates](https://cpapi.gabia.com/docs/#tag/Certificates)
+    - SSL 인증서 CRUD API 추가
+### Changed
+- [Loadbalancers](https://cpapi.gabia.com/docs/#tag/LoadBalancers)
+    - added `POST /loadbalancers`
+    - added `GET /loadbalancers`
+    - added `GET /loadbalancers/:lb_id`
+    - added `PUT /loadbalancers/:lb_id`
+    - added `DELETE /loadbalancers/:lb_id`
+    - added `PUT /loadbalancers/:lb_id/ips/:ip_id`
+    - added `POST /loadbalancers/:lb_id/firewalls/:fg_id`
+    - added `DELETE /loadbalancers/:lb_id/firewalls/:fg_id`
+    - added `PUT /loadbalancers/:lb_id/network`
+    - added `GET /loadbalancers/:lb_id/monitoring/traffic`
+    - added `GET /loadbalancers/:lb_id/monitoring/session`
+    - deprecated `POST /lbs`
+    - deprecated `GET /lbs`
+    - deprecated `GET /lbs/:lb_id`
+    - deprecated `PUT /lbs/:lb_id`
+    - deprecated `DELETE /lbs/:lb_id`
+    - deprecated `PUT /lbs/:lb_id/ips/:ip_id`
+    - deprecated `PUT /lbs/:lb_id/setup`
+    - deprecated `PUT /lbs/:lb_id/network`
+    - deprecated `POST /lbs/:lb_id/ports`
+    - deprecated `PUT /lbs/:lb_id/ports`
+    - deprecated `DELETE /lbs/:lb_id/ports`
+    - deprecated `POST /lbs/:lb_id/ports/:port/servers`
+    - deprecated `PUT /lbs/:lb_id/ports/:port/servers`
+    - deprecated `DELETE /lbs/:lb_id/ports/:port/servers`
+    - deprecated `GET /lbs/:lb_id/monitoring/traffic`
+    - deprecated `GET /lbs/:lb_id/monitoring/session`
+- [Users](https://cpapi.gabia.com/docs/#tag/Users)
+    - Responses
+        - added `certificates`
+- [Firewalls](https://cpapi.gabia.com/docs/#tag/Firewalls)
+    - added `POST /loadbalancers/:lb_id/firewalls/:fg_id`
+    - added `DELETE /loadbalancers/:lb_id/firewalls/:fg_id`
+    - Responses
+        - added `attached_lbs`
+- [Monitoring](https://cpapi.gabia.com/docs/#tag/Monitoring)
+    - added `GET /loadbalancers/:lb_id/monitoring/traffic`
+    - added `GET /loadbalancers/:lb_id/monitoring/session`
+    - deprecated `GET /lbs/:lb_id/monitoring/traffic`
+    - deprecated `GET /lbs/:lb_id/monitoring/session`
+- [Bills](https://cpapi.gabia.com/docs/#tag/Bills)
+    - 로드밸런서 국내, 해외 트래픽 요금을 별도로 과금
+
 ## [1.3.2] - 2019-06-05
 ### Changed
 - API 가이드 - 비동기작업 내용 수정

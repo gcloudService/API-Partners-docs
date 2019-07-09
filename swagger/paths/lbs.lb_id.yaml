@@ -1,4 +1,5 @@
 get:
+  deprecated: true
   summary: 로드밸런서 상세 정보
   operationId: getLb
   description: |
@@ -84,6 +85,7 @@ get:
       schema:
         $ref: ../definitions/NotFound.yaml
 put:
+  deprecated: true
   summary: 로드밸런서 정보 변경
   operationId: updateLb
   description: |
@@ -184,6 +186,7 @@ put:
       schema:
         $ref: ../definitions/NotFound.yaml
 delete:
+  deprecated: true
   summary: 로드밸런서 삭제
   operationId: deleteLb
   description: |

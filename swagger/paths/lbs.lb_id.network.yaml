@@ -1,4 +1,5 @@
 put:
+  deprecated: true
   summary: 로드밸런서 네트워크 차단
   operationId: updateLbNetwork
   description: |

@@ -1,4 +1,4 @@
-version: 1.3.1
+version: 1.4.0
 title: 클라우드 파트너 API
 x-logo: 
   url: ./static/gcloud_ptn.jpg
@@ -94,21 +94,18 @@ description: |
     - [방화벽 그룹 삭제](#operation/deleteFirewall)
     - [서버 방화벽 그룹 설정](#operation/attachServerFirewall)
     - [서버 방화벽 그룹 해제](#operation/detachServerFirewall)
+    - [로드밸런서 방화벽 그룹 설정](#operation/attachLoadbalancerFirewall)
+    - [로드밸런서 방화벽 그룹 해제](#operation/detachLoadbalancerFirewall)
   - **[로드밸런서](#tag/LoadBalancers)**
-    - [로드밸런서 조회](#operation/getLbList)
-    - [로드밸런서 생성](#operation/createLb)
-    - [로드밸런서 상세 정보](#operation/getLb)
-    - [로드밸런서 정보 변경](#operation/updateLb)
-    - [로드밸런서 삭제](#operation/deleteLb)
-    - [로드밸런서 IP 변경](#operation/updateLbIp)
-    - [로드밸런서 고급 설정 변경](#operation/updateLbSetup)
-    - [로드밸런서 네트워크 차단](#operation/updateLbNetwork)
-    - [로드밸런서 포트 추가](#operation/addLbPort)
-    - [로드밸런서 포트 변경](#operation/updateLbPort)
-    - [로드밸런서 포트 삭제](#operation/deleteLbPort)
-    - [연결 서버 추가](#operation/addLbServer)
-    - [연결 서버 수정](#operation/updateLbServer)
-    - [연결 서버 삭제](#operation/deleteLbServer)
+    - [로드밸런서 조회](#operation/getLoadbalancerList)
+    - [로드밸런서 생성](#operation/createLoadbalancer)
+    - [로드밸런서 상세 정보](#operation/getLoadbalancer)
+    - [로드밸런서 변경](#operation/updateLoadbalancer)
+    - [로드밸런서 삭제](#operation/deleteLoadbalancer)
+    - [로드밸런서 IP 변경](#operation/updateLoadbalancerIp)
+    - [로드밸런서 방화벽 그룹 설정](#operation/attachLoadbalancerFirewall)
+    - [로드밸런서 방화벽 그룹 해제](#operation/detachLoadbalancerFirewall)
+    - [로드밸런서 네트워크 차단](#operation/updateLoadbalancerNetwork)
   - **[스냅샷](#tag/Snapshots)**
     - [스냅샷 조회](#operation/getSnapshotList)
     - [서버 스냅샷 생성](#operation/createServerSnapshot)
@@ -135,11 +132,17 @@ description: |
     - [NAS CIFS 인증정보 생성](#operation/createNasCifs)
     - [NAS CIFS 인증 비밀번호 변경](#operation/updateNasCifsPassword)
     - [NAS CIFS 인증정보 삭제](#operation/deleteNasCifs)
+  - **[SSL 인증서](#tag/Certificates)**
+    - [SSL 인증서 조회](#operation/getCertificateList)
+    - [SSL 인증서 등록](#operation/createCertificate)
+    - [SSL 인증서 상세 정보](#operation/getCertificate)
+    - [SSL 인증서 변경](#operation/updateCertificate)
+    - [SSL 인증서 삭제](#operation/deleteCertificate)
   - **[모니터링](#tag/Monitoring)**
     - [서버 시스템 사용량 조회](#operation/getServerSystem)
     - [서버 트래픽 사용량 조회](#operation/getServerTraffic)
-    - [로드밸런서 트래픽 사용량 조회](#operation/getLbTraffic)
-    - [로드밸런서 세션 사용량 조회](#operation/getLbSession)
+    - [로드밸런서 트래픽 사용량 조회](#operation/getLoadbalancerTraffic)
+    - [로드밸런서 세션 사용량 조회](#operation/getLoadbalancerSession)
   - **[청구서](#tag/Bills)**
     - [정산금 조회](#operation/getBill)
     - [실시간 요금 현황 조회](#operation/getBillNow)
@@ -304,7 +307,7 @@ description: |
 
   아래 링크를 통해 API Collection을 다운받을 수 있습니다.
 
-  [API Collection 다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.3.0/gCloud.partner.API.1.3.0.postman_collection.json)
+  [API Collection 다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.4.0/gCloud.partner.API.1.4.0.postman_collection.json)
 
   [API Collection 버전 관리(Github)](https://github.com/gcloudService/API-Partners-docs/releases)
 

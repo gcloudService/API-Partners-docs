@@ -1,0 +1,696 @@
+get:
+  summary: 로드밸런서 상세 정보
+  operationId: getLoadbalancer
+  description: |
+    로드밸런서의 상세 정보를 확인할 수 있습니다.
+
+    ### cURL
+    ```
+    curl -X GET \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/json' \
+    ```
+  tags:
+    - LoadBalancers
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/lbg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/json",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'GET',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/lbg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: OK. 로드밸런서 상세 정보 조회 성공
+      schema:
+        $ref: ../definitions/LoadBalancersNew.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+put:
+  summary: 로드밸런서 변경
+  operationId: updateLoadbalancer
+  description: |
+    로드밸런서를 변경할 수 있습니다.
+    - 로드밸런서 이름과 설명을 변경할 수 있습니다.
+    - 로드밸런서 포트를 추가, 변경, 삭제할 수 있습니다.
+    - 로드밸런서의 밸런서 모드, 세션 타임아웃, 세션 쿠키, X-Forwarded-For, 스티키 세션 설정을 변경할 수 있습니다.
+    - 로드밸런서의 네트워크가 차단되었을 경우 설정을 변경할 수 없습니다.
+
+    ### cURL
+    ```
+    curl -X PUT \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/json' \
+      -d {
+        "name": "lb-test",
+        "desc": "basic-lb",
+        "balance_mode": "r",
+        "session_time": 50,
+        "session_cookie": "Y",
+        "xff": "Y",
+        "sticky_session": "Y",
+        "program": "php",
+        "token_length": 64,
+        "sticky_time": 10800,
+        "append_ports": [
+          {
+            "port": 22222,
+            "protocol": "HTTPS",
+            "offloading": "Y",
+            "desc": "HTTPS port 80",
+            "servers": [
+              {
+                "svr_id": "vm_1",
+                "port": 80
+              }
+            ],
+            "certificates": [
+              "crt_1"
+            ]
+          }
+        ],
+        "update_ports": [
+          {
+            "port_num": 80,
+            "port": {
+              "port": 80,
+              "protocol": "HTTPS",
+              "offloading": "Y",
+              "desc": "HTTPS port 80",
+              "servers": [
+                {
+                  "svr_id": "vm_1",
+                  "port": 80
+                }
+              ],
+              "certificates": [
+                "crt_1"
+              ]
+            }
+          }
+        ],
+        "delete_ports": ['443']
+      }
+    ```
+
+    ### Error Code
+    - `-4691` : [API] 로드밸런서 변경 오류. 로드밸런서명 중복
+    - `-4692` : [API] 로드밸런서 변경 오류. 로드밸런서 변경 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4693` : [API] 로드밸런서 변경 오류. 기존 로드밸런서 포트와 중복된 로드밸런서 포트를 추가/변경하거나, 존재하지 않는 로드밸런서 포트를 변경/삭제할 수 없습니다.
+    - `-4694` : [API] 로드밸런서 변경 오류. 설정된 방화벽 그룹에 로드밸런서 포트와 관련된 Inbound 정책이 없습니다.
+    - `-4695` : [API] 로드밸런서 변경 오류. 로드밸런서 포트는 최소 1개 이상이어야 합니다.
+    - `-4696` : [API] 로드밸런서 변경 오류. 로드밸런서 포트는 20개를 초과할 수 없습니다.
+    - `-5101` : [API] 로드밸런서 포트 규칙 오류. 로드밸런서 포트는 API 문서에 정의된 규칙을 따라야 합니다.
+  tags:
+    - LoadBalancers
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - in: body
+      name: loadbalancer
+      schema:
+        type: object
+        properties:
+          name:
+            description: |
+              로드밸런서의 자원명에 해당하는 매개변수입니다.
+              - 이용자의 다른 g클라우드 로드밸런서의 자원명과 중복될 수 없습니다.
+              - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+            type: string
+            minLength: 1
+            maxLength: 16
+            pattern: ^[\w\-]{1,16}$
+            example: lb-test
+          desc:
+            description: |
+              로드밸런서에 대한 설명에 해당하는 매개변수입니다.
+              - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+            type: string
+            minLength: 0
+            maxLength: 100
+            pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+            example: basic-lb
+          balance_mode:
+            description: |
+              로드밸런서 밸런스 모드에 해당하는 매개변수입니다.
+              - 매개변수로 [r, l, h]중 하나를 입력할 수 있으며, 순서대로 라운드 로빈(Round Robin), 리스트 커넥션(Least Connection), 해쉬소스-IP(Hash Source-IP)를 의미합니다.
+            type: string
+            enum: [r, l, h]
+            example: r
+          session_time:
+            description: |
+              로드밸런서와 g클라우드 서버 사이의 세션 타임아웃 시간(초)을 입력하는 매개변수입니다.
+              - [1~300] 사이의 정수 값으로만 입력할 수 있습니다.
+            type: integer
+            minimum: 1
+            maximum: 300
+            example: 180
+          session_cookie:
+            description: |
+              로드밸런서 세션 쿠키 사용여부 해당하는 매개변수입니다.
+              - protocol 이 HTTP, HTTPS인 로드밸런서 포트에만 적용됩니다.
+            type: string
+            enum: [Y, N]
+            example: Y
+          xff:
+            description: |
+              로드밸런서 X-Forwarded-For 설정에 해당하는 매개변수입니다.
+              - protocol 이 HTTP, HTTPS인 로드밸런서 포트에만 적용됩니다.
+            type: string
+            enum: [Y, N]
+            exmaple: Y
+          sticky_session:
+            description: |
+              로드밸런서 스티키 세션 사용여부에 해당하는 매개변수입니다.
+              - protocol 이 HTTP, HTTPS인 로드밸런서 포트에만 적용됩니다.
+            type: string
+            enum: [Y, N]
+            example: Y
+          program:
+            description: |
+              스티키 세션 사용 시, 서버의 개발 언어를 입력하는 매개변수입니다.
+              - sticky_session의 입력 값이 Y일 경우, 꼭 입력해야 하는 값입니다.
+              - [php, asp, net, jsp] 중 하나의 값을 입력할 수 있습니다.
+              - php: 서버 개발 언어로 PHP를 선택하고자 할 때 선택할 수 있는 입력값입니다.
+              - asp: 서버 개발 언어로 ASP를 선택하고자 할 때 선택할 수 있는 입력값입니다.
+              - net: 서버 개발 언어로 ASP.NET를 선택하고자 할 때 선택할 수 있는 입력값입니다.
+              - jsp: 서버 개발 언어로 JSP를 선택하고자 할 때 선택할 수 있는 입력값입니다.
+            type: string
+            enum: [php, asp, net, jsp]
+            example: php
+          token_length:
+            description: |
+              스티키 세션 사용 시, 토큰 길이(Byte)를 입력하는 매개변수입니다.
+              - sticky_session의 입력 값이 Y일 경우, 꼭 입력해야 하는 값입니다.
+              - [1~256] 사이의 정수 값으로만 입력할 수 있습니다.
+            type: integer
+            minimum: 1
+            maximum: 256
+            example: 64
+          sticky_time:
+            description: |
+              스티키 세션 설정 시, 쿠키(토큰)에 대한 세션의 유효시간(초)을 입력하는 매개변수입니다.
+              - sticky_session의 입력 값이 Y일 경우, 꼭 입력해야 하는 값입니다.
+              - [1~86400] 사이의 정수 값으로만 입력할 수 있습니다.
+            type: integer
+            minimum: 1
+            maximum: 86400
+            example: 10800
+          append_ports:
+            description: |
+              로드밸런서 포트 추가를 위한 매개변수로 추가하고자 하는 로드밸런서 포트를 객체의 배열로 입력할 수 있습니다.
+            type: array
+            items:
+              type: object
+              required:
+                - port
+                - protocol
+              properties:
+                port:
+                  description: |
+                    각 로드밸런서 포트의 포트 번호에 해당하는 매개변수입니다.
+                    - [1~65535] 사이 정수 값으로만 입력할 수 있습니다.
+                  type: integer
+                  minimum: 1
+                  maximum: 65535
+                  example: 22222
+                protocol:
+                  description: |
+                    각 로드밸런서 포트의 프로토콜(포트 모드)에 해당하는 매개변수입니다.
+                    - 매개변수로 [HTTP, HTTPS, TCP]중 하나를 입력할 수 있습니다.
+                    - 로드밸런서 포트가 클라이언트, 서버와 어떤 프로토콜로 통신할 지 설정합니다.
+                  type: string
+                  enum: [HTTP, HTTPS, TCP]
+                  example: HTTPS
+                offloading:
+                  description: |
+                    HTTPS 프로토콜을 사용하는 로드밸런서 포트에 대해 Offloading 설정 사용 여부를 입력하는 매개변수입니다.
+                    - protocol의 입력값이 HTTPS일 경우, 꼭 입력해야하는 값입니다.
+                    - [Y, N]중 하나를 입력할 수 있습니다.
+                    - Offloading 을 사용할 경우, 클라이언트↔로드밸런서는 HTTPS를 기반으로, 로드밸런서↔서버는 HTTP를 기반으로 통신합니다. 로드밸런서 포트에만 SSL 인증서를 설정해야 합니다.
+                    - Offloading 을 사용하지 않을 경우, 클라이언트↔로드밸런서↔서버가 모두 HTTPS를 기반으로 통신합니다. 원활한 서비스 이용을 위해, 로드밸런서 포트와 서버 모두에 SSL 인증서를 설정해야 합니다.
+                  type: string
+                  enum: [Y, N]
+                  example: Y
+                desc:
+                  description: |
+                    각 로드밸런서 포트의 설명에 해당하는 매개변수입니다.
+                  type: string
+                  minLength: 0
+                  maxLength: 100
+                  pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+                  example: HTTPS port 80
+                servers:
+                  description: |
+                    각 로드밸런서 포트에 연결된 서버에 해당하는 매개변수로 연결 서버에 대한 정보를 객체의 배열로 입력할 수 있습니다.
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - svr_id
+                      - port
+                    properties:
+                      svr_id:
+                        description: |
+                          연결 서버의 서버 ID 에 해당하는 매개변수입니다.
+                        type: string
+                        pattern: ^(vm_)+[1-9]{1}\d*$
+                        example: vm_1
+                      port:
+                        description: |
+                          연결 서버의 서버 포트에 해당하는 매개변수입니다.
+                          - [1~65535] 사이 정수 값으로만 입력할 수 있습니다.
+                        type: integer
+                        minimum: 1
+                        maximum: 65535
+                        example: 80
+                certificates:
+                  description: |
+                    HTTPS 프로토콜을 사용하는 로드밸런서 포트에 대해 SSL 인증서 설정을 입력하는 매개변수로 SSL 인증서 ID의 배열로 입력할 수 있습니다.
+                    - protocol의 입력값이 HTTPS일 경우, 꼭 입력해야하는 값입니다.
+                  type: array
+                  items:
+                    type: string
+                    pattern: ^(crt_)+[1-9]{1}\d*$
+                    example: crt_1
+                  pattern: ^(crt_)+[1-9]{1}\d*$
+          update_ports:
+            description: |
+              로드밸런서 포트 변경을 위한 매개변수로 변경하고자 하는 로드밸런서 포트를 객체의 배열로 입력할 수 있습니다.
+            type: array
+            items:
+              type: object
+              required:
+                - port_num
+                - port
+              properties:
+                port_num:
+                  description: |
+                    변경하려는 로드밸런서 포트 번호에 해당하는 속성입니다.
+                  type: integer
+                  minimum: 1
+                  maximum: 65535
+                  example: 80
+                port:
+                  description: |
+                    변경 후 로드밸런서 포트 설정에 해당하는 속성입니다.
+                  type: object
+                  properties:
+                    port:
+                      description: |
+                        각 로드밸런서 포트의 포트 번호에 해당하는 매개변수입니다.
+                        - [1~65535] 사이 정수 값으로만 입력할 수 있습니다.
+                      type: integer
+                      minimum: 1
+                      maximum: 65535
+                      example: 80
+                    protocol:
+                      description: |
+                        각 로드밸런서 포트의 프로토콜(포트 모드)에 해당하는 매개변수입니다.
+                        - 매개변수로 [HTTP, HTTPS, TCP]중 하나를 입력할 수 있습니다.
+                        - 로드밸런서 포트가 클라이언트, 서버와 어떤 프로토콜로 통신할 지 설정합니다.
+                      type: string
+                      enum: [HTTP, HTTPS, TCP]
+                      example: HTTPS
+                    offloading:
+                      description: |
+                        HTTPS 프로토콜을 사용하는 로드밸런서 포트에 대해 Offloading 설정 사용 여부를 입력하는 매개변수입니다.
+                        - protocol의 입력값이 HTTPS일 경우, 꼭 입력해야하는 값입니다.
+                        - [Y, N]중 하나를 입력할 수 있습니다.
+                        - Offloading 을 사용할 경우, 클라이언트↔로드밸런서는 HTTPS를 기반으로, 로드밸런서↔서버는 HTTP를 기반으로 통신합니다. 로드밸런서 포트에만 SSL 인증서를 설정해야 합니다.
+                        - Offloading 을 사용하지 않을 경우, 클라이언트↔로드밸런서↔서버가 모두 HTTPS를 기반으로 통신합니다. 원활한 서비스 이용을 위해, 로드밸런서 포트와 서버 모두에 SSL 인증서를 설정해야 합니다.
+                      type: string
+                      enum: [Y, N]
+                      example: Y
+                    desc:
+                      description: |
+                        각 로드밸런서 포트의 설명에 해당하는 매개변수입니다.
+                      type: string
+                      minLength: 0
+                      maxLength: 100
+                      pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+                      example: HTTPS port 80
+                    servers:
+                      description: |
+                        각 로드밸런서 포트에 연결된 서버에 해당하는 매개변수로 연결 서버에 대한 정보를 객체의 배열로 입력할 수 있습니다.
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - svr_id
+                          - port
+                        properties:
+                          svr_id:
+                            description: |
+                              연결 서버의 서버 ID 에 해당하는 매개변수입니다.
+                            type: string
+                            pattern: ^(vm_)+[1-9]{1}\d*$
+                            example: vm_1
+                          port:
+                            description: |
+                              연결 서버의 서버 포트에 해당하는 매개변수입니다.
+                              - [1~65535] 사이 정수 값으로만 입력할 수 있습니다.
+                            type: integer
+                            minimum: 1
+                            maximum: 65535
+                            example: 80
+                    certificates:
+                      description: |
+                        HTTPS 프로토콜을 사용하는 로드밸런서 포트에 대해 SSL 인증서 설정을 입력하는 매개변수로 SSL 인증서 ID의 배열로 입력할 수 있습니다.
+                        - protocol의 입력값이 HTTPS일 경우, 꼭 입력해야하는 값입니다.
+                      type: array
+                      items:
+                        type: string
+                        pattern: ^(crt_)+[1-9]{1}\d*$
+                        example: crt_1
+                      pattern: ^(crt_)+[1-9]{1}\d*$
+          delete_ports:
+            description: |
+              로드밸런서 포트 삭제를 위한 매개변수로 삭제하고자 하는 로드밸런서 포트 번호 목록을 배열로 입력할 수 있습니다.
+              - update_ports 에 입력된 로드밸런서 포트는 삭제할 수 없습니다.
+            type: array
+            items:
+              type: integer
+              minimum: 1
+              maximum: 65535
+              example: 443
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        $data_string = json_encode(array(
+          "name" => "lb-test",
+          "desc" => "basic-lb",
+          "balance_mode" => "r",
+          "session_time" => 180,
+          "session_cookie" => "Y",
+          "xff" => "Y",
+          "sticky_session" => "Y",
+          "program" => "php",
+          "token_length" => 64,
+          "sticky_time" => 10800,
+          "append_ports" => array(
+            array(
+              "port" => 80,
+              "protocol" => "HTTPS",
+              "offloading" => "Y",
+              "desc" => "HTTPS port 80",
+              "servers" => array(
+                array(
+                  "svr_id" => "vm_1",
+                  "port" => 80
+                )
+              ),
+              "certificates" => array(
+                "crt_1"
+              )
+            )
+          ),
+          "update_ports" => array(
+            array(
+              "port_num" => 80,
+              "port" => array(
+                "port" => 80,
+                "protocol" => "HTTPS",
+                "offloading" => "Y",
+                "desc" => "HTTPS port 80",
+                "servers" => array(
+                  array(
+                    "svr_id" => "vm_1",
+                    "port" => 80
+                  )
+                ),
+                "certificates" => array(
+                  "crt_1"
+                )
+              )
+            )
+          ),
+          "delete_ports" => array(443)
+        ));
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/lbg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => $data_string,
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/json",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/lbg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          body: {
+            "name": "lb-test",
+            "desc": "basic-lb",
+            "balance_mode": "r",
+            "session_time": 50,
+            "session_cookie": "Y",
+            "xff": "Y",
+            "sticky_session": "Y",
+            "program": "php",
+            "token_length": 64,
+            "sticky_time": 10800,
+            "append_ports": [
+              {
+                "port": 22222,
+                "protocol": "HTTPS",
+                "offloading": "Y",
+                "desc": "HTTPS port 80",
+                "servers": [
+                  {
+                    "svr_id": "vm_1",
+                    "port": 80
+                  }
+                ],
+                "certificates": [
+                  "crt_1"
+                ]
+              }
+            ],
+            "update_ports": [
+              {
+                "port_num": 80,
+                "port": {
+                  "port": 80,
+                  "protocol": "HTTPS",
+                  "offloading": "Y",
+                  "desc": "HTTPS port 80",
+                  "servers": [
+                    {
+                      "svr_id": "vm_1",
+                      "port": 80
+                    }
+                  ],
+                  "certificates": [
+                    "crt_1"
+                  ]
+                }
+              }
+            ],
+            "delete_ports": ['443']
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: Created. 로드밸런서 변경 성공
+      schema:
+        $ref: ../definitions/LoadBalancersNew.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+        
+delete:
+  summary: 로드밸런서 삭제
+  operationId: deleteLoadbalancer
+  description: |
+    로드밸런서를 삭제할 수 있습니다.
+    - 로드밸런서의 네트워크가 차단되었을 경우 삭제할 수 없습니다.
+    - 공인 IP가 로드밸런서에 할당되어 있는 경우, 로드밸런서 삭제 시 공인 IP가 해제됩니다.
+    - 방화벽 그룹이 로드밸런서에 연결되어 있는 경우, 로드밸런서 삭제 시 방화벽 그룹이 해제됩니다.
+    - SSL 인증서가 로드밸런서 포트에 설정되어 있는 경우, 로드밸런서 삭제 시 SSL 인증서가 해제됩니다.
+
+    ### cURL
+    ```
+    curl -X DELETE \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/json' \
+    ```
+
+    ### Error Code
+    - `-4661` : [API] 로드밸런서 삭제 오류. 로드밸런서 삭제 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+  tags:
+    - LoadBalancers
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+  produces:
+    - application/json
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/lbg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/json",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'DELETE',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/lbg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    204:
+      description: No Content. 로드밸런서 삭제 성공
+      schema:
+        type: object
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 로드밸런서가 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 로드밸런서가 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml

@@ -43,6 +43,20 @@
   $ref: ./ips.yaml
 /ips/{ip_id}:
   $ref: ./ips.ip_id.yaml
+/loadbalancers:
+  $ref: ./loadbalancers.yaml
+/loadbalancers/{lb_id}:
+  $ref: ./loadbalancers.lb_id.yaml
+/loadbalancers/{lb_id}/ips/{ip_id}:
+  $ref: ./loadbalancers.lb_id.ips.ip_id.yaml
+/loadbalancers/{lb_id}/firewalls/{fg_id}:
+  $ref: ./loadbalancers.lb_id.firewalls.fg_id.yaml
+/loadbalancers/{lb_id}/network:
+  $ref: ./loadbalancers.lb_id.network.yaml
+/loadbalancers/{lb_id}/monitoring/traffic:
+  $ref: ./loadbalancers.lb_id.monitoring.traffic.yaml
+/loadbalancers/{lb_id}/monitoring/session:
+  $ref: ./loadbalancers.lb_id.monitoring.session.yaml
 /lbs:
   $ref: ./lbs.yaml
 /lbs/{lb_id}:
@@ -89,3 +103,7 @@
   $ref: ./nas.nas_id.snapshots.snap_id.recovery.yaml
 /nas/cifs:
   $ref: ./nas.cifs.yaml
+/certificates:
+  $ref: ./certificates.yaml
+/certificates/{ssl_id}:
+  $ref: ./certificates.ssl_id.yaml

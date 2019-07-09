@@ -1,9 +1,9 @@
 put:
-  deprecated: true
   summary: 로드밸런서 IP 변경
-  operationId: updateLbIp
+  operationId: updateLoadbalancerIp
   description: |
     로드밸런서에 할당된 공인 IP를 다른 공인 IP로 변경할 수 있습니다.
+    - 네트워크 타입이 External인 로드밸런서만 공인 IP를 변경할 수 있습니다.
     - 로드밸런서의 네트워크가 차단되었을 경우 공인 IP를 변경할 수 없습니다.
     - 동일한 존에 생성된 공인 IP로만 변경할 수 있습니다.
     - 다른 자원에 할당되지 않은 공인 IP로만 변경할 수 있습니다.
@@ -11,17 +11,18 @@ put:
     ### cURL
     ```
     curl -X PUT \
-      https://cpapi.gabia.com/v1/lbs/lbg_1/ips/pubIp_1 \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1/ips/pubIp_1 \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
-      -H 'content-type: application/x-www-form-urlencoded' \
+      -H 'content-type: application/json' \
     ```
 
     ### Error Code
-    - `-4624` : [API] 로드밸런서 IP 변경 오류. 로드밸런서 IP 삭제 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
+    - `-4624` : [API] 로드밸런서 IP 변경 오류. 로드밸런서 IP 변경 불가 상태. 로드밸런서의 네트워크가 'start' 상태에서만 요청 가능.
     - `-4625` : [API] 로드밸런서 IP 변경 오류. 현재 로드밸런스의 IP와 다른 IP만 변경 가능.
     - `-4626` : [API] 로드밸런서 IP 변경 오류. 로드밸런서의 서비스존과 IP의 서비스존이 다릅니다.
     - `-4627` : [API] 로드밸런서 IP 변경 오류. 선택한 IP가 다른 서비스에 부착되어 있습니다.
+    - `-4628` : [API] 로드밸런서 IP 변경 오류. 네트워크 타입이 External인 로드밸런서만 IP 변경 가능
   tags:
     - LoadBalancers
   produces:
@@ -36,7 +37,7 @@ put:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://cpapi.gabia.com/v1/lbs/ips/pubIp_1",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/ips/pubIp_1",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -46,7 +47,7 @@ put:
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
-            "content-type: application/x-www-form-urlencoded",
+            "content-type: application/json",
           ),
         ));
 
@@ -60,10 +61,10 @@ put:
 
         var options = {
           method: 'PUT',
-          url: 'https://cpapi.gabia.com/v1/lbs/ips/pubIp_1',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/ips/pubIp_1',
           headers: {
             'cache-control': 'no-cache',
-            'content-type': 'application/x-www-form-urlencoded',
+            'content-type': 'application/json',
             'authorization': 'Bearer {YOUR-JWT-TOKEN}'
           }
         };
@@ -87,10 +88,10 @@ put:
       schema:
         $ref: ../definitions/Unauthorized.yaml
     403:
-      description: Forbidden. lb_id,ip_id 파트너/사용자의 자원이 아닌 경우
+      description: Forbidden. 파트너/사용자의 자원이 아닌 경우
       schema:
         $ref: ../definitions/PermissionDeny.yaml
     404:
-      description: Not Found. 존재하지 않음
+      description: Not Found. 자원이 존재하지 않음
       schema:
         $ref: ../definitions/NotFound.yaml

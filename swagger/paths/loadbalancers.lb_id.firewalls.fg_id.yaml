@@ -1,0 +1,193 @@
+post:
+  summary: 로드밸런서 방화벽 그룹 설정
+  operationId: attachLoadbalancerFirewall
+  description: |
+    로드밸런서에 방화벽 그룹을 연결할 수 있습니다.
+    - 네트워크 타입이 External인 로드밸런서만 방화벽 그룹을 연결할 수 있습니다.
+    - 1개의 방화벽 그룹을 여러 개의 로드밸런서에 연결할 수 있습니다.
+    - 로드밸런서에는 1개의 방화벽 그룹만 연결할 수 있습니다.
+    - 방화벽 그룹에 로드밸런서의 모든 포트와 관련된 Inbound 정책이 존재해야 합니다.
+
+    ### cURL
+    ```
+    curl -X POST \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1/firewalls/fg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/json' \
+    ```
+
+    ### Error Code
+    - `-5061` : [API] 로드밸런서 방화벽 그룹 설정 오류. 네트워크 타입이 External인 로드밸런서만 방화벽을 설정할 수 있습니다.
+    - `-5062` : [API] 로드밸런서 방화벽 그룹 설정 오류. 해당 로드밸런서에는 이미 설정된 방화벽이 존재합니다.
+    - `-5063` : [API] 로드밸런서 방화벽 그룹 설정 오류. 네트워크가 정지된 상태에서는 로드밸런서에 방화벽 그룹을 추가할 수 없습니다. 네트워크 허용 후 다시 시도 바랍니다.
+    - `-5064` : [API] 로드밸런서 방화벽 그룹 설정 오류. 로드밸런서 소유자와 방화벽 그룹 소유자가 다릅니다.
+    - `-5065` : [API] 로드밸런서 방화벽 그룹 설정 오류. 방화벽 그룹에 로드밸런서 포트와 관련된 Inbound 정책이 없습니다.
+  tags:
+    - LoadBalancers
+    - Firewalls
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - $ref: ../parameters/index.yaml#/fg_id
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/firewalls/fg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/json",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'PUT',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/firewalls/fg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    201:
+      description: Created. 로드밸런서 방화벽 그룹 설정 성공
+      schema:
+        $ref: ../definitions/LoadBalancersNew.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 자원이 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
+delete:
+  summary: 로드밸런서 방화벽 그룹 해제
+  operationId: detachLoadbalancerFirewall
+  description: |
+    로드밸런서에서 방화벽 그룹을 해제할 수 있습니다.
+    - 로드밸런서에서 방화벽 그룹을 해제할 경우, 해당 로드밸런서에 설정한 포트에 대해 모든 통신이 허용됩니다.
+
+    ### cURL
+    ```
+    curl -X DELETE \
+      https://cpapi.gabia.com/v1/loadbalancers/lbg_1/firewalls/fg_1 \
+      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
+      -H 'cache-control: no-cache' \
+      -H 'content-type: application/json' \
+    ```
+
+    ### Error Code
+    - `-5071` : [API] 로드밸런서 방화벽 그룹 해제 오류. 네트워크 타입이 External인 로드밸런서만 방화벽을 해제할 수 있습니다.
+    - `-5072` : [API] 로드밸런서 방화벽 그룹 해제 오류. 해당 로드밸런서에는 어떤 방화벽도 설정되지 않았습니다.
+    - `-5073` : [API] 로드밸런서 방화벽 그룹 해제 오류. 네트워크가 정지된 상태에서는 로드밸런서에 방화벽 그룹을 해제할 수 없습니다. 네트워크 허용 후 다시 시도 바랍니다.
+    - `-5074` : [API] 로드밸런서 방화벽 그룹 해제 오류. 로드밸런서에 설정된 방화벽과 해제하려는 방화벽이 다릅니다.
+    - `-5075` : [API] 로드밸런서 방화벽 그룹 해제 오류. 로드밸런서 소유자와 방화벽 그룹 소유자가 다릅니다.
+  tags:
+    - LoadBalancers
+    - Firewalls
+  produces:
+    - application/json
+  parameters:
+    - $ref: ../parameters/index.yaml#/lb_id
+    - $ref: ../parameters/index.yaml#/fg_id
+  x-code-samples:
+    - lang: PHP
+      source: |
+        <?php
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/loadbalancers/firewalls/fg_1",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => array(
+            "authorization: Bearer {YOUR-JWT-TOKEN}",
+            "cache-control: no-cache",
+            "content-type: application/json",
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+    - lang: Node.js
+      source: |
+        var request = require("request");
+
+        var options = {
+          method: 'DELETE',
+          url: 'https://cpapi.gabia.com/v1/loadbalancers/firewalls/fg_1',
+          headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'application/json',
+            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          }
+        };
+
+        request(options, function(error, response, body) {
+          if (error) throw new Error(error);
+
+          console.log(body);
+        });
+  responses:
+    200:
+      description: Ok. 로드밸런서 방화벽 그룹 해제 성공
+      schema:
+        $ref: ../definitions/LoadBalancersNew.yaml
+    400:
+      description: Bad request. 파라미터 오류
+      schema:
+        $ref: ../definitions/BadRequest.yaml
+    401:
+      description: Unauthorized. 인증 실패
+      schema:
+        $ref: ../definitions/Unauthorized.yaml
+    403:
+      description: Forbidden. 파트너/사용자의 자원이 아닌 경우
+      schema:
+        $ref: ../definitions/PermissionDeny.yaml
+    404:
+      description: Not Found. 자원이 존재하지 않음
+      schema:
+        $ref: ../definitions/NotFound.yaml
