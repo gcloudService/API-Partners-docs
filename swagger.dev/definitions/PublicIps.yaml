@@ -6,11 +6,11 @@ properties:
     example: biz_1004
   user_id:
     type: string
-    description: 파트너의 ID에 해당하는 속성입니다.
+    description: 이용자의 ID에 해당하는 속성입니다.
     example: company_777
     minLength: 3
     maxLength: 16
-    pattern: ^[\w\-]{3,16}$
+    pattern: ^[\w]{3,16}$
   ip_id:
     type: string
     description: 공인 IP의 ID에 해당하는 속성입니다.

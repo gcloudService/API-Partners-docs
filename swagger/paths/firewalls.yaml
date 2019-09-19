@@ -54,7 +54,7 @@ post:
             description: 이용자의 ID에 해당하는 매개변수입니다.
             minLength: 3
             maxLength: 16
-            pattern: ^[\w\-]{3,16}$
+            pattern: ^[\w]{3,16}$
             example: company_777
           name:
             description: |

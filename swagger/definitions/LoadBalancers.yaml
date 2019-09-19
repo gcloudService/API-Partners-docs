@@ -10,7 +10,7 @@ properties:
     example: company_777
     minLength: 3
     maxLength: 16
-    pattern: ^[\w\-]{3,16}$
+    pattern: ^[\w]{3,16}$
   lb_id:
     type: string
     description: 로드밸런서의 ID에 해당하는 속성입니다.

@@ -59,7 +59,7 @@ post:
       type: string
       minLength: 1
       maxLength: 16
-      pattern: ^[\w\-]{1,16}$
+      pattern: ^[\w]{1,16}$
     - name: desc
       description: |
         g클라우드 서버에 대한 설명을 입력하는 매개변수입니다.

@@ -10,7 +10,7 @@ properties:
     example: company_777
     minLength: 3
     maxLength: 16
-    pattern: ^[\w\-]{3,16}$
+    pattern: ^[\w]{3,16}$
   nas_id:
     type: string
     description: NAS ID

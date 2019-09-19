@@ -51,7 +51,7 @@ post:
       required: true
       minLength: 3
       maxLength: 16
-      pattern: ^[\w\-]{3,16}$
+      pattern: ^[\w]{3,16}$
       example: company_777
     - $ref: ../parameters/index.yaml#/img_name
     - $ref: ../parameters/index.yaml#/img_desc

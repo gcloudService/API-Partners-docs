@@ -11,7 +11,7 @@ properties:
     example: company_777
     minLength: 3
     maxLength: 16
-    pattern: ^[\w\-]{3,16}$
+    pattern: ^[\w]{3,16}$
   lb_session_max:
     type: integer
     description: 로드밸런서의 최대 동시 세션 수에 해당하는 속성입니다.

@@ -25,7 +25,7 @@ get:
       in: path
       required: true
       type: string
-      pattern: ^[\w\-]{3,16}$
+      pattern: ^[\w]{3,16}$
       example: company_777
     - name: detail
       description: |

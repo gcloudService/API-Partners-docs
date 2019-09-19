@@ -27,7 +27,7 @@ delete:
       type: string
       minLength: 3
       maxLength: 16
-      pattern: ^[\w\-]$
+      pattern: ^[\w]{3,16}$
   x-code-samples:
     - lang: PHP
       source: |

@@ -26,7 +26,7 @@ post:
     - name: user_id
       description: |
         이용자의 ID에 해당하는 매개변수입니다.
-        - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 3자 이상 16자 이하로만 입력할 수 있습니다.
+        - 영문, 숫자, 언더바(_)를 사용하여 3자 이상 16자 이하로만 입력할 수 있습니다.
         - 입력 값으로 cloud를 사용할 수 없습니다. 해당 값은 서버 생성을 위한 기본 이미지 조회 용도로 활용됩니다.
         - 입력 값으로 파트너 ID를 사용할 수 없습니다. 파트너 승인 시 파트너 ID와 동일한 ID는 이용자 ID로 자동 등록되며, 파트너 이미지 생성 및 관리와 서버 생성을 위한 이미지 조회 용도로 사용됩니다. 
       in: formData
@@ -34,7 +34,7 @@ post:
       type: string
       minLength: 3
       maxLength: 16
-      pattern: ^[\w\-]$
+      pattern: ^[\w]{3,16}$
   x-code-samples:
     - lang: PHP
       source: |
@@ -96,7 +96,7 @@ post:
           msg:
             type: string
             description: 에러 메세지
-            example: "'user_id' must [alphabetic, numeric, '-', '_'] only combination is possible. (must 3 ~ 50 characters). Your input 'user_id': ''."
+            example: "'user_id' must [alphabetic, numeric, '_'] only combination is possible. (must 3 ~ 16 characters). Your input 'user_id': ''."
           code:
             type: integer
             description: 에러 코드

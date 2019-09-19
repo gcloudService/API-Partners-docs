@@ -10,7 +10,7 @@ properties:
     example: company_777
     minLength: 3
     maxLength: 16
-    pattern: ^[\w\-]{3,16}$
+    pattern: ^[\w]{3,16}$
   fg_id:
     type: string
     description: 방화벽 그룹의 ID에 해당하는 속성입니다.

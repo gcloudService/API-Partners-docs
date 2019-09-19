@@ -382,7 +382,7 @@ delete:
       required: true
       minLength: 3
       maxLength: 16
-      pattern: ^[\w\-]{3,16}$
+      pattern: ^[\w]{3,16}$
       example: company_777
   x-code-samples:
     - lang: PHP

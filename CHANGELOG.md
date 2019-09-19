@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.1] - 2019-09-19
+### Changed
+- user_id validation 수정
+    - `^[\w\-]{3,16}$` -> `^[\w]{3,16}$`
+    - 관련 문구 수정
+
 ## [1.4.0] - 2019-07-05
 ### Added
 - [Certificates](https://cpapi.gabia.com/docs/#tag/Certificates)

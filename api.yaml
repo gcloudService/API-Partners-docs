@@ -4,7 +4,7 @@ schemes:
 host: cpapi.gabia.com
 basePath: /v1
 info:
-  version: 1.4.0
+  version: 1.4.1
   title: 클라우드 파트너 API
   x-logo:
     url: ./static/gcloud_ptn.jpg
@@ -536,7 +536,7 @@ parameters:
     required: true
     minLength: 3
     maxLength: 16
-    pattern: '^[\w\-]{3,16}$'
+    pattern: '^[\w]{3,16}$'
     example: company_777
   svr_id:
     name: svr_id
@@ -1124,7 +1124,7 @@ paths:
           description: >
             이용자의 ID에 해당하는 매개변수입니다.
 
-            - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 3자 이상 16자 이하로만 입력할 수 있습니다.
+            - 영문, 숫자, 언더바(_)를 사용하여 3자 이상 16자 이하로만 입력할 수 있습니다.
 
             - 입력 값으로 cloud를 사용할 수 없습니다. 해당 값은 서버 생성을 위한 기본 이미지 조회 용도로 활용됩니다.
 
@@ -1135,7 +1135,7 @@ paths:
           type: string
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w]{3,16}$'
       x-code-samples:
         - lang: PHP
           source: |
@@ -1347,9 +1347,8 @@ paths:
                 type: string
                 description: 에러 메세지
                 example: >-
-                  'user_id' must [alphabetic, numeric, '-', '_'] only
-                  combination is possible. (must 3 ~ 50 characters). Your input
-                  'user_id': ''.
+                  'user_id' must [alphabetic, numeric, '_'] only combination is
+                  possible. (must 3 ~ 16 characters). Your input 'user_id': ''.
               code:
                 type: integer
                 description: 에러 코드
@@ -1709,7 +1708,7 @@ paths:
           type: string
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]$'
+          pattern: '^[\w]{3,16}$'
       x-code-samples:
         - lang: PHP
           source: |
@@ -1853,7 +1852,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - name: name
           description: |
@@ -2074,7 +2073,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -2509,7 +2508,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 svr_id:
                   type: string
                   description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -2850,7 +2849,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -3278,7 +3277,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -3531,7 +3530,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -3935,7 +3934,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -4368,7 +4367,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -4621,7 +4620,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -5064,7 +5063,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -5480,7 +5479,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -5925,7 +5924,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -6348,7 +6347,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -6768,7 +6767,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -7175,7 +7174,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -7578,7 +7577,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -8019,7 +8018,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -8437,7 +8436,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -8889,7 +8888,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               snap_id:
                 type: string
                 description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -9142,7 +9141,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               type:
                 type: string
                 description: |
@@ -9373,7 +9372,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               range:
                 type: string
                 description: |
@@ -9561,7 +9560,7 @@ paths:
                 description: 이용자의 ID에 해당하는 매개변수입니다.
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
                 example: company_777
               name:
                 description: |
@@ -10278,7 +10277,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               fg_id:
                 type: string
                 description: 방화벽 그룹의 ID에 해당하는 속성입니다.
@@ -11025,7 +11024,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 fg_id:
                   type: string
                   description: 방화벽 그룹의 ID에 해당하는 속성입니다.
@@ -11743,7 +11742,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               fg_id:
                 type: string
                 description: 방화벽 그룹의 ID에 해당하는 속성입니다.
@@ -13228,7 +13227,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               fg_id:
                 type: string
                 description: 방화벽 그룹의 ID에 해당하는 속성입니다.
@@ -13945,7 +13944,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - name: name
           description: |
@@ -14060,7 +14059,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               vol_id:
                 type: string
                 description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
@@ -14310,7 +14309,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 vol_id:
                   type: string
                   description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
@@ -14506,7 +14505,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               svr_id:
                 type: string
                 description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -14934,7 +14933,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               vol_id:
                 type: string
                 description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
@@ -15041,7 +15040,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               vol_id:
                 type: string
                 description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
@@ -15386,7 +15385,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - name: service_zone
           description: |
@@ -15461,11 +15460,11 @@ paths:
                 example: biz_1004
               user_id:
                 type: string
-                description: 파트너의 ID에 해당하는 속성입니다.
+                description: 이용자의 ID에 해당하는 속성입니다.
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               ip_id:
                 type: string
                 description: 공인 IP의 ID에 해당하는 속성입니다.
@@ -15701,11 +15700,11 @@ paths:
                   example: biz_1004
                 user_id:
                   type: string
-                  description: 파트너의 ID에 해당하는 속성입니다.
+                  description: 이용자의 ID에 해당하는 속성입니다.
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 ip_id:
                   type: string
                   description: 공인 IP의 ID에 해당하는 속성입니다.
@@ -15857,11 +15856,11 @@ paths:
                 example: biz_1004
               user_id:
                 type: string
-                description: 파트너의 ID에 해당하는 속성입니다.
+                description: 이용자의 ID에 해당하는 속성입니다.
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               ip_id:
                 type: string
                 description: 공인 IP의 ID에 해당하는 속성입니다.
@@ -16629,7 +16628,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -17072,7 +17071,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 lb_id:
                   type: string
                   description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -17430,7 +17429,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -18342,7 +18341,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -18947,7 +18946,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -19393,7 +19392,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -19831,7 +19830,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -20282,7 +20281,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -20730,7 +20729,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               range:
                 type: string
                 description: |
@@ -20947,7 +20946,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_session_max:
                 type: integer
                 description: 로드밸런서의 최대 동시 세션 수에 해당하는 속성입니다.
@@ -21228,7 +21227,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - in: formData
           name: ip_id
@@ -21401,7 +21400,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -21766,7 +21765,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 lb_id:
                   type: string
                   description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -22044,7 +22043,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -22408,7 +22407,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -22596,7 +22595,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -23114,7 +23113,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -23614,7 +23613,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -23802,7 +23801,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -24161,7 +24160,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -24551,7 +24550,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -24940,7 +24939,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -25294,7 +25293,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -25681,7 +25680,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -26034,7 +26033,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -26370,7 +26369,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_id:
                 type: string
                 description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -26738,7 +26737,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               range:
                 type: string
                 description: |
@@ -26957,7 +26956,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               lb_session_max:
                 type: integer
                 description: 로드밸런서의 최대 동시 세션 수에 해당하는 속성입니다.
@@ -27237,7 +27236,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 snap_id:
                   type: string
                   description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -27401,7 +27400,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               snap_id:
                 type: string
                 description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -27651,7 +27650,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               snap_id:
                 type: string
                 description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -27726,7 +27725,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               snap_id:
                 type: string
                 description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -27945,7 +27944,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               snap_id:
                 type: string
                 description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -28159,7 +28158,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - name: name
           type: string
@@ -28276,7 +28275,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               img_id:
                 type: string
                 description: 이미지의 ID에 해당하는 속성입니다.
@@ -28565,7 +28564,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 img_id:
                   type: string
                   description: 이미지의 ID에 해당하는 속성입니다.
@@ -28777,7 +28776,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               img_id:
                 type: string
                 description: 이미지의 ID에 해당하는 속성입니다.
@@ -29072,7 +29071,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               img_id:
                 type: string
                 description: 이미지의 ID에 해당하는 속성입니다.
@@ -29195,7 +29194,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               img_id:
                 type: string
                 description: 이미지의 ID에 해당하는 속성입니다.
@@ -29447,7 +29446,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               img_id:
                 type: string
                 description: 이미지의 ID에 해당하는 속성입니다.
@@ -30086,7 +30085,7 @@ paths:
           in: path
           required: true
           type: string
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - name: detail
           description: |
@@ -30737,7 +30736,7 @@ paths:
           in: path
           required: true
           type: string
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - name: detail
           description: |
@@ -31410,7 +31409,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - name: name
           type: string
@@ -31539,7 +31538,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               nas_id:
                 type: string
                 description: NAS의 ID에 해당하는 속성입니다.
@@ -31783,7 +31782,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 nas_id:
                   type: string
                   description: NAS의 ID에 해당하는 속성입니다.
@@ -31971,7 +31970,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               nas_id:
                 type: string
                 description: NAS의 ID에 해당하는 속성입니다.
@@ -32245,7 +32244,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               nas_id:
                 type: string
                 description: NAS의 ID에 해당하는 속성입니다.
@@ -32344,7 +32343,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               nas_id:
                 type: string
                 description: NAS의 ID에 해당하는 속성입니다.
@@ -32589,7 +32588,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               nas_id:
                 type: string
                 description: NAS의 ID에 해당하는 속성입니다.
@@ -32854,7 +32853,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               nas_id:
                 type: string
                 description: NAS의 ID에 해당하는 속성입니다.
@@ -33123,7 +33122,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               snap_id:
                 type: string
                 description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -33327,7 +33326,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               snap_id:
                 type: string
                 description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -33509,7 +33508,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - in: formData
           name: cifs_id
@@ -33600,7 +33599,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               cifs_id:
                 type: string
                 description: |
@@ -33757,7 +33756,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 cifs_id:
                   type: string
                   description: |
@@ -33831,7 +33830,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
         - in: formData
           name: cifs_pw
@@ -33910,7 +33909,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               cifs_id:
                 type: string
                 description: |
@@ -34008,7 +34007,7 @@ paths:
           required: true
           minLength: 3
           maxLength: 16
-          pattern: '^[\w\-]{3,16}$'
+          pattern: '^[\w]{3,16}$'
           example: company_777
       x-code-samples:
         - lang: PHP
@@ -34167,7 +34166,7 @@ paths:
                 description: 이용자의 ID에 해당하는 매개변수입니다.
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
                 example: company_777
               name:
                 description: |
@@ -34296,7 +34295,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               ssl_id:
                 type: string
                 description: SSL 인증서 ID에 해당하는 속성입니다.
@@ -34516,7 +34515,7 @@ paths:
                   example: company_777
                   minLength: 3
                   maxLength: 16
-                  pattern: '^[\w\-]{3,16}$'
+                  pattern: '^[\w]{3,16}$'
                 ssl_id:
                   type: string
                   description: SSL 인증서 ID에 해당하는 속성입니다.
@@ -34677,7 +34676,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               ssl_id:
                 type: string
                 description: SSL 인증서 ID에 해당하는 속성입니다.
@@ -34982,7 +34981,7 @@ paths:
                 example: company_777
                 minLength: 3
                 maxLength: 16
-                pattern: '^[\w\-]{3,16}$'
+                pattern: '^[\w]{3,16}$'
               ssl_id:
                 type: string
                 description: SSL 인증서 ID에 해당하는 속성입니다.
@@ -35289,7 +35288,7 @@ definitions:
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       svr_id:
         type: string
         description: g클라우드 서버의 ID에 해당하는 속성입니다.
@@ -35534,7 +35533,7 @@ definitions:
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       vol_id:
         type: string
         description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
@@ -35634,11 +35633,11 @@ definitions:
         example: biz_1004
       user_id:
         type: string
-        description: 파트너의 ID에 해당하는 속성입니다.
+        description: 이용자의 ID에 해당하는 속성입니다.
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       ip_id:
         type: string
         description: 공인 IP의 ID에 해당하는 속성입니다.
@@ -35703,7 +35702,7 @@ definitions:
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       lb_id:
         type: string
         description: 로드밸런서의 ID에 해당하는 속성입니다.
@@ -35889,7 +35888,7 @@ definitions:
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       snap_id:
         type: string
         description: 스냅샷의 ID에 해당하는 속성입니다.
@@ -35965,7 +35964,7 @@ definitions:
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       img_id:
         type: string
         description: 이미지의 ID에 해당하는 속성입니다.
@@ -36078,7 +36077,7 @@ definitions:
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       nas_id:
         type: string
         description: NAS의 ID에 해당하는 속성입니다.
@@ -36171,7 +36170,7 @@ definitions:
         example: company_777
         minLength: 3
         maxLength: 16
-        pattern: '^[\w\-]{3,16}$'
+        pattern: '^[\w]{3,16}$'
       cifs_id:
         type: string
         description: |
