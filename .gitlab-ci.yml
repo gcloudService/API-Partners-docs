@@ -27,7 +27,7 @@ nightwatch:
 
 
 
-publish:  
+pages:  
   stage: deploy
   only:
     - master
