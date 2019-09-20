@@ -27,10 +27,17 @@ nightwatch:
 
 
 
-# publish:  
-#   stage: deploy
-#   only:
-#     - tags
-#     - triggers
-#   script:
-#     - npm publish
+publish:  
+  stage: deploy
+  only:
+    - master
+  script:
+    - npm build
+    - mkdir .public
+    - cp index.html .public/
+    - cp api.yaml .public/
+    - cp -r static .public/
+    - mv .public public
+  artifacts:
+    paths:
+    - public
