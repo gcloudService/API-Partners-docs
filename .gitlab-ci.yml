@@ -1,9 +1,9 @@
-image: node:latest
+image: gabiacloud/node:latest
 
 stages:
   - build
   - test
-  # - deploy
+  - deploy
 
 cache:
   paths:
