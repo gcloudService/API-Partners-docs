@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.2] - 2019-09-26
+### Changed
+- redoc@1.22.3
+    - issue: https://gitlab.gabia.com/cloud/service/gcloud-partner-api-docs/issues/9
+
 ## [1.4.1] - 2019-09-19
 ### Changed
 - user_id validation 수정
