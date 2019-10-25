@@ -34,7 +34,7 @@ properties:
   service_zone:
     type: string
     description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
-    enum: [zone_1]
+    enum: [zone_1, zone_2]
     pattern: ^(zone_)+[1-9]{1}\d*$
     example: zone_1
   attached:
