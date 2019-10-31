@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.4] - 2019-10-25
+- 2nd 존 오픈
+
+## [1.4.3] - 2019-10-16
+- MONITORING API 문구 수정
+    - 데이터 간격에 대한 설명 추가
+    - 조회 기간에 따라 데이터 간격이 달라질 수 있음을 명시
+    - 기타 오기 수정
+
 ## [1.4.2] - 2019-09-26
 ### Changed
 - redoc@1.22.3

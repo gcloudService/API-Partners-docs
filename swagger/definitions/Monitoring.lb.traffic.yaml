@@ -34,7 +34,7 @@ properties:
     example: '2018-01-01 12:00:00'
   data:
     type: array
-    description: 서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 
+    description: 로드밸런서의 트래픽 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 조회 기간 내에 존재하는 사용량만 표시됩니다.
     items:
       type: object
       properties:
@@ -42,7 +42,7 @@ properties:
           type: string
           format: dateTime
           description: 조회 시점에 해당하는 속성입니다.
-          example: '2018-01-01 12:00:00'
+          example: '2018-01-01 12:00'
         in_traffic:
           type: integer
           description: Inbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.

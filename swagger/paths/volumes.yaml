@@ -11,7 +11,7 @@ post:
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
-      -d 'user_id=company_777&name=vol-test&desc=API%20test111&size=50'
+      -d 'user_id=company_777&name=vol-test&desc=API%20test111&size=50&service_zone=zone_1'
     ```
 
     ### Error Code
@@ -49,6 +49,14 @@ post:
       required: true
       type: integer
       enum: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
+    - name: service_zone
+      description: |
+        g클라우드 스토리지가 생성될 서비스 존을 선택하는 매개변수입니다.
+        - g클라우드 서버에는 동일한 존에 생성된 g클라우드 스토리지만 장착할 수 있습니다.
+      in: formData
+      required: true
+      type: string
+      pattern: ^(zone_)+[1-9]{1}\d*$
   produces:
     - application/json
   x-code-samples:
@@ -65,7 +73,7 @@ post:
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "user_id=company_777&name=vol-test&desc=API%20test111&size=50",
+          CURLOPT_POSTFIELDS => "user_id=company_777&name=vol-test&desc=API%20test111&size=50&service_zone=zone_1",
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
@@ -93,7 +101,8 @@ post:
             'user_id': 'company_777',
             'name': 'vol-test',
             'desc': 'API test111',
-            'size': 50
+            'size': 50,
+            'service_zone': 'zone_1'
           }
         };
 

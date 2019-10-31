@@ -4,7 +4,7 @@ schemes:
 host: cpapi.gabia.com
 basePath: /v1
 info:
-  version: 1.4.2
+  version: 1.4.4
   title: 클라우드 파트너 API
   x-logo:
     url: ./static/gcloud_ptn.jpg
@@ -1825,6 +1825,7 @@ paths:
           - g클라우드 서버 생성 시, 선택해야 하는 이미지에 따라 최소/최대 CPU 사양과 최소/최대 Memory 사양의 제한이 있습니다. 사양 제한에 대한 정보는 [이미지 정보 조회](#operation/getImageList) 또는 [이미지 상세 정보](#operation/getImage) 기능을 통해 확인할 수 있습니다.
           - g클라우드 서버 생성 시, 공인 IP 할당 여부를 결정할 수 있습니다.
           - g클라우드 서버에 공인 IP를 할당할 경우, 방화벽 그룹을 서버에 연결할 수 있으며 방화벽 그룹이 허용하는 정책에 대해서만 공인망 통신이 가능합니다. 방화벽 그룹을 연결하지 않을 경우, 원격접속(SSH, RDP)를 비롯한 모든 공인망 통신이 차단됩니다.
+          - g클라우드 서버에는 동일한 존에 생성한 공인 IP, g클라우드 스토리지만 할당/장착 할 수 있습니다.
           - 서버 접속 비밀번호(OS 비밀번호)는 서버 생성 요청 시, 비동기 작업을 거쳐 Callback URL로 받을 수 있습니다. 이후 비밀번호 변경을 원할 경우, [서버 비밀번호 변경](#operation/updateServerPassword) 기능을 활용해 재발급 받을 수 있습니다.
 
         ### cURL
@@ -1994,6 +1995,7 @@ paths:
           description: |
             g클라우드 서버가 생성될 서비스 존을 선택하는 매개변수입니다.
             - g클라우드 서버에는 동일한 존에 생성된 공인 IP만 할당할 수 있습니다.
+            - g클라우드 서버에는 동일한 존에 생성된 g클라우드 스토리지만 장착할 수 있습니다.
           in: formData
           required: true
           type: string
@@ -2190,6 +2192,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -2625,6 +2628,7 @@ paths:
                   description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                   enum:
                     - zone_1
+                    - zone_2
                   pattern: '^(zone_)+[1-9]{1}\d*$'
                   example: zone_1
                 volumes:
@@ -2966,6 +2970,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -3394,6 +3399,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -3647,6 +3653,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -4051,6 +4058,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -4484,6 +4492,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -4737,6 +4746,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -5180,6 +5190,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -5596,6 +5607,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -6041,6 +6053,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -6241,6 +6254,8 @@ paths:
         - g클라우드 서버의 상태 값이 정지된 상태(status: 01)일 때만 g클라우드 스토리지(볼륨 스토리지)를 장착하거나 추가할
         수 있습니다.
 
+        - 동일한 존에 생성된 g클라우드 서버에만 g클라우드 스토리지(볼륨 스토리지)를 장착하거나 추가할 수 있습니다.
+
         - g클라우드 서버(SSD)는 볼륨 스토리지를 장착할 수 없습니다.
 
         - g클라우드 스토리지는 부착/추가 후 별도의 마운트가 필요합니다.
@@ -6266,6 +6281,9 @@ paths:
         - `-4141` : [API] 서버 볼륨 장착 오류. 서버 장착 불가 상태. 정지 상태에서만 가능합니다.
 
         - `-4142` : [API] 서버 볼륨 장착 오류. 서버 장착 불가 상태. ssd 서버에 볼륨 부착 불가.
+
+        - `-4145` : [API] 서버 볼륨 장착 오류. 유효하지 않은 파라미터. g클라우드 서버의 서비스 존과 g클라우드
+        스토리지의 서비스 존이 다릅니다.
       tags:
         - Servers
         - Volumes
@@ -6464,6 +6482,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -6683,9 +6702,9 @@ paths:
 
         ### Error Code
 
-        - `-4141` : [API] 서버 볼륨 해제 오류. 서버 해제 불가 상태. 정지 상태에서만 가능합니다.
+        - `-4143` : [API] 서버 볼륨 해제 오류. 서버 해제 불가 상태. 정지 상태에서만 가능합니다.
 
-        - `-4142` : [API] 서버 볼륨 해제 오류. 서버 해제 불가 상태. ssd 서버에 볼륨 해제 불가.
+        - `-4144` : [API] 서버 볼륨 해제 오류. 서버 해제 불가 상태. ssd 서버에 볼륨 해제 불가.
       tags:
         - Servers
         - Volumes
@@ -6884,6 +6903,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -7291,6 +7311,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -7694,6 +7715,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -8135,6 +8157,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -8553,6 +8576,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -9025,14 +9049,22 @@ paths:
           type: string
           example: cpu
         - name: range
-          description: |
+          description: >
             요청 시점을 기준으로 데이터 조회 범위를 선택할 수 있는 매개변수입니다.
-            - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 입력 값입니다.
-            - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 입력 값입니다.
-            - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다.
-            - year: 요청 시점을 기준으로 1년간의 데이터를 조회하는 입력 값입니다.
+
+            - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 입력 값입니다. 데이터가 5분 간격으로 표시됩니다.
+
+            - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 입력 값입니다. 데이터가 30분 간격으로 표시됩니다.
+
+            - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다. 데이터가 2시간 간격으로 표시됩니다.
+
+            - year: 요청 시점을 기준으로 1년간의 데이터를 조회하는 입력 값입니다. 데이터가 1일 간격으로 표시됩니다.
+
             - start 또는 end 값이 입력된 경우 range 값은 적용되지 않습니다.
-            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+
+            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다.
+            데이터가 5분 간격으로 표시됩니다.
+
             - 예시) /v1/servers/vm_777/monitoring/cpu?range=day
           in: query
           enum:
@@ -9051,9 +9083,17 @@ paths:
             - start 값을 입력하고 end 값을 입력하지 않은 경우, end 값은 start 값의 하루 지난 값으로 입력됩니다.
             단, 이때 end 값이 현재 시간보다 큰 값일 경우 end 값은 현재 시간으로 입력됩니다.
 
+            - start 값을 입력하고 end 값을 입력하지 않은 경우, 데이터가 5분 간격으로 표시됩니다.
+
+            - start 값과 end 값을 모두 입력한 경우, 조회 기간에 따라 데이터 간격이 다르게 표시됩니다.
+              - 조회 기간이 1일(86400초) 이내인 경우, 데이터가 5분 간격으로 표시됩니다.
+              - 조회 기간이 7일(604800초) 이내인 경우, 데이터가 30분 간격으로 표시됩니다.
+              - 조회 기간이 30일(2592000초) 이내인 경우, 데이터가 2시간 간격으로 표시됩니다.
+              - 조회 기간이 30일(2592000초)을 초과하는 경우, 데이터가 1일 간격으로 표시됩니다.
             - 현재 시간보다 큰 값으로 입력할 수 없습니다.
 
-            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다.
+            데이터가 5분 간격으로 표시됩니다.
 
             - 예시) /v1/servers/vm_777/monitoring/cpu?start=2018-01-01 00:00:00
           in: query
@@ -9066,12 +9106,20 @@ paths:
 
             - end 값을 입력한 경우, range 값은 적용되지 않습니다.
 
-            - end 를 입력하고 start를 입력하지 않은 경우, start 값은 end 값의 하루 전 값으로 입력됩니다. 단,
-            이때 start 값이 서버 생성 시간보다 작은 값일 경우 start 값은 서버 생성 시간으로 입력됩니다.
+            - end 값을 입력하고 start 값을 입력하지 않은 경우, start 값은 end 값의 하루 전 값으로 입력됩니다.
+            단, 이때 start 값이 서버 생성 시간보다 작은 값일 경우 start 값은 서버 생성 시간으로 입력됩니다.
 
+            - end 값을 입력하고 start 값을 입력하지 않은 경우, 데이터가 5분 간격으로 표시됩니다.
+
+            - start 값과 end 값을 모두 입력한 경우, 조회 기간에 따라 데이터 간격이 다르게 표시됩니다.
+              - 조회 기간이 1일(86400초) 이내인 경우, 데이터가 5분 간격으로 표시됩니다.
+              - 조회 기간이 7일(604800초) 이내인 경우, 데이터가 30분 간격으로 표시됩니다.
+              - 조회 기간이 30일(2592000초) 이내인 경우, 데이터가 2시간 간격으로 표시됩니다.
+              - 조회 기간이 30일(2592000초)을 초과하는 경우, 데이터가 1일 간격으로 표시됩니다.
             - 현재 시간보다 큰 값으로 입력할 수 없습니다.
 
-            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다.
+            데이터가 5분 간격으로 표시됩니다.
 
             - 예시) /v1/servers/vm_777/monitoring/cpu?end=2018-01-01 00:00:00
           in: query
@@ -9180,7 +9228,9 @@ paths:
                 description: '조회 종료 시점에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.'
               data:
                 type: array
-                description: 서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: >-
+                  서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 조회 기간 내에 존재하는 사용량만
+                  표시됩니다.
         '400':
           description: Bad request. 파라미터 오류
           schema:
@@ -9278,13 +9328,20 @@ paths:
           pattern: '^(vm_)+[1-9]{1}\d*$'
           example: vm_1
         - name: range
-          description: |
+          description: >
             요청 시점을 기준으로 데이터 조회 범위를 선택할 수 있는 매개변수입니다.
-            - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 입력 값입니다.
-            - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 입력 값입니다.
-            - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다.
+
+            - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 입력 값입니다. 데이터가 5분 간격으로 표시됩니다.
+
+            - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 입력 값입니다. 데이터가 30분 간격으로 표시됩니다.
+
+            - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다. 데이터가 2시간 간격으로 표시됩니다.
+
             - end 값이 입력된 경우 range 값은 적용되지 않습니다.
-            - 매개변수(range, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+
+            - 매개변수(range, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 데이터가 5분
+            간격으로 표시됩니다.
+
             - 예시) /v1/servers/vm_777/monitoring/traffic?range=day
           in: query
           enum:
@@ -9302,9 +9359,12 @@ paths:
             - end 값을 기준으로 하루 간의 데이터가 조회됩니다. 단, 이때 end 값이 현재 시간보다 큰 값일 경우 end 값은
             현재 시간으로 입력됩니다.
 
-            - 매개변수(range, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+            - 데이터는 5분 간격으로 표시됩니다.
 
-            - 예시) /v1/servers/vm_777/monitoring/cpu?end=2018-01-01 00:00:00
+            - 매개변수(range, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 데이터가 5분
+            간격으로 표시됩니다.
+
+            - 예시) /v1/servers/vm_777/monitoring/traffic?end=2018-01-01 00:00:00
           in: query
           type: string
           format: dateTime
@@ -9396,7 +9456,9 @@ paths:
                 description: '조회 종료 시점에 해당하는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.'
               data:
                 type: array
-                description: 서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: >-
+                  서버의 트래픽 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 조회 기간 내에 존재하는 사용량만
+                  표시됩니다.
                 items:
                   type: object
                   properties:
@@ -9404,6 +9466,7 @@ paths:
                       type: string
                       format: dateTime
                       description: 조회 시점에 해당하는 속성입니다.
+                      example: '2018-01-01 12:00'
                     in_traffic:
                       type: integer
                       description: Inbound 트래픽의 사용량을 나타내는 속성으로 속성값의 단위는 Byte입니다.
@@ -13929,7 +13992,7 @@ paths:
           -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
           -H 'cache-control: no-cache' \
           -H 'content-type: application/x-www-form-urlencoded' \
-          -d 'user_id=company_777&name=vol-test&desc=API%20test111&size=50'
+          -d 'user_id=company_777&name=vol-test&desc=API%20test111&size=50&service_zone=zone_1'
         ```
 
         ### Error Code
@@ -13989,6 +14052,14 @@ paths:
             - 400
             - 450
             - 500
+        - name: service_zone
+          description: |
+            g클라우드 스토리지가 생성될 서비스 존을 선택하는 매개변수입니다.
+            - g클라우드 서버에는 동일한 존에 생성된 g클라우드 스토리지만 장착할 수 있습니다.
+          in: formData
+          required: true
+          type: string
+          pattern: '^(zone_)+[1-9]{1}\d*$'
       produces:
         - application/json
       x-code-samples:
@@ -14005,7 +14076,7 @@ paths:
               CURLOPT_TIMEOUT => 30,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => "user_id=company_777&name=vol-test&desc=API%20test111&size=50",
+              CURLOPT_POSTFIELDS => "user_id=company_777&name=vol-test&desc=API%20test111&size=50&service_zone=zone_1",
               CURLOPT_HTTPHEADER => array(
                 "authorization: Bearer {YOUR-JWT-TOKEN}",
                 "cache-control: no-cache",
@@ -14033,7 +14104,8 @@ paths:
                 'user_id': 'company_777',
                 'name': 'vol-test',
                 'desc': 'API test111',
-                'size': 50
+                'size': 50,
+                'service_zone': 'zone_1'
               }
             };
 
@@ -14134,6 +14206,14 @@ paths:
                 type: dateTime
                 description: g클라우드 스토리지의 삭제일에 해당하는 속성입니다.
                 example: '1899-11-30T00:00:00.000Z'
+              service_zone:
+                type: string
+                description: g클라우드 스토리지가 생성된 서비스 존을 확인할 수 있는 속성입니다.
+                enum:
+                  - zone_1
+                  - zone_2
+                pattern: '^(zone_)+[1-9]{1}\d*$'
+                example: zone_1
               server:
                 type: object
                 description: g클라우드 스토리지가 장착되어 있는 g클라우드 서버에 해당하는 속성으로 배열로 제공됩니다.
@@ -14384,6 +14464,14 @@ paths:
                   type: dateTime
                   description: g클라우드 스토리지의 삭제일에 해당하는 속성입니다.
                   example: '1899-11-30T00:00:00.000Z'
+                service_zone:
+                  type: string
+                  description: g클라우드 스토리지가 생성된 서비스 존을 확인할 수 있는 속성입니다.
+                  enum:
+                    - zone_1
+                    - zone_2
+                  pattern: '^(zone_)+[1-9]{1}\d*$'
+                  example: zone_1
                 server:
                   type: object
                   description: g클라우드 스토리지가 장착되어 있는 g클라우드 서버에 해당하는 속성으로 배열로 제공됩니다.
@@ -14622,6 +14710,7 @@ paths:
                 description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               volumes:
@@ -15008,6 +15097,14 @@ paths:
                 type: dateTime
                 description: g클라우드 스토리지의 삭제일에 해당하는 속성입니다.
                 example: '1899-11-30T00:00:00.000Z'
+              service_zone:
+                type: string
+                description: g클라우드 스토리지가 생성된 서비스 존을 확인할 수 있는 속성입니다.
+                enum:
+                  - zone_1
+                  - zone_2
+                pattern: '^(zone_)+[1-9]{1}\d*$'
+                example: zone_1
               server:
                 type: object
                 description: g클라우드 스토리지가 장착되어 있는 g클라우드 서버에 해당하는 속성으로 배열로 제공됩니다.
@@ -15115,6 +15212,14 @@ paths:
                 type: dateTime
                 description: g클라우드 스토리지의 삭제일에 해당하는 속성입니다.
                 example: '1899-11-30T00:00:00.000Z'
+              service_zone:
+                type: string
+                description: g클라우드 스토리지가 생성된 서비스 존을 확인할 수 있는 속성입니다.
+                enum:
+                  - zone_1
+                  - zone_2
+                pattern: '^(zone_)+[1-9]{1}\d*$'
+                example: zone_1
               server:
                 type: object
                 description: g클라우드 스토리지가 장착되어 있는 g클라우드 서버에 해당하는 속성으로 배열로 제공됩니다.
@@ -15396,6 +15501,7 @@ paths:
           type: string
           enum:
             - zone_1
+            - zone_2
           pattern: '^(zone_)+[1-9]{1}\d*$'
           example: zone_1
       x-code-samples:
@@ -15494,6 +15600,7 @@ paths:
                 description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               attached:
@@ -15734,6 +15841,7 @@ paths:
                   description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                   enum:
                     - zone_1
+                    - zone_2
                   pattern: '^(zone_)+[1-9]{1}\d*$'
                   example: zone_1
                 attached:
@@ -15890,6 +15998,7 @@ paths:
                 description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
                 enum:
                   - zone_1
+                  - zone_2
                 pattern: '^(zone_)+[1-9]{1}\d*$'
                 example: zone_1
               attached:
@@ -16141,6 +16250,8 @@ paths:
 
         - 로드밸런서 포트 설정과 서버 포트 설정을 할 수 있습니다. 로드밸런서 포트는 외부망과 접하고 있는 로드밸런서의 포트이고, 서버
         포트는 로드밸런서의 포트에 연결된 g클라우드 서버의 포트입니다.
+
+        - 로드밸런서에는 동일한 서비스 존에 생성된 공인 IP만 할당할 수 있습니다.
 
         - 밸런스 모드(Blance Mode)를 설정할 수 있습니다. 밸런스 모드를 통해 트래픽 분산방식을 정할 수 있습니다.
         밸런스모드는 총 3가지로 아래의 표와 같습니다.
@@ -20632,13 +20743,20 @@ paths:
           pattern: '^(lbg_)+[1-9]{1}\d*$'
           example: lbg_1
         - name: range
-          description: |
+          description: >
             요청 시점을 기준으로 데이터 조회 범위를 선택할 수 있는 매개변수입니다.
-            - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 입력 값입니다.
-            - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 입력 값입니다.
-            - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다.
-            - start 또는 end 값이 입력된 경우 range 값은 적용되지 않습니다.
-            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+
+            - day: 요청 시점을 기준으로 1일간의 데이터를 조회하는 입력 값입니다. 데이터가 5분 간격으로 표시됩니다.
+
+            - week: 요청 시점을 기준으로 1주간의 데이터를 조회하는 입력 값입니다. 데이터가 30분 간격으로 표시됩니다.
+
+            - month: 요청 시점을 기준으로 1달간의 데이터를 조회하는 입력 값입니다. 데이터가 2시간 간격으로 표시됩니다.
+
+            - end 값이 입력된 경우 range 값은 적용되지 않습니다.
+
+            - 매개변수(range, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 데이터가 5분
+            간격으로 표시됩니다.
+
             - 예시) /v1/loadbalancers/lbg_1/monitoring/traffic?range=day
           in: query
           enum:
@@ -20651,14 +20769,13 @@ paths:
           description: >
             데이터 조회 시작 시점을 선택할 수 있는 매개변수로 YYYY-MM-DD HH:mm:ss 형태의 입력 값을 갖습니다.
 
-            - end 값을 입력한 경우, range 값은 적용되지 않습니다.
+            - end 값을 기준으로 하루 간의 데이터가 조회됩니다. 단, 이때 end 값이 현재 시간보다 큰 값일 경우 end 값은
+            현재 시간으로 입력됩니다.
 
-            - end 를 입력하고 start를 입력하지 않은 경우, start 값은 end 값의 하루 전 값으로 입력됩니다. 단,
-            이때 start 값이 서버 생성 시간보다 작은 값일 경우 start 값은 서버 생성 시간으로 입력됩니다.
+            - 데이터는 5분 간격으로 표시됩니다.
 
-            - 현재 시간보다 큰 값으로 입력할 수 없습니다.
-
-            - 매개변수(range, start, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 
+            - 매개변수(range, end)를 입력하지 않을 경우, 요청 시점 기준으로 1일간의 데이터가 조회됩니다. 데이터가 5분
+            간격으로 표시됩니다.
 
             - 예시) /v1/loadbalancers/lbg_1/monitoring/traffic?end=2018-01-01
             00:00:00
@@ -20755,7 +20872,9 @@ paths:
                 example: '2018-01-01 12:00:00'
               data:
                 type: array
-                description: 서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: >-
+                  로드밸런서의 트래픽 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 조회 기간 내에 존재하는 사용량만
+                  표시됩니다.
                 items:
                   type: object
                   properties:
@@ -20763,7 +20882,7 @@ paths:
                       type: string
                       format: dateTime
                       description: 조회 시점에 해당하는 속성입니다.
-                      example: '2018-01-01 12:00:00'
+                      example: '2018-01-01 12:00'
                     in_traffic:
                       type: integer
                       description: Inbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
@@ -26763,7 +26882,9 @@ paths:
                 example: '2018-01-01 12:00:00'
               data:
                 type: array
-                description: 서버의 시스템 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다.
+                description: >-
+                  로드밸런서의 트래픽 사용량을 확인할 수 있는 속성으로 배열로 제공됩니다. 조회 기간 내에 존재하는 사용량만
+                  표시됩니다.
                 items:
                   type: object
                   properties:
@@ -26771,7 +26892,7 @@ paths:
                       type: string
                       format: dateTime
                       description: 조회 시점에 해당하는 속성입니다.
-                      example: '2018-01-01 12:00:00'
+                      example: '2018-01-01 12:00'
                     in_traffic:
                       type: integer
                       description: Inbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
@@ -35402,6 +35523,7 @@ definitions:
         description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
         enum:
           - zone_1
+          - zone_2
         pattern: '^(zone_)+[1-9]{1}\d*$'
         example: zone_1
       volumes:
@@ -35608,6 +35730,14 @@ definitions:
         type: dateTime
         description: g클라우드 스토리지의 삭제일에 해당하는 속성입니다.
         example: '1899-11-30T00:00:00.000Z'
+      service_zone:
+        type: string
+        description: g클라우드 스토리지가 생성된 서비스 존을 확인할 수 있는 속성입니다.
+        enum:
+          - zone_1
+          - zone_2
+        pattern: '^(zone_)+[1-9]{1}\d*$'
+        example: zone_1
       server:
         type: object
         description: g클라우드 스토리지가 장착되어 있는 g클라우드 서버에 해당하는 속성으로 배열로 제공됩니다.
@@ -35667,6 +35797,7 @@ definitions:
         description: 공인 IP가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
         enum:
           - zone_1
+          - zone_2
         pattern: '^(zone_)+[1-9]{1}\d*$'
         example: zone_1
       attached:
