@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.5] - 2019-12-05
+- Error Code 정리
+
 ## [1.4.4] - 2019-10-25
 - 2nd 존 오픈
 

@@ -17,6 +17,7 @@ post:
     ### Error Code
     - `-4301` : [API] 공인 IP 생성 오류. 존재하지 않는 사용자입니다.
     - `-4302` : [API] 공인 IP 생성 오류. 선택한 서비스존에 추가 가능한 IP가 없습니다.
+    - `-4303` : [API] 공인 IP 생성 오류. 내부 오류.
   tags:
     - PublicIps
   produces:

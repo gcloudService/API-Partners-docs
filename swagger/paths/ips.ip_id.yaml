@@ -102,6 +102,7 @@ delete:
     ### Error Code
     - `-4311` : [API] 공인 IP 삭제 오류. 선택한 IP가 로드밸런서 서비스에 부착되어 있습니다.
     - `-4312` : [API] 공인 IP 삭제 오류. 선택한 IP가 서버 서비스에 부착되어 있습니다.
+    - `-4313` : [API] 공인 IP 삭제 오류. 내부 오류.
   tags:
     - PublicIps
   produces:

@@ -17,6 +17,7 @@ put:
     ### Error Code
     - `-4621` : [API] 로드밸런서 네트워크 변경 오류. 'start' 명령은 'stop' 상태의 로드밸런서에만 가능합니다.
     - `-4622` : [API] 로드밸런서 네트워크 변경 오류. 'stop' 명령은 'start' 상태의 로드밸런서에만 가능합니다.
+    - `-4698` : [API] 로드밸런서 네트워크 변경 오류. 내부 오류.
   tags:
     - LoadBalancers
   produces:
