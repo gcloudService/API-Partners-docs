@@ -19,6 +19,7 @@ put:
     ### Error Code
     - `-4732` : [API] NAS 복구 오류. NAS 타입의 스냅샷으로만 복구 가능합니다.
     - `-4733` : [API] NAS 복구 오류. NAS 복구는 해당 NAS로 생성된 스냅샷으로만 가능합니다.
+    - `-4736` : [API] NAS 복구 오류. 내부 오류.
   tags:
     - NAS
     - Snapshots
