@@ -113,6 +113,7 @@ put:
     - `-5214`: [API] SSL 인증서 변경 오류. 인증서 체인 형식이 잘못됐습니다.
     - `-5215`: [API] SSL 인증서 변경 오류. 비밀키와 인증서가 일치하지 않습니다.
     - `-5216`: [API] SSL 인증서 변경 오류. 이미 등록된 인증서입니다.
+    - `-5217`: [API] SSL 인증서 변경 오류. 내부 오류.
   tags:
     - Certificates
   parameters:
@@ -261,6 +262,7 @@ delete:
     ```
     ### Error Code
     - `-5221`: [API] SSL 인증서 삭제 오류. SSL 인증서를 사용 중인 자원이 있습니다. 자원을 모두 해제하고 삭제해야 합니다.
+    - `-5222`: [API] SSL 인증서 삭제 오류. 내부 오류.
   tags:
     - Certificates
   parameters:

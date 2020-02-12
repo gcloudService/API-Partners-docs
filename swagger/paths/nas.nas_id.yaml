@@ -202,6 +202,7 @@ delete:
 
     ### Error Code
     - `-4715` : [API] NAS 삭제 오류. NAS 삭제 불가 상태. 운영중인 NAS만 삭제 가능합니다.
+    - `-4720` : [API] NAS 삭제 오류. 내부 오류.
   tags:
     - NAS
   produces:

@@ -39,6 +39,10 @@ post:
         }
       }
     ```
+    ### Error Code
+    - `-5001` : [API] 방화벽 그룹 생성 오류. 방화벽 그룹명 중복.
+    - `-5002` : [API] 방화벽 그룹 생성 오류. 내부 오류.
+    - `-5011` : [API] 방화벽 그룹 규칙 오류. 방화벽 그룹의 Rule 과 Foreign 은 API 문서에 정의된 규칙을 따라야 합니다.
   tags:
     - Firewalls
   parameters:

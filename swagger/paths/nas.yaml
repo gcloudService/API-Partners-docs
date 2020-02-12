@@ -27,6 +27,8 @@ post:
     ### Error Code
     - `-4711` : [API] NAS 생성 오류. NAS명 중복
     - `-4712` : [API] NAS 생성 오류. NAS 마운트패쓰명 중복
+    - `-4716` : [API] NAS 생성 오류. 내부 오류.
+    - `-4717` : [API] NAS 생성 오류. 자원이 부족합니다.
 
   tags:
     - NAS

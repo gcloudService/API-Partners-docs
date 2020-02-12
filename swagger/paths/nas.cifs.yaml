@@ -22,7 +22,7 @@ post:
     ### Error Code
     - `-4721` : [API] NAS CIFS 생성 오류. 해당 사용자에 CIFS 타입의 NAS가 있어야 CIFS 정보 생성이 가능합니다.
     - `-4722` : [API] NAS CIFS 생성 오류. 해당 사용자는 이미 CIFS 정보가 존재합니다.
-
+    - `-4741` : [API] NAS CIFS 생성 오류. 내부 오류.
   tags:
     - NAS
   produces:
@@ -247,6 +247,7 @@ put:
     - `-4724` : [API] NAS CIFS 수정 오류. CIFS 정보 수정은 한 사용자씩 가능합니다.
     - `-4725` : [API] NAS CIFS 수정 오류. 존재하지 않는 사용자입니다.
     - `-4726` : [API] NAS CIFS 수정 오류. 해당 사용자에 CIfs 정보가 존재하지 않습니다.
+    - `-4742` : [API] NAS CIFS 수정 오류. 내부 오류.
   tags:
     - NAS
   produces:
@@ -361,6 +362,7 @@ delete:
     - `-4727` : [API] NAS CIFS 삭제 오류. CIFS 정보 삭제는 한 사용자씩 가능합니다.
     - `-4728` : [API] NAS CIFS 삭제 오류. 존재하지 않는 사용자입니다.
     - `-4729` : [API] NAS CIFS 삭제 오류. 해당 사용자에 CIfs 정보가 존재하지 않습니다.
+    - `-4743` : [API] NAS CIFS 삭제 오류. 내부 오류.
   tags:
     - NAS
   produces:
