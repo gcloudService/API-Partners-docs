@@ -36,7 +36,7 @@ properties:
         type: integer
         description: 당월 이용자의 NAS 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 2200
-      nas_snapshot_total_charge:
+      nas_snap_total_charge:
         type: integer
         description: 당월 이용자의 NAS 스냅샷 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 1000
@@ -89,6 +89,11 @@ properties:
               description: g클라우드 서버의 종류를 나타내는 속성입니다.
               example: basic
               enum: [basic, premium, ssd]
+            storage_type:
+              type: string
+              description: g클라우드 서버의 스토리지 종류를 나타내는 속성입니다.
+              example: hdd
+              enum: [ssd, hdd]
             os:
               type: string
               description: g클라우드 서버의 운영체제를 확인할 수 있는 속성입니다.
@@ -132,6 +137,17 @@ properties:
               type: string
               description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
               example: test volume
+            storage_type:
+              type: string
+              description: g클라우드 스토리지의 타입에 해당하는 속성입니다.
+              enum: [hdd, ssd]
+              example: hdd
+            type:
+              type: string
+              description: |
+                `deprecated`: 해당 매개변수는 향후 지원하지 않을 예정입니다. storage_type 매개변수를 사용하시기 바랍니다.<br>
+                g클라우드 스토리지의 타입에 해당하는 속성입니다.
+              example: hdd
             size:
               type: integer
               description: g클라우드 스토리지의 용량을 나타내는 속성으로 속성값의 단위는 GB입니다.
@@ -178,7 +194,7 @@ properties:
               type: integer
               description: NAS의 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
               example: 33000
-      nas_snapshots:
+      nassnapshots:
         type: array
         description: 이용자의 NAS 스냅샷 상세 이용 내역에 대한 속성으로 배열로 제공됩니다.
         items:
@@ -186,7 +202,7 @@ properties:
           properties:
             snap_id:
               type: string
-              description: NAS 스냅샷의 ID에 해당하는 속성입니다.
+              description: NAS스냅샷의 ID에 해당하는 속성입니다.
               example: snap_1
             name:
               type: string
@@ -278,7 +294,9 @@ properties:
             svr_ip:
               type: string
               format: ipv4
-              description: 서버 스냅샷의 대상이 된 서버의 IP에 해당하는 속성입니다.
+              description: |
+                서버 스냅샷의 대상이 된 서버의 IP에 해당하는 속성입니다.
+                - 스냅샷 생성 당시가 아닌 현재 서버의 IP 를 표시합니다.
               example: 10.222.222.145
             date:
               type: dateTime
@@ -342,6 +360,10 @@ properties:
               type: string
               description: 이미지의 상세한 운영체제 종류를 나타내는 속성입니다.
               example: cent
+            size:
+              type: integer
+              description: 이미지 보관 용량을 나타내는 속성으로 'GB' 단위입니다.
+              example: 50
             start:
               type: dateTime
               description: 이미지 저장을 위한 스토리지의 해당월 서비스 시작일을 나타내는 속성으로 YYYY-MM-DD HH:mm:ss 형태의 속성값을 갖습니다.
@@ -352,7 +374,7 @@ properties:
               example: '2018-02-01 00:00:00'
             charge:
               type: integer
-              description: 이미지 저장을 위한 스토리지 이용 금액에 대한 속성으로 속성값의 단위는 원입니다
+              description: 이미지 저장을 위한 스토리지 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
               example: 5500
       traffic:
         type: array
@@ -379,12 +401,31 @@ properties:
               example: '2018-02-01 00:00:00'
             in_traffic:
               type: integer
-              description: Inbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+              description: Inbound 트래픽의 사용량을 나타내는 속성으로 속성값의 단위는 Byte입니다.
               example: 0
             out_traffic:
               type: integer
-              description: Outbound 트래픽에 해당하는 속성으로 속성값의 단위는 Byte입니다.
+              description: Outbound 트래픽의 사용량을 나타내는 속성으로 속성값의 단위는 Byte입니다.
               example: 0
+            in_traffic_domestic:
+              type: integer
+              description: |
+                Inbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+              example: 0
+            out_traffic_domestic:
+              type: integer
+              description: |
+                Outbound 트래픽 중 국내 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+              example: 0
+            in_traffic_foreign:
+              type: integer
+              description: |
+                Inbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
+              example: 0
+            out_traffic_foreign:
+              type: integer
+              description: |
+                Outbound 트래픽 중 해외 트래픽의 사용량 나타내는 속성으로 속성값의 단위는 Byte입니다.
             charge:
               type: integer
               description: 트래픽 이용 금액에 대한 속성으로 속성값의 단위는 원입니다.
@@ -409,12 +450,16 @@ properties:
               example: vm_1
             svr_name:
               type: string
-              description: 라이선스가 적용된 서버의 ID의 자원명에 해당하는 속성입니다..
+              description: |
+                라이선스가 적용된 서버의 ID의 자원명에 해당하는 속성입니다.
+                - 라이선스 적용 당시가 아닌 현재 서버의 자원명을 표시합니다.
               example: test server
             svr_ip:
               type: string
               format: ipv4
-              description: 라이선스가 적용된 서버의 IP에 해당하는 속성입니다.
+              description: |
+                라이선스가 적용된 서버의 IP에 해당하는 속성입니다.
+                - 라이선스 적용 당시가 아닌 현재 서버의 IP 를 표시합니다.
               example: 10.222.222.145
             start:
               type: dateTime

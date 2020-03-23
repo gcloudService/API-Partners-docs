@@ -1,34 +1,36 @@
 put:
-  summary: 서버 비밀번호 변경
-  operationId: updateServerPassword
+  summary: 볼륨 스토리지 용량 변경
+  operationId: updateVolumeStorage
   description: |
-    g클라우드 서버 운영체제의 비밀번호를 새로 발급받을 수 있습니다.
-    - g클라우드 서버의 상태 값이 시작된 상태(status: 03)일 때만 비밀번호를 재발급 받을 수 있습니다.
-    - 비밀번호 재발급 이후에는 g클라우드 서버를 재시작(reboot)해야 변경된 비밀번호가 적용됩니다.
-    - 서버 운영체제 비밀번호는 서버 생성 시와 서버 비밀번호 변경 요청 시에만 확인할 수 있습니다. 비밀번호를 잊었을 경우, 서버 비밀번호 변경 기능을 통해 비밀번호를 재발급 받아야만 서버에 접속할 수 있습니다.
-    - 서버 비밀번호는 파트너가 등록한 Callback URL로 전송됩니다.
-    - 베이직/프리미엄 서버의 경우, 서버 생성 후 최대 10분간 비밀번호 재발급이 제한될 수 있습니다.
-
+    SSD 타입의 g클라우드 스토리지의 용량을 변경할 수 있습니다.
+    - 스토리지가 서버에 연결돼 있는 경우 서버가 정지 상태일 때만 용량을 변경할 수 있습니다.
 
     ### cURL
     ```
     curl -X PUT \
-      https://cpapi.gabia.com/v1/servers/vm_1/password \
+      https://cpapi.gabia.com/v1/volumes/lun_1/storage \
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'size=120'
     ```
 
     ### Error Code
-    - `-4171` : [API] 서버 비밀번호 변경 오류. 서버 변경 불가 상태. 정지/운영 상태에서만 가능합니다.
-    - `-4172` : [API] 서버 비밀번호 변경 오류. 서버 변경 불가 상태.
-    - `-4173` : [API] 서버 비밀번호 변경 오류. 서버 비밀번호 변경 진행중.
-    - `-4175` : [API] 서버 비밀번호 변경 오류. 내부 오류.
-
+    - `-4211` : [API] 볼륨 상태 변경 오류. 이름/설명 변경 중복
   tags:
-    - Servers
+    - Volumes
   parameters:
-    - $ref: ../parameters/index.yaml#/svr_id
+    - $ref: ../parameters/index.yaml#/vol_id
+    - name: size
+      description: |
+        SSD 타입의 g클라우드 스토리지 용량(GB)을 입력하는 매개변수입니다.
+        - 최소 100 에서 최대 1000 까지 10 단위로 입력할 수 있습니다.
+        - 기존 볼륨 스토리지 용량보다 작거나 같은 값을 입력할 수 없습니다.
+      in: formData
+      required: false
+      type: integer
+      minimum: 100
+      maximum: 1000
   produces:
     - application/json
   x-code-samples:
@@ -38,13 +40,14 @@ put:
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://cpapi.gabia.com/v1/servers/vm_1/password",
+          CURLOPT_URL => "https://cpapi.gabia.com/v1/volumes/lun_1/storage",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "PUT",
+          CURLOPT_POSTFIELDS => "size=120",
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
@@ -62,11 +65,14 @@ put:
 
         var options = {
           method: 'PUT',
-          url: 'https://cpapi.gabia.com/v1/servers/vm_1/password',
+          url: 'https://cpapi.gabia.com/v1/volumes/lun_1',
           headers: {
             'cache-control': 'no-cache',
             'content-type': 'application/x-www-form-urlencoded',
             'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          },
+          form: {
+            'size': 120
           }
         };
 
@@ -77,9 +83,9 @@ put:
         });
   responses:
     202:
-      description: Accepted. 비밀번호 변경 요청 성공
+      description: Accepted. 볼륨 스토리지 정보 변경 요청(비동기) 성공
       schema:
-        $ref: ../definitions/Servers.yaml
+        $ref: ../definitions/Volumes.yaml
     400:
       description: Bad request. 파라미터 오류
       schema:
@@ -89,10 +95,10 @@ put:
       schema:
         $ref: ../definitions/Unauthorized.yaml
     403:
-      description: Forbidden. svr_id 파트너/사용자의 자원이 아닌 경우
+      description: Forbidden. 볼륨이 파트너/사용자의 자원이 아닌 경우
       schema:
         $ref: ../definitions/PermissionDeny.yaml
     404:
-      description: Not Found. svr_id 존재하지 않음
+      description: Not Found. 존재하지 않음
       schema:
         $ref: ../definitions/NotFound.yaml

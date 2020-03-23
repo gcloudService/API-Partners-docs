@@ -41,8 +41,9 @@ properties:
       - 05: g클라우드 서버가 시작되고 있는 상태를 나타내는 속성값입니다.
       - 06: g클라우드 서버가 삭제되고 있는 상태를 나타내는 속성값입니다.
       - 07: g클라우드 서버가 생성되고 있는 상태를 나타내는 속성값입니다.
+      - 12: g클라우드 서버가 변경되고 있는 상태를 나타내는 속성값입니다.
     example: '03'
-    enum: ['01','02','03','04','05','06','07']
+    enum: ['01','02','03','04','05','06','07', '12']
   regdate:
     type: dateTime
     description: g클라우드 서버의 등록일에 해당하는 속성입니다.
@@ -71,11 +72,16 @@ properties:
     type: string
     description: | 
       g클라우드 서버의 종류를 나타내는 속성입니다.
-      - basic: g클라우드 서버(베이직)을 나타내는 속성값입니다.
-      - premium: g클라우드 서버(프리미엄)을 나타내는 속성값입니다.
-      - ssd : g클라우드 서버(SSD)를 나타내는 속성값입니다.
+      - basic: 베이직 서버를 나타내는 속성값입니다.
+      - premium: 프리미엄 서버를 나타내는 속성값입니다.
+      - ssd : 로컬 SSD 서버를 나타내는 속성값입니다.
     example: basic
     enum: ['basic','premium','ssd']
+  storage_type:
+    type: string
+    description: |
+      g클라우드 서버 스토리지 타입을 나타내는 속성입니다.
+    enum: ['ssd', 'hdd']
   private_ip:
     type: string
     format: ipv4
@@ -109,16 +115,21 @@ properties:
         vol_id:
           type: string
           description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
-          example: vol_1
-          pattern: ^(vol_)+[1-9]{1}\d*$
+          example: lun_1
+          pattern: ^(vol_|lun_)+[1-9]{1}\d*$
         vol_name:
           type: string
           description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
           example: 서버 추가 볼륨
+        vol_type:
+          type: string
+          description: g클라우드 스토리지의 타입에 해당하는 속성입니다.
+          enum: ['ssd', 'hdd']
+          example: ssd
         vol_size:
           type: integer
           description: g클라우드 스토리지의 용량을 나타내는 속성으로 속성 값의 단위는 GB입니다.
-          example: 50
+          example: 100
   ips:
     type: array
     description: g클라우드 서버에 할당된 공인 IP를 확인할 수 있는 속성으로 배열로 제공됩니다.
@@ -146,6 +157,10 @@ properties:
           description: 로드밸런서의 ID에 해당하는 속성입니다.
           example: lbg_2
           pattern: ^(lbg_)+[1-9]{1}\d*$
+        lb_name:
+          type: string
+          description: 로드밸런서의 이름에 해당하는 속성입니다.
+          example: testlb
         lb_port:
           type: integer
           description: 로드밸런서의 포트 중 g클라우드 서버가 연결된 포트에 해당하는 속성입니다.
@@ -160,7 +175,7 @@ properties:
           maximum: 65535
   images:
     type: array
-    description: g클라우드 서버(SSD)로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
+    description: 로컬 SSD 서버와 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
     items:
       type: object
       properties:
@@ -178,7 +193,7 @@ properties:
           pattern: ^[\w\-]{1,16}$
   snaps:
     type: array
-    description: g클라우드 서버(베이직/프리미엄)로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
+    description: 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
     items:
       type: object
       properties:
@@ -194,6 +209,10 @@ properties:
           minLength: 1
           maxLength: 16
           pattern: ^[\w\-]{1,16}$p
+        size:
+          type: integer
+          description: 스냅샷 용량에 해당하는 속성입니다.
+          example: 50
   firewalls:
     type: array
     description: g클라우드 서버에 설정된 방화벽 그룹을 확인할 수 있는 속성으로 배열로 제공됩니다.
@@ -205,7 +224,7 @@ properties:
           description: 방화벽 그룹의 ID에 해당하는 속성입니다.
           example: fg_1
           pattern: ^(fg_)+[1-9]{1}\d*$
-        name:
+        fg_name:
           type: string
           description: 방화벽 그룹의 자원명에 해당하는 속성입니다.
           example: basic-firewall
@@ -215,4 +234,8 @@ properties:
   storage:
     type: integer
     description: g클라우드 서버에 장착된 Root 스토리지와 Data 스토리지의 용량 합계를 나타내는 속성으로 속성 값의 단위는 GB입니다.
+    example: 100
+  root_storage:
+    type: integer
+    description: g클라우드 서버의 루트 스토리지 용량만을 나타내는 속성으로 값의 단위는 GB입니다.
     example: 100

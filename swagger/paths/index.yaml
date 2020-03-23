@@ -12,6 +12,8 @@
   $ref: ./servers.svr_id.yaml
 /servers/{svr_id}/spec:
   $ref: ./servers.svr_id.spec.yaml
+/servers/{svr_id}/storage:
+  $ref: ./servers.svr_id.storage.yaml
 /servers/{svr_id}/action:
   $ref: ./servers.svr_id.action.yaml
 /servers/{svr_id}/password:
@@ -39,6 +41,8 @@
   $ref: ./volumes.yaml
 /volumes/{vol_id}:
   $ref: ./volumes.vol_id.yaml
+/volumes/{vol_id}/storage:
+  $ref: ./volumes.vol_id.storage.yaml
 /ips:
   $ref: ./ips.yaml
 /ips/{ip_id}:
@@ -57,24 +61,6 @@
   $ref: ./loadbalancers.lb_id.monitoring.traffic.yaml
 /loadbalancers/{lb_id}/monitoring/session:
   $ref: ./loadbalancers.lb_id.monitoring.session.yaml
-/lbs:
-  $ref: ./lbs.yaml
-/lbs/{lb_id}:
-  $ref: ./lbs.lb_id.yaml
-/lbs/{lb_id}/ips/{ip_id}:
-  $ref: ./lbs.lb_id.ips.ip_id.yaml
-/lbs/{lb_id}/setup:
-  $ref: ./lbs.lb_id.setup.yaml
-/lbs/{lb_id}/network:
-  $ref: ./lbs.lb_id.network.yaml
-/lbs/{lb_id}/ports:
-  $ref: ./lbs.lb_id.ports.yaml
-/lbs/{lb_id}/ports/{port}/servers:
-  $ref: ./lbs.lb_id.ports.port.servers.yaml
-/lbs/{lb_id}/monitoring/traffic:
-  $ref: ./lbs.lb_id.monitoring.traffic.yaml
-/lbs/{lb_id}/monitoring/session:
-  $ref: ./lbs.lb_id.monitoring.session.yaml
 /snapshots:
   $ref: ./snapshots.yaml
 /snapshots/{snap_id}:

@@ -3,6 +3,25 @@ post:
   operationId: createVolume
   description: |
     g클라우드 스토리지를 생성할 수 있습니다.
+    - g클라우드 스토리지는 SSD, HDD 중 선택할 수 있으며 아래 표와 같이 용량을 설정할 수 있습니다.
+      |                  |     SSD    |     HDD     |
+      |:----------------:|:----------:|:-----------:|
+      | 설정 단위(GB)     |     10     |     50      |
+      | 최소 용량(GB)     |     100    |     50      |
+      | 최대 용량(GB)     |    1000    |     500     |
+    - SSD 타입의 g클라우드 스토리지는 용량 설정에 따라 제공되는 IOPS(Input/Output Operations Per Second, 초당 읽기/쓰기 횟수) 가 다릅니다. 최소 4,000 IOPS에서 최대 20,000 IOPS로 용량 변경에 따라 10GB 당 최대 IOPS 가 400 IOPS씩 증가합니다.
+      | 볼륨 크기(GB) |      IOPS      | 볼륨 크기(GB) |      IOPS      |
+      |:------------:|:--------------:|:------------:|:--------------:|
+      |      50      |   최대 4,000   |     300      | 4,000 ~ 12,000 |
+      |      100     |   최대 4,000   |     350      | 4,000 ~ 14,000 |
+      |      150     | 4,000 ~ 6,000  |     400      | 4,000 ~ 16,000 |
+      |      200     | 4,000 ~ 8,000  |     450      | 4,000 ~ 18,000 |
+      |      250     | 4,000 ~ 10,000 |   500 초과   | 4,000 ~ 20,000 |   
+    - HDD 타입의 g클라우드 스토리지는 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버에만 장착할 수 있습니다.
+    - HDD 타입의 g클라우드 스토리지는 생성 후에 용량을 변경할 수 없습니다.
+    - SSD 타입의 g클라우드 스토리지는 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버에만 장착할 수 있으며 최대 3개까지 장착 가능합니다.
+    - SSD 타입의 g클라우드 스토리지는 생성 후에도 용량을 변경할 수 있습니다.
+    - SSD 타입의 g클라우드 스토리지는 'zone_1' 에서 생성할 수 없습니다.
 
     ### cURL
     ```
@@ -11,7 +30,7 @@ post:
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
-      -d 'user_id=company_777&name=vol-test&desc=API%20test111&size=50&service_zone=zone_1'
+      -d 'user_id=company_777&name=vol-test&desc=API%20test111&type=ssd&size=100&service_zone=zone_2'
     ```
 
     ### Error Code
@@ -25,7 +44,7 @@ post:
     - name: name
       description: |
         g클라우드 스토리지의 자원명에 해당하는 매개변수입니다.
-        - 이용자의 다른 g클라우드 서버의 자원명과 중복될 수 없습니다.
+        - 이용자의 다른 g클라우드 스토리지의 자원명과 중복될 수 없습니다.
         - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
       in: formData
       required: true
@@ -43,18 +62,32 @@ post:
       minLength: 0
       maxLength: 100
       pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+    - name: type
+      description: |
+        g클라우드 스토리지 타입을 입력하는 매개변수입니다.
+        - **ssd**: SSD 타입의 g클라우드 스토리지를 생성합니다. 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버에만 장착할 수 있습니다.
+        - **hdd**: HDD 타입의 g클라우드 스토리지를 생성합니다. 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버에만 장착할 수 있습니다.
+        - 입력하지 않으면 hdd 를 기본값으로 사용합니다.
+        - SSD 타입의 g클라우드 스토리지는 zone_1 에 생성할 수 없습니다.
+      in: formData
+      required: false
+      type: string
+      enum: [ssd, hdd]
     - name: size
       description: |
         g클라우드 스토리지의 용량을 선택하는 매개변수로 입력값의 단위는 GB입니다.
-        - [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] 중 하나를 선택할 수 있습니다.
+        - type 매개변수가 ssd 인 경우 최소 100에서 최대 1000까지 10 단위로 입력할 수 있습니다.
+        - type 매개변수가 hdd 인 경우, [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] 중 하나를 입력할 수 있습니다.
       in: formData
       required: true
       type: integer
-      enum: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
+      minimum: 50
+      maximum: 1000
     - name: service_zone
       description: |
         g클라우드 스토리지가 생성될 서비스 존을 선택하는 매개변수입니다.
         - g클라우드 서버에는 동일한 존에 생성된 g클라우드 스토리지만 장착할 수 있습니다.
+        - type 매개변수가 ssd 인 경우, 해당 매개변수는 zone_1 을 입력할 수 없습니다.
       in: formData
       required: true
       type: string
@@ -75,7 +108,7 @@ post:
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "user_id=company_777&name=vol-test&desc=API%20test111&size=50&service_zone=zone_1",
+          CURLOPT_POSTFIELDS => "user_id=company_777&name=vol-test&desc=API%20test111&type=ssd&size=100&service_zone=zone_2",
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
@@ -103,8 +136,9 @@ post:
             'user_id': 'company_777',
             'name': 'vol-test',
             'desc': 'API test111',
-            'size': 50,
-            'service_zone': 'zone_1'
+            'type': 'ssd',
+            'size': 100,
+            'service_zone': 'zone_2'
           }
         };
 
@@ -158,10 +192,11 @@ get:
           - status: g클라우드 스토리지의 현재 상태 값
           - size: g클라우드 스토리지의 용량(GB)
           - attached: g클라우드 스토리지의 g클라우드 서버 장착 여부
+          - storage_type: g클라우드 스토리지의 타입
         - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
         - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
         - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
-        - 예시) /v1/volumes?q=user_id=company_777&size=50
+        - 예시) /v1/volumes?q=user_id=company_777&size=100&type=ssd
     - name: order
       in: query
       type: string

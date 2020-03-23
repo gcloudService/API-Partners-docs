@@ -1,4 +1,4 @@
-version: 1.4.5
+version: 1.5.0
 title: 클라우드 파트너 API
 x-logo: 
   url: ./static/gcloud_ptn.jpg
@@ -61,6 +61,7 @@ description: |
     - [서버 정보 변경](#operation/updateServer)
     - [서버 삭제](#operation/deleteServer)
     - [서버 사양 변경](#operation/updateServerSpec)
+    - [서버 루트 스토리지 용량 변경](#operation/updateServerStorage)
     - [서버 상태 변경](#operation/updateServerAction)
     - [서버 비밀번호 변경](#operation/updateServerPassword)
     - [서버 네트워크 차단](#operation/updateServerNetwork)
@@ -80,6 +81,7 @@ description: |
     - [볼륨 스토리지 삭제](#operation/deleteVolume)
     - [볼륨 스토리지 장착/추가](#operation/attachServerVolume)
     - [볼륨 스토리지 해제](#operation/detachServerVolume)
+    - [볼륨 스토리지 용량 변경](#operation/updateVolumeStorage)
   - **[공인 IP](#tag/PublicIps)**
     - [공인 IP 조회](#operation/getIpList)
     - [공인 IP 생성](#operation/createIp)
@@ -270,9 +272,11 @@ description: |
         |------------------|-------------------------|
         | servers.create   | g클라우드 서버 생성      |
         | servers.delete   | g클라우드 서버 삭제      |
+        | servers.storage  | g클라우드 서버 스토리지 용량 변경 |
         | servers.password | g클라우드 서버 비밀번호 발급/변경|
         | volumes.create   | g클라우드 스토리지 생성   |
         | volumes.delete   | g클라우드 스토리지 삭제   |
+        | volumes.storage  | g클라우드 스토리지 용량 변경|
         | snapshots.create | 스냅샷, NAS 스냅샷 생성   |
         | snapshots.delete | 스냅샷, NAS스냅샷 삭제    |
         | images.create    | 이미지 생성              |
@@ -307,7 +311,7 @@ description: |
 
   아래 링크를 통해 API Collection을 다운받을 수 있습니다.
 
-  [API Collection 다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.4.0/gCloud.partner.API.1.4.0.postman_collection.json)
+  [API Collection 다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.5.0/gCloud.partner.API.1.5.0.postman_collection.json)
 
   [API Collection 버전 관리(Github)](https://github.com/gcloudService/API-Partners-docs/releases)
 

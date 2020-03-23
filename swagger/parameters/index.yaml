@@ -60,7 +60,7 @@ vol_id:
   in: path
   required: true
   type: string
-  pattern: ^(vol_)+[1-9]{1}\d*$
+  pattern: ^(vol_|lun_)+[1-9]{1}\d*$
   example: vol_1
 vol_name:
   name: name

@@ -61,7 +61,7 @@ properties:
         type: integer
         description: 당월 파트너의 NAS 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 2200
-      nas_snapshot_total_charge:
+      nas_snap_total_charge:
         type: integer
         description: 당월 파트너의 NAS 스냅샷 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 1000

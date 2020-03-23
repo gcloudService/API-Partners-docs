@@ -3,15 +3,16 @@ post:
   operationId: createServer
   description: |
     g클라우드 서버를 생성할 수 있습니다.
-      - g클라우드 서버(베이직/프리미엄)는 HDD를 기반으로 하는 가상 서버로 아래 표와 같이 사양에 따라 베이직과 프리미엄으로 나뉩니다. CPU, Memory, 스토리지 사양에 대해 자유롭게 선택하여 구성할 수 있습니다.
-        |                  | g클라우드 서버(베이직) | g클라우드 서버(프리미엄) |
-        |------------------|:----------------------:|:------------------------:|
-        | CPU(vCore)       |         1/2/4/8        |          4/8/16          |
-        | Memory(GB)       |      1/2/3/4/8/16      |    (**16** )/32/64/128   |
-        | Root Storage(GB) |           50           |            50            |
-        | Data Storage(GB) |     50~500(50 단위)    |      50~500(50 단위)     |
-        **CPU가 16vCore, Memory가 16GB인 경우 프리미엄 서버로 생성됩니다.**
-      - g클라우드 서버(SSD)는 SSD를 기반으로 하는 가상 서버입니다. 고정된 CPU, Memory, 스토리지 사양 중 선택할 수 있습니다.
+      - 베이직/프리미엄 서버는 SSD, HDD 중 원하는 스토리지를 선택하여 가상 서버를 설정할 수 있으며 아래 표와 같이 사양에 따라 베이직과 프리미엄으로 나뉩니다. CPU, Memory, 스토리지 사양에 대해 자유롭게 선택하여 구성할 수 있습니다.
+        | 서버 타입/스토리지 타입 |   베이직/SSD       |     프리미엄/SSD    |    베이직/HDD    |     프리미엄/HDD    |
+        |:---------------------:|:-----------------:|:-------------------:|:---------------:|:-------------------:|
+        | CPU(vCore)            |      2/4/8        |       4/8/16        |    1/2/4/8      |       4/8/16        |
+        | Memory(GB)            |      4/8/16       | (**16** )/32/64/128 |  1/2/3/4/8/16   | (**16** )/32/64/128 |
+        | Root Storage(GB)      |      50/100       |       50/100        |      50         |         50          |
+        | Data Storage(GB)      | 100~1000(10 단위) |  100~1000(10 단위)   | 50~500(50 단위) |   50~500(50 단위)   |
+        **CPU가 16vCore, Memory가 16GB인 경우 프리미엄 서버로 생성됩니다.**<br>
+        **서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버는 IOPS(Input/Output Operations Per Second)를 최대 4,000 IOPS 까지 제공합니다.**
+      - 로컬 SSD 서버는 SSD를 기반으로 하는 가상 서버입니다. 고정된 CPU, Memory, 스토리지 사양 중 선택할 수 있습니다.
         | CPU(vCore) | Memory(GB) | Root Storage(GB) |
         |:----------:|:----------:|:----------------:|
         |      1     |      1     |        30        |
@@ -22,25 +23,47 @@ post:
         |      4     |     16     |        480       |
         |      8     |     16     |        480       |
         |     16     |     32     |        960       |
-      - g클라우드 서버(베이직/프리미엄)의 경우, 운영체제가 설치되는 영역인 Root 스토리지 영역이 50GB로 고정되어 g클라우드 서버에 장착되며, 이는 서버에 종속적이며 해제할 수 없습니다.
-      - g클라우드 서버(SSD)의 경우, 운영체제가 설치되는 영역인 Root 영역이 CPU와 Memory 사양에 따라 고정되어 g클라우드 서버에 장착되며, 이는 서버에 종속적이며 해제할 수 없습니다.
-      - g클라우드 서버(베이직/프리미엄)의 경우, 서버 생성 시 서버에 필요한 데이터를 저장하는 독립된 영역인 Data 스토리지 영역(g클라우드 스토리지)를 장착할 수 있습니다. g클라우드 스토리지의 단위는 50GB이며, 최소 50GB에서 최대 500GB를 장착할 수 있습니다.
-      - g클라우드 서버(SSD)의 경우, Data 스토리지 영역(g클라우드 스토리지)를 장착할 수 없습니다.
+      - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버의 경우, 운영체제가 설치되는 영역인 Root 스토리지 영역을 50GB 또는 100GB 로 선택할 수 있고, g클라우드 서버에 장착되며, 이는 서버에 종속적이며 해제할 수 없습니다.
+      - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버의 경우, 운영체제가 설치되는 영역인 Root 스토리지 영역이 50GB로 고정되어 g클라우드 서버에 장착되며, 이는 서버에 종속적이며 해제할 수 없습니다.
+      - 로컬 SSD 서버의 경우, 운영체제가 설치되는 영역인 Root 영역이 CPU와 Memory 사양에 따라 고정되어 g클라우드 서버에 장착되며, 이는 서버에 종속적이며 해제할 수 없습니다.
+      - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버의 경우, 서버 생성 시 서버에 필요한 데이터를 저장하는 독립된 영역인 Data 스토리지 영역(g클라우드 스토리지)을 장착할 수 있습니다. SSD 타입의 g클라우드 스토리지만 장착할 수 있고, g클라우드 스토리지의 단위는 10GB이며, 최소 100GB에서 최대 1000GB를 장착할 수 있습니다. 또한 g클라우드 스토리지를 최대 3개까지 장착할 수 있습니다.
+      - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버의 경우, 서버 생성 시 서버에 필요한 데이터를 저장하는 독립된 영역인 Data 스토리지 영역(g클라우드 스토리지)을 장착할 수 있습니다. HDD 타입의 g클라우드 스토리지만 장착할 수 있고, g클라우드 스토리지의 단위는 50GB이며, 최소 50GB에서 최대 500GB를 장착할 수 있습니다.
+      - 로컬 SSD 서버의 경우, Data 스토리지 영역(g클라우드 스토리지)을 장착할 수 없습니다.
       - g클라우드 서버 생성 시, OS 및 소프트웨어가 미리 설치된 서버 이미지를 선택할 수 있습니다. 서버 이미지는 가비아 클라우드사업부가 제공하는 ‘기본 이미지’, 파트너가 생성한 이미지를 이용자에게 제공하는 ‘파트너 이미지’, 이용자가 직접 생성해 사용하는 ‘이용자 이미지’중에서 선택할 수 있습니다.
-      - g클라우드 서버 생성 시, 선택해야 하는 이미지에 따라 최소/최대 CPU 사양과 최소/최대 Memory 사양의 제한이 있습니다. 사양 제한에 대한 정보는 [이미지 정보 조회](#operation/getImageList) 또는 [이미지 상세 정보](#operation/getImage) 기능을 통해 확인할 수 있습니다.
+      - g클라우드 서버 생성 시, 선택해야 하는 이미지에 따라 최소/최대 CPU 사양과 최소/최대 Memory 사양 및 최소 루트 스토리지 용량 제한이 있습니다. 사양 제한에 대한 정보는 [이미지 정보 조회](#operation/getImageList) 또는 [이미지 상세 정보](#operation/getImage) 기능을 통해 확인할 수 있습니다.
       - g클라우드 서버 생성 시, 공인 IP 할당 여부를 결정할 수 있습니다.
       - g클라우드 서버에 공인 IP를 할당할 경우, 방화벽 그룹을 서버에 연결할 수 있으며 방화벽 그룹이 허용하는 정책에 대해서만 공인망 통신이 가능합니다. 방화벽 그룹을 연결하지 않을 경우, 원격접속(SSH, RDP)를 비롯한 모든 공인망 통신이 차단됩니다.
       - g클라우드 서버에는 동일한 존에 생성한 공인 IP, g클라우드 스토리지만 할당/장착 할 수 있습니다.
+      - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버의 경우, 'zone_1' 에서 생성할 수 없습니다.
       - 서버 접속 비밀번호(OS 비밀번호)는 서버 생성 요청 시, 비동기 작업을 거쳐 Callback URL로 받을 수 있습니다. 이후 비밀번호 변경을 원할 경우, [서버 비밀번호 변경](#operation/updateServerPassword) 기능을 활용해 재발급 받을 수 있습니다.
 
     ### cURL
     ```
-    curl -X POST \
-      https://cpapi.gabia.com/v1/servers \
-      -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
-      -H 'cache-control: no-cache' \
-      -H 'content-type: application/x-www-form-urlencoded' \
-      -d 'user_id=company_777&service_zone=zone_1&img_id=img_131&ip_use=N&name=as-server&desc=scale-out%20server&type=basic&cpu=1&memory=1&hdd=50'
+    curl
+      --location --request POST 'https://cpapi.gabia.com/v1/servers' \
+      --header 'Cache-Control: no-cache' \
+      --header 'Content-Type: application/json' \
+      --header 'Authorization: Bearer {YOUR-JWT-TOKEN}' \
+      --data-raw '{
+          "user_id": "company777",
+          "name": "as-server",
+          "desc": "scalew-out server",
+          "type": "basic",
+          "storage_type": "ssd",
+          "cpu": 1,
+          "memory": 1,
+          "root_storage": 50,
+          "volumes": [
+              {
+                  "vol_type": "ssd",
+                  "vol_size": 100
+              }
+          ],
+          "img_id": "img_131",
+          "ip_use": "Y",
+          "fg_id": "fg_1",
+          "service_zone": "zone_2"
+      }'
     ```
 
     ### Error Code
@@ -48,133 +71,194 @@ post:
     - `-4102` : [API] 서버 생성 오류. 서버에 부착된 볼륨 정보가 없음
     - `-4103` : [API] 서버 생성 오류. 유효하지 않은 cpu 범위
     - `-4104` : [API] 서버 생성 오류. 유효하지 않은 memory 범위
-    - `-4107` : [API] 서버 생성 오류. 유효하지 않은 'type'. 'img_id'의 원본 서버 타입과 요청한 'type'이 불일치합니다.
+    - `-4107` : [API] 서버 생성 오류. 유효하지 않은 'type'. 'img_id'의 원본 서버 타입 및 스토리지 타입과 요청한 서버 타입 및 스토리지 타입이 불일치합니다.
     - `-4108` : [API] 서버 생성 오류. 서버 생성을 요청한 사용자와 방화벽 그룹 소유자가 다릅니다.
     - `-4109` : [API] 서버 생성 오류. 내부 오류.
     - `-4110` : [API] 서버 생성 오류. 자원이 부족합니다.
+    - `-5301` : [API] 서버 생성 오류. 유효하지 않은 루트 스토리지 용량 범위
   tags:
     - Servers
   parameters:
-    - $ref: ../parameters/index.yaml#/user_id
-    - name: name
-      description: |
-        g클라우드 서버의 자원명에 해당하는 매개변수입니다.
-        - 이용자의 다른 g클라우드 서버의 자원명과 중복될 수 없습니다.
-        - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
-      in: formData
-      required: true
-      type: string
-      minLength: 1
-      maxLength: 16
-      pattern: ^[\w\-]{1,16}$
-    - name: desc
-      description: |
-        g클라우드 서버에 대한 설명을 입력하는 매개변수입니다.
-        - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
-      in: formData
-      required: false
-      type: string
-      minLength: 0
-      maxLength: 100
-      pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
-    - name: type
-      description: |
-        g클라우드 서버의 종류를 선택하는 매개변수입니다.
-        - **basic**: g클라우드 서버(베이직) 생성 시 사용하는 입력 값입니다.
-        - **premium**: g클라우드 서버(프리미엄) 생성 시 사용하는 입력 값입니다.
-        - **ssd**: g클라우드 서버(SSD)에 생성 시 사용하는 입력 값입니다.
-      in: formData
-      required: true
-      type: string
-      enum: ['basic','premium','ssd']
-    - name: ssd
-      description: |
-        g클라우드 서버(SSD)의 사양을 선택하는 매개변수입니다
-          - g클라우드 서버(SSD)는 CPU, Memory, Root Storage 사양이 고정되어 있습니다.
-          - 고정된 사양을 CPU vCore 수/Memory 용량(GB)/Root Storage 용량(GB) 순으로 입력할 수 있습니다.
-          - 서버의 type이 ssd가 아닐 경우, 해당 매개변수에 입력된 값은 적용되지 않습니다.
-      in: formData
-      required: false
-      type: string
-      enum:
-        - 1/1/30
-        - 2/2/60
-        - 2/4/120
-        - 4/4/120
-        - 4/8/240
-        - 4/16/480
-        - 8/16/480
-        - 16/32/960
-    - name: cpu
-      description: |
-        g클라우드 서버(베이직/프리미엄)의 CPU 사양(vCore)을 입력하는 매개변수입니다.
-        - type 매개변수가 basic이나 premium이 아닐 경우, 해당 매개변수는 사용할 수 없습니다.
-        - g클라우드 서버(베이직)은 [1, 2, 4, 8] 중 하나를 입력할 수 있습니다.
-        - g클라우드 서버(프리미엄)은 [4, 8, 16] 중 하나를 입력할 수 있습니다.
-      in: formData
-      required: false
-      type: integer
-      format: int32
-      enum: [1,2,4,8,16]
-    - name: memory
-      description: |
-        g클라우드 서버(베이직/프리미엄)의 Memory 사양(GB)을 입력하는 매개변수입니다.
-        - type 매개변수가 basic이나 premium이 아닐 경우, 해당 매개변수는 사용할 수 없습니다.
-        - g클라우드 서버(베이직)은 [1, 2, 3, 4, 8, 16] 중 하나를 입력할 수 있습니다.
-        - g클라우드 서버(프리미엄)은 [16, 32, 64, 128] 중 하나를 입력할 수 있습니다. (단, 16은 cpu 매개변수가 16일 때만 가능합니다.)
-      in: formData
-      required: false
-      type: integer
-      format: int32
-      enum: [1,2,3,4,8,16,32,64,128]
-    - name: hdd
-      description: |
-        g클라우드 서버(베이직/프리미엄)의 Data Storage(g클라우드 스토리지) 용량(GB)에 해당하는 매개변수입니다.
-        - g클라우드 서버(베이직)과 g클라우드 서버(프리미엄) 모두 [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] 중 하나를 선택할 수 있습니다.
-      in: formData
-      required: false
-      type: integer
-      format: int32
-    - name: img_id
-      description: |
-        g클라우드 서버의 이미지를 선택하는 매개변수입니다.
-        - API의 [이미지 조회 기능](#operation/getImageList)을 통해, 생성하고자 하는 서버의 이미지를 선택할 수 있습니다.
-      in: formData
-      required: true
-      type: string
-      pattern: ^(img_)+[1-9]{1}\d*$
-    - name: ip_use
-      description: |
-        g클라우드 서버에 공인 IP할당 여부를 선택하는 매개변수입니다.
-        - Y를 입력할 경우, g클라우드 서버 생성과 함께 공인 IP 생성이 진행되고 공인 IP가 g클라우드 서버에 할당됩니다.
-        - N를 입력할 경우, g클라우드 서버는 기본으로 제공되는 사설 IP를 통해 이용자에게 할당된 내부망에서만 접속할 수 있습니다.
-      in: formData
-      required: true
-      type: string
-      enum: [N, Y]
-    - name: fg_id
-      description: |
-        g클라우드 서버에 연결할 방화벽 그룹을 선택하는 매개변수입니다.
-        - ip_use가 Y인 경우에만 입력할 수 있습니다.
-        - 방화벽 그룹을 연결하지 않을 경우, 원격 접속(SSH, RDP)를 비롯한 모든 공인망 통신이 차단됩니다.
-      in: formData
-      type: string
-      pattern: ^(fg_)+[1-9]{1}\d*$
-    - name: service_zone
-      description: |
-        g클라우드 서버가 생성될 서비스 존을 선택하는 매개변수입니다.
-        - g클라우드 서버에는 동일한 존에 생성된 공인 IP만 할당할 수 있습니다.
-        - g클라우드 서버에는 동일한 존에 생성된 g클라우드 스토리지만 장착할 수 있습니다.
-      in: formData
-      required: true
-      type: string
-      pattern: ^(zone_)+[1-9]{1}\d*$
+    - in: body
+      name: server
+      schema:
+        type: object
+        required:
+          - user_id
+          - name
+          - type
+          - img_id
+          - ip_use
+          - service_zone
+        properties:
+          user_id:
+            type: string
+            description: |
+              Example: `"company777"`<br>이용자의 ID에 해당하는 매개변수입니다.
+            minLength: 3
+            maxLength: 16
+            pattern: ^[\w\-]{3,16}$
+          name:
+            description: |
+              g클라우드 서버의 자원명에 해당하는 매개변수입니다.
+              - 이용자의 다른 g클라우드 서버의 자원명과 중복될 수 없습니다.
+              - 영문, 숫자, 하이픈(-), 언더바(_)를 사용하여 1자 이상 16자 이하로만 입력할 수 있습니다.
+            type: string
+            minLength: 1
+            maxLength: 16
+            pattern: ^[\w\-]{1,16}$
+          desc:
+            description: |
+              g클라우드 서버에 대한 설명을 입력하는 매개변수입니다.
+              - 일부 특수문자( ( ? ! [ \ / ? ; : | * < > @ \ ' " ] ) )를 제외한 0자 이상 100자 이하의 문자(한글, 영문, 숫자, 특수문자 등)로 입력할 수 있습니다.
+            type: string
+            minLength: 0
+            maxLength: 100
+            pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+          type:
+            description: |
+              g클라우드 서버의 종류를 선택하는 매개변수입니다.
+              - **basic**: g클라우드 서버 타입을 베이직으로 설정하여 생성 시 사용하는 입력 값입니다.
+              - **premium**: g클라우드 서버 타입을 프리미엄으로 설정하여 생성 시 사용하는 입력 값입니다.
+              - **ssd**: g클라우드 서버 타입을 로컬 SSD로 설정하여 생성 시 사용하는 입력 값입니다.
+            type: string
+            enum: ['basic','premium','ssd']
+          storage_type:
+            description: |
+              g클라우드 서버 스토리지 타입을 선택하는 매개변수입니다
+              - **ssd**: g클라우드 서버 스토리지 타입을 SSD로 설정하여 생성 시 사용하는 입력 값입니다.
+              - **hdd**: g클라우드 서버 스토리지 타입을 HDD로 설정하여 생성 시 사용하는 입력 값입니다.
+              - type 매개변수가 basic 이나 premium 인 경우에만 입력할 수 있습니다.
+              - type 매개변수가 basic 이나 premium 이고 해당 매개변수를 입력하지 않으면 hdd 를 기본값으로 사용합니다.
+              - service_zone 매개변수가 zone_1 인 경우, ssd 를 입력할 수 없습니다.
+            type: string
+            enum: ['ssd', 'hdd']
+          ssd:
+            description: |
+              로컬 SSD 서버의 사양을 선택하는 매개변수입니다
+                - 로컬 SSD 서버는 CPU, Memory, Root Storage 사양이 고정되어 있습니다.
+                - 고정된 사양을 CPU vCore 수/Memory 용량(GB)/Root Storage 용량(GB) 순으로 입력할 수 있습니다.
+                - 서버의 type이 ssd가 아닐 경우, 해당 매개변수에 입력된 값은 적용되지 않습니다.
+            type: string
+            enum:
+              - 1/1/30
+              - 2/2/60
+              - 2/4/120
+              - 4/4/120
+              - 4/8/240
+              - 4/16/480
+              - 8/16/480
+              - 16/32/960
+          cpu:
+            description: |
+              베이직/프리미엄 서버의 CPU 사양(vCore)을 입력하는 매개변수입니다.
+              - type 매개변수가 basic이나 premium이 아닐 경우, 해당 매개변수는 사용할 수 없습니다.
+              - 서버 타입이 베이직이고 스토리지 타입이 SSD인 서버는 [2, 4, 8] 중 하나를 입력할 수 있습니다.
+              - 서버 타입이 프리미엄이고 스토리지 타입이 SSD인 서버는 [4, 8, 16] 중 하나를 입력할 수 있습니다.
+              - 서버 타입이 베이직이고 스토리지 타입이 HDD인 서버는 [1, 2, 4, 8] 중 하나를 입력할 수 있습니다.
+              - 서버 타입이 프리미엄이고 스토리지 타입이 HDD인 서버는 [4, 8, 16] 중 하나를 입력할 수 있습니다.
+            type: integer
+            format: int32
+            enum: [1,2,4,8,16]
+          memory:
+            description: |
+              베이직/프리미엄 서버의 Memory 사양(GB)을 입력하는 매개변수입니다.
+              - type 매개변수가 basic이나 premium이 아닐 경우, 해당 매개변수는 사용할 수 없습니다.
+              - 서버 타입이 베이직이고 스토리지 타입이 SSD인 서버는 [4, 8, 16] 중 하나를 입력할 수 있습니다.
+              - 서버 타입이 프리미엄이고 스토리지 타입이 SSD인 서버는 [16, 32, 64, 128] 중 하나를 입력할 수 있습니다. (단, 16은 cpu 매개변수가 16일 때만 가능합니다.)
+              - 서버 타입이 베이직이고 스토리지 타입이 HDD인 서버는 [1, 2, 3, 4, 8, 16] 중 하나를 입력할 수 있습니다.
+              - 서버 타입이 프리미엄이고 스토리지 타입이 HDD인 서버는 [16, 32, 64, 128] 중 하나를 입력할 수 있습니다. (단, 16은 cpu 매개변수가 16일 때만 가능합니다.)
+            type: integer
+            format: int32
+            enum: [1,2,3,4,8,16,32,64,128]
+          root_storage:
+            description: |
+              베이직/프리미엄 서버의 루트 스토리지 용량(GB)을 입력하는 매개변수입니다.
+              - type 매개변수가 basic이나 premium이 아닐 경우, 해당 매개변수는 사용할 수 없습니다.
+              - storage_type 매개변수가 ssd 인 경우, 50 또는 100 을 입력할 수 있습니다.
+              - storage_type 매개변수가 hdd 인 경우, 50 만 입력할 수 있습니다.
+              - type 매개변수가 basic 이나 premium 인 경우, 해당 매개변수를 입력하지 않으면 50 을 기본으로 사용합니다.
+              - 해당 매개변수는 선택한 이미지 용량과 같거나 큰 값을 입력해야 합니다.
+            type: integer
+            format: int32
+            enum: [50, 100]
+          volumes:
+            description: |
+              베이직/프리미엄 서버의 Data Storage(g클라우드 스토리지)에 해당하는 매개변수입니다.
+              - type 매개변수가 basic이나 premium이 아닐 경우, 해당 매개변수는 사용할 수 없습니다.
+              - storage_type 매개변수가 ssd 인 경우 최대 3개까지 설정할 수 있습니다.
+              - storage_type 매개변수가 hdd 인 경우 최대 1개까지 설정할 수 있습니다.
+              - hdd 매개변수와 함께 사용할 수 없습니다.
+            type: array
+            items:
+              type: object
+              required:
+                - vol_type
+                - vol_size
+              properties:
+                vol_type:
+                  description: |
+                    g클라우드 스토리지 타입에 해당하는 매개변수입니다.
+                    - **ssd**: g클라우드 스토리지(SSD)를 생성할 시 사용하는 입력 값입니다.
+                    - **hdd**: g클라우드 스토리지(HDD)를 생성할 시 사용하는 입력 값입니다.
+                    - storage_type 매개변수가 ssd 인 경우, 해당 매개변수는 ssd 만 입력할 수 있습니다.
+                    - storage_type 매개변수가 hdd 인 경우, 해당 매개변수는 hdd 만 입력할 수 있습니다.
+                  enum: [ssd, hdd]
+                vol_size:
+                  description: |
+                    g클라우드 스토리지 용량(GB)에 해당하는 매개변수입니다.
+                    - vol_type 이 ssd 인 경우, 최소 100에서 1000까지 10 단위로 입력할 수 있습니다.
+                    - vol_type 이 hdd 인 경우, [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] 중 하나를 입력할 수 있습니다.
+                  type: integer
+                  format: int32
+                  minimum: 50
+                  maximum: 1000
+          hdd:
+            description: |
+              `deprecated`: 해당 매개변수는 향후 지원하지 않을 예정입니다. volumes 매개변수를 사용하시기 바랍니다<br>
+              베이직/프리미엄 서버의 Data Storage(g클라우드 스토리지) 용량(GB)에 해당하는 매개변수입니다.
+              - g클라우드 서버(베이직)과 g클라우드 서버(프리미엄) 모두 [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] 중 하나를 선택할 수 있습니다.
+              - volumes 매개변수와 함께 사용할 수 없습니다
+            type: integer
+            format: int32
+            enum: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
+          img_id:
+            description: |
+              g클라우드 서버의 이미지를 선택하는 매개변수입니다.
+              - API의 [이미지 조회 기능](#operation/getImageList)을 통해, 생성하고자 하는 서버의 이미지를 선택할 수 있습니다.
+              - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버는 AFA_SSD 타입의 이미지만 선택할 수 있습니다. 단 이미지가 파트너 이미지나 사용자 이미지인 경우에는 LSSD, SATA 타입의 이미지도 선택할 수 있습니다.
+              - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버는 SATA 타입의 이미지만 선택할 수 있습니다.
+              - 로컬 SSD 서버는 LSSD 타입의 이미지만 선택할 수 있습니다.
+            type: string
+            pattern: ^(img_)+[1-9]{1}\d*$
+          ip_use:
+            description: |
+              g클라우드 서버에 공인 IP할당 여부를 선택하는 매개변수입니다.
+              - Y를 입력할 경우, g클라우드 서버 생성과 함께 공인 IP 생성이 진행되고 공인 IP가 g클라우드 서버에 할당됩니다.
+              - N를 입력할 경우, g클라우드 서버는 기본으로 제공되는 사설 IP를 통해 이용자에게 할당된 내부망에서만 접속할 수 있습니다.
+            type: string
+            enum: [N, Y]
+          fg_id:
+            description: |
+              g클라우드 서버에 연결할 방화벽 그룹을 선택하는 매개변수입니다.
+              - ip_use가 Y인 경우에만 입력할 수 있습니다.
+              - 방화벽 그룹을 연결하지 않을 경우, 원격 접속(SSH, RDP)를 비롯한 모든 공인망 통신이 차단됩니다.
+            type: string
+            pattern: ^(fg_)+[1-9]{1}\d*$
+          service_zone:
+            description: |
+              g클라우드 서버가 생성될 서비스 존을 선택하는 매개변수입니다.
+              - g클라우드 서버에는 동일한 존에 생성된 공인 IP만 할당할 수 있습니다.
+              - g클라우드 서버에는 동일한 존에 생성된 g클라우드 스토리지만 장착할 수 있습니다.
+            type: string
+            pattern: ^(zone_)+[1-9]{1}\d*$
   produces:
     - application/json
   x-code-samples:
     - lang: PHP
       source: |
         <?php
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -182,51 +266,39 @@ post:
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "user_id=company_777&service_zone=zone_1&img_id=img_131&ip_use=N&name=as-server&desc=scale-out%20server&type=basic&cpu=1&memory=1&hdd=50",
+          CURLOPT_POSTFIELDS =>"{\n    \"user_id\": \"company777\",\n    \"name\": \"as-server\",\n    \"desc\": \"scalew-out server\",\n    \"type\": \"basic\",\n    \"storage_type\": \"ssd\",\n    \"cpu\": 1,\n    \"memory\": 1,\n    \"root_storage\": 50,\n    \"volumes\": [\n        {\n            \"vol_type\": \"ssd\",\n            \"vol_size\": 100\n        }\n    ],\n    \"img_id\": \"img_131\",\n    \"ip_use\": \"Y\",\n    \"fg_id\": \"fg_1\",\n    \"service_zone\": \"zone_2\"\n}",
           CURLOPT_HTTPHEADER => array(
-            "authorization: Bearer {YOUR-JWT-TOKEN}",
-            "cache-control: no-cache",
-            "content-type: application/json",
+            "Cache-Control: no-cache",
+            "Content-Type: application/json",
+            "Authorization: Bearer {YOUR-JWT-TOKEN}"
           ),
         ));
 
         $response = curl_exec($curl);
-        $err = curl_error($curl);
 
         curl_close($curl);
+        echo $response;
     - lang: Node.js
       source: |
-        var request = require("request");
-
+        var request = require('request');
         var options = {
-          method: 'POST',
-          url: 'https://cpapi.gabia.com/v1/servers',
-          headers: {
-            'cache-control': 'no-cache',
-            'content-type': 'application/json',
-            'authorization': 'Bearer {YOUR-JWT-TOKEN}'
+          'method': 'POST',
+          'url': 'https://cpapi.gabia.com/v1/servers',
+          'headers': {
+            'Cache-Control': 'no-cache',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer {YOUR-JWT-TOKEN}'
           },
-          form: {
-            'user_id': 'company_777',
-            'service_zone': 'zone_1',
-            'img_id': 'img_131',
-            'ip_use': 'N',
-            'name': 'as-server',
-            'desc': 'scale-out server',
-            'type': 'basic',
-            'cpu': 1,
-            'memory': 1,
-            'hdd': 50
-          }
+          body: JSON.stringify({"user_id":"company777","name":"as-server","desc":"scalew-out server","type":"basic","storage_type":"ssd","cpu":1,"memory":1,"root_storage":50,"volumes":[{"vol_type":"ssd","vol_size":100}],"img_id":"img_131","ip_use":"Y","fg_id":"fg_1","service_zone":"zone_2"})
+
         };
-
-        request(options, function(error, response, body) {
+        request(options, function (error, response) { 
           if (error) throw new Error(error);
-
-          console.log(body);
+          console.log(response.body);
         });
   responses:
     202:
@@ -283,11 +355,12 @@ get:
           - cpu: g클라우드 서버의 CPU 사양(vCore)
           - memory: g클라우드 서버의 Memory 사양(GB)
           - img_id: g클라우드 서버 생성 시 사용된 이미지의 ID
-          - type: g클라우드 서버의 종류
+          - type: g클라우드 서버 타입
+          - storage_type: g클라우드 서버 스토리지 타입
         - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
         - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
         - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
-        - 예시) /v1/servers?q=user_id=company_777,type=basic
+        - 예시) /v1/servers?q=user_id=company_777,type=basic,storage_type=ssd
     - name: order
       in: query
       type: string

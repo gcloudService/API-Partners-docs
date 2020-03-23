@@ -47,9 +47,11 @@ properties:
     type: string
     description: |
       이미지를 생성한 서버의 종류를 나타내는 속성입니다.
-      - SATA: g클라우드 서버(베이직/프리미엄)을 나타내는 속성값입니다.
-      - SSD: g클라우드 서버(SSD)를 나타내는 속성값 입니다.
+      - SATA: 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버를 나타내는 속성값입니다.
+      - SSD: 로컬 SSD 서버를 나타내는 속성값 입니다.
+      - AFA_SSD: 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버를 나타내는 속성값입니다.
     example: SATA
+    enum: ['SATA', 'SSD', 'AFA_SSD']
   img_os:
     type: string
     description: |
@@ -99,7 +101,7 @@ properties:
     type: string
     description: |
       이미지를 생성하는데 사용된 스냅샷의 ID에 해당하는 속성입니다.
-      - g클라우드 서버(베이직/프리미엄)에만 해당되며, g클라우드 서버(SSD)는 해당되지 않는 속성입니다.
+      - 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버에만 해당되며, 로컬 SSD 서버와 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버에는 해당되지 않는 속성입니다.
     example:
   regdate:
     type: dateTime
