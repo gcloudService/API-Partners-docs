@@ -84,7 +84,7 @@ get:
     200:
       description: OK. 이용자별 실시간 요금 현황 조회 성공
       schema:
-        $ref: ../definitions/Bills.date.users.yaml
+        $ref: ../definitions/Bills.now.users.yaml
     400:
       description: Bad request. 파라미터 오류
       schema:

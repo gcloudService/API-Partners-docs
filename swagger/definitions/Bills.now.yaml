@@ -15,7 +15,7 @@ properties:
   total_charge:
     type: integer
     description: 당월 파트너의 서비스 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
-    example: 82757
+    example: 126852
   charge_summary:
     type: object
     description: 당월 파트너의 각 자원별 총 이용금액에 해당하는 속성으로 객체로 제공됩니다.
@@ -23,35 +23,35 @@ properties:
       svr_total_charge:
         type: integer
         description: 당월 파트너의 g클라우드 서버 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
-        example: 46238
+        example: 88000
       vol_total_charge:
         type: integer
         description: 당월 파트너의 g클라우드 스토리지 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
-        example: 13940
+        example: 8052
       nas_total_charge:
         type: integer
         description: 당월 파트너의 NAS 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 2200
-      nas_snapshot_total_charge:
+      nas_snap_total_charge:
         type: integer
         description: 당월 파트너의 NAS 스냅샷 총 이용 요금에 해당하는 속성으로 속성값의 단위는 원입니다.
         example: 1000
       ip_total_charge:
         type: integer
         description: 당월 파트너의 공인 IP 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
-        example: 11140
+        example: 5500
       lb_total_charge:
         type: integer
         description: 당월 파트너의 로드밸런서 총 이용 금액에 해당하는 속성으로 속성값의 단위는 원입니다.
-        example: 5802
+        example: 16500
       snap_total_charge:
         type: integer
         description: 당월 파트너의 서버 스냅샷 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
-        example: 0  
+        example: 2200  
       img_total_charge:
         type: integer
         description: 당월 파트너의 이미지 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다.
-        example: 2437
+        example: 6600
       traffic_total_charge:
         type: integer
         description: 당월 파트너의 트래픽 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 

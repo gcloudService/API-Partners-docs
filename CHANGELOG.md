@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2020-02-18
+### Added
+- g클라우드 서버(베이직/프리미엄 SSD) 추가
+- SSD 타입의 g클라우드 스토리지 추가
+- MR 템플릿 추가
+### Changed
+- bills API response 수정
+    - 정산금 상세 조회 시 네트워크 사용량이 표기되지 않는 문제 수정
+        - 기존의 키 (in_traffic_domestic, out_traffic_domestic, in_traffic_foreign, out_traffic_foreign, in_traffic, out_traffic)은 표시할 방법이 없으므로 deprecated. 항상 0으로 표시됨
+        - use_traffic(과금 대상 트래픽), use_traffic_domestic(과금 대상 국내 트래픽), use_traffic_foreign(과금 대상 해외 트래픽) 으로 표기
+    - 정산금 상세 조회 및 실시간 사용 요금 조회 시 image_storages 에는 image size 를 표기하도록 수정
+    - 실시간 요금 조회 시 servers 및 images 에 서버 OS 종류 (Linux, Windows) 를 표시하도록 수정
+    - 기타 오기 수정
+- 서버 타입 표기 변경
+    - SSD -> 로컬 SSD
+    - 베이직/프리미엄 HDD -> 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버
+    - 베이직/프리미엄 SSD -> 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버
+### Deprecated
+- `v1/lbs` API 지원 중단
+
+
 ## [1.4.5] - 2019-12-05
 - Error Code 정리
 

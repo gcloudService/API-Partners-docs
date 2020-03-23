@@ -68,7 +68,7 @@ get:
       description: |
         OK. 볼륨 스토리지 상세 정보 조회 성공
       schema:
-        $ref: ../definitions/Servers.yaml
+        $ref: ../definitions/Volumes.yaml
     400:
       description: Bad request. 파라미터 오류
       schema:

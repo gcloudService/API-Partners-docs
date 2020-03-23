@@ -170,6 +170,10 @@ properties:
           description: 로드밸런서 ID
           example: lbg_2
           pattern: ^(lbg_)+[1-9]{1}\d*$
+        lb_name:
+          type: string
+          description: 로드밸런서 이름
+          example: testlb
         lb_port:
           type: integer
           description: 로드밸런서 포트
@@ -218,6 +222,10 @@ properties:
           minLength: 1
           maxLength: 16
           pattern: ^[\w\-]{1,16}$p
+        size:
+          type: integer
+          description: 스냅샷 용량
+          example: 50
   storage:
     type: integer
     description: 서버 전체 볼륨 크기
