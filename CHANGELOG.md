@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.1] - 2020-05-20
+### Changed
+- 클라우드 파트너 도입 가이드 v1.1
+
 ## [1.5.0] - 2020-02-18
 ### Added
 - g클라우드 서버(베이직/프리미엄 SSD) 추가
