@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2020-08-25
+### Changed
+- 로드밸런서 xfp, proxyp 속성 추가
+
 ## [1.5.2] - 2020-07-30
 ### Changed
 - 서버 생성 시 응답값에 비밀번호 속성 추가

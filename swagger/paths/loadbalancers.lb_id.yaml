@@ -90,7 +90,7 @@ put:
     로드밸런서를 변경할 수 있습니다.
     - 로드밸런서 이름과 설명을 변경할 수 있습니다.
     - 로드밸런서 포트를 추가, 변경, 삭제할 수 있습니다.
-    - 로드밸런서의 밸런서 모드, 세션 타임아웃, 세션 쿠키, X-Forwarded-For, 스티키 세션 설정을 변경할 수 있습니다.
+    - 로드밸런서의 밸런서 모드, 세션 타임아웃, 세션 쿠키, X-Forwarded-For, X-Forwarded-Proto, 프록시 프로토콜, 스티키 세션 설정을 변경할 수 있습니다.
     - 로드밸런서의 네트워크가 차단되었을 경우 설정을 변경할 수 없습니다.
 
     ### cURL
@@ -107,6 +107,8 @@ put:
         "session_time": 50,
         "session_cookie": "Y",
         "xff": "Y",
+        "xfp": "Y",
+        "proxyp": "N",
         "sticky_session": "Y",
         "program": "php",
         "token_length": 64,
@@ -218,6 +220,20 @@ put:
             type: string
             enum: [Y, N]
             exmaple: Y
+          xfp:
+            description: |
+              로드밸런서 X-Forwarded-Proto 설정에 해당하는 매개변수입니다.
+              - protocol 이 HTTP, HTTPS인 로드밸런서 포트에만 적용됩니다.
+            type: string
+            enum: [Y, N]
+            exmaple: Y
+          proxyp:
+            description: |
+              로드밸런서 프록시 프로토콜 설정에 해당하는 매개변수입니다.
+              - protocol 이 TCP인 로드밸런서 포트에만 적용됩니다.
+            type: string
+            enum: [N, Y]
+            exmaple: N
           sticky_session:
             description: |
               로드밸런서 스티키 세션 사용여부에 해당하는 매개변수입니다.
@@ -448,6 +464,8 @@ put:
           "session_time" => 180,
           "session_cookie" => "Y",
           "xff" => "Y",
+          "xfp" => "Y",
+          "proxyp" => "N",
           "sticky_session" => "Y",
           "program" => "php",
           "token_length" => 64,
@@ -531,6 +549,8 @@ put:
             "session_time": 50,
             "session_cookie": "Y",
             "xff": "Y",
+            "xfp": "Y",
+            "proxyp": "N",
             "sticky_session": "Y",
             "program": "php",
             "token_length": 64,
