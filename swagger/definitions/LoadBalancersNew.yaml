@@ -93,6 +93,16 @@ properties:
     description: X-Forwarded-For 설정에 해당하는 속성입니다.
     example: Y
     enum: [Y, N]
+  xfp:
+    type: string
+    description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+    example: Y
+    enum: [Y, N]
+  proxyp:
+    type: string
+    description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+    example: N
+    enum: [N, Y]
   sticky_session:
     type: integer
     description: 스티키세션 사용 여부에 해당하는 속성입니다.

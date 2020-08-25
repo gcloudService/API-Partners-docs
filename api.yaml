@@ -4,7 +4,7 @@ schemes:
 host: cpapi.gabia.com
 basePath: /v1
 info:
-  version: 1.5.2
+  version: 1.6.0
   title: 클라우드 파트너 API
   x-logo:
     url: ./static/gcloud_ptn.jpg
@@ -427,7 +427,7 @@ info:
 
 
     [API Collection
-    다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.5.0/gCloud.partner.API.1.5.0.postman_collection.json)
+    다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.6.0/gCloud.partner.API.1.6.0.postman_collection.json)
 
 
     [API Collection 버전
@@ -17808,19 +17808,28 @@ paths:
 
         - 세션 타임아웃(Session Timeout)을 설정할 수 있습니다. 세션 타임아웃 설정을 통해 클라이언트, 로드밸런서, 서버
         간의 연결에 대한 유지 시간을 설정할 수 있습니다. 세션 유지 시간 내에 서버와 로드밸런서 간의 데이터 전송이 이루어지지 않을
-        경우 연결이 종료됩니다. 시간을 불필요하게 길게 설정할 경우, 과도한 로드밸런서 및 서버의 부하로 장애가 발생할 수 있습니다.
-
+        경우 연결이 종료됩니다.
+          - 시간을 불필요하게 길게 설정할 경우, 과도한 로드밸런서 및 서버의 부하로 장애가 발생할 수 있습니다.
         - 세션 쿠키(Session Cookie)를 설정할 수 있습니다. 세션 쿠키(Session Cookie)는 클라이언트의 웹
         브라우저가 종료되기 전까지 특정 클라이언트의 모든 요청에 대해서는 동일한 서버로만 트래픽을 분배하는 기능입니다.
 
         - X-Forwarded-For 를 설정할 수 있습니다. X-Forwareded-For(XFF) 설정을 사용할 경우,
         HTTP/HTTPS 의 XFF 필드에 로드밸런서 이전 노드의 IP 가 추가됩니다.
 
-        - 스티키 세션(Sticky Session)을 설정할 수 있습니다. 스티키 세션은 쿠키를 기반으로 동일한 클라이언트의 요청은
-        동일한 서버로 분배되도록 할 수 있습니다. 4가지 서버 개발 언어(PHP, ASP, ASP.NET, JSP)에 대해 스티키 세션을
-        지원하며, 토큰(쿠키) 길이는 최대 256Byte까지 설정할 수 있습니다. 또한 쿠키에 대한 세션의 유효 시간은 최대
-        24시간이며, 유효 기간이 지난 후에는 동일한 클라이언트의 요청이 동일한 서버에서 처리되지 않을 수 있습니다.
+        - XFP(X-Forwarded-Proto) 를 설정할 수 있습니다. XFP(X-Forwarded-Proto) 설정을 사용할
+        경우, 서버로 전송되는 패킷의 HTTP XFF 필드에 로드밸런서 이전 노드(주로 클라이언트)와 로드밸런서의 통신에 사용된
+        프로토콜을 표기할 수 있습니다.
 
+        - 프록시 프로토콜을 설정할 수 있습니다. 프록시 프로토콜 설정을 사용할 경우, 서버에서 로드밸런서 이전 노드와 로드밸런서의
+        IP, 통신에 사용된 포트를 확인할 수 있습니다.
+          - 프록시 프로토콜 설정을 사용하기 위해서는 서버에도 별도 설정(모듈 설치, 옵션 설정 등)이 필요합니다.
+          - 서버에 별도 설정을 하지 않은 상태로 프록시 프로토콜 설정을 사용하는 경우 서비스가 정상적으로 작동하지 않을 수 있습니다.
+          - 서버와 클라이언트 사이에 로드밸런서 외의 다른 프록시가 있을 경우, 프록시의 설정에 따라 기능이 정상적으로 작동하지 않을 수 있습니다.
+        - 스티키 세션(Sticky Session)을 설정할 수 있습니다. 스티키 세션은 쿠키를 기반으로 동일한 클라이언트의 요청은
+        동일한 서버로 분배되도록 할 수 있습니다. 
+          - 4가지 서버 개발 언어(PHP, ASP, ASP.NET, JSP)에 대해 스티키 세션을 지원합니다.
+          - 토큰(쿠키) 길이는 최대 256Byte까지 설정할 수 있습니다.
+          - 쿠키에 대한 세션의 유효 시간은 최대 24시간이며, 유효 기간이 지난 후에는 동일한 클라이언트의 요청이 동일한 서버에서 처리되지 않을 수 있습니다.
 
         ### cURL
 
@@ -17843,6 +17852,8 @@ paths:
             "session_time": 50,
             "session_cookie": "Y",
             "xff": "Y",
+            "xfp": "Y",
+            "proxyp": "N",
             "sticky_session": "Y",
             "program": "php",
             "token_length": 64,
@@ -18013,6 +18024,26 @@ paths:
                   - 'Y'
                   - 'N'
                 exmaple: 'Y'
+              xfp:
+                description: |
+                  로드밸런서 X-Forwarded-Proto 설정에 해당하는 매개변수입니다.
+                  - protocol 이 HTTP, HTTPS인 로드밸런서 포트에만 적용됩니다.
+                  - 해당 매개변수를 사용하지 않으면 'Y' 를 기본으로 사용합니다.
+                type: string
+                enum:
+                  - 'Y'
+                  - 'N'
+                exmaple: 'Y'
+              proxyp:
+                description: |
+                  로드밸런서 프록시 프로토콜 설정에 해당하는 매개변수입니다.
+                  - protocol 이 TCP인 로드밸런서 포트에만 적용됩니다.
+                  - 해당 매개변수를 사용하지 않으면 'N' 을 기본으로 사용합니다.
+                type: string
+                enum:
+                  - 'N'
+                  - 'Y'
+                exmaple: 'N'
               sticky_session:
                 description: |
                   로드밸런서 스티키 세션 사용여부에 해당하는 매개변수입니다.
@@ -18173,6 +18204,8 @@ paths:
               "session_time" => 180,
               "session_cookie" => "Y",
               "xff" => "Y",
+              "xfp" => "Y",
+              "proxyp" => "N",
               "sticky_session" => "Y",
               "program" => "php",
               "token_length" => 64,
@@ -18240,6 +18273,8 @@ paths:
                 "session_time": 50,
                 "session_cookie": "Y",
                 "xff": "Y",
+                "xfp": "Y",
+                "proxyp": "N",
                 "sticky_session": "Y",
                 "program": "php",
                 "token_length": 64,
@@ -18382,6 +18417,20 @@ paths:
                 enum:
                   - 'Y'
                   - 'N'
+              xfp:
+                type: string
+                description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                example: 'Y'
+                enum:
+                  - 'Y'
+                  - 'N'
+              proxyp:
+                type: string
+                description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                example: 'N'
+                enum:
+                  - 'N'
+                  - 'Y'
               sticky_session:
                 type: integer
                 description: 스티키세션 사용 여부에 해당하는 속성입니다.
@@ -18825,6 +18874,20 @@ paths:
                   enum:
                     - 'Y'
                     - 'N'
+                xfp:
+                  type: string
+                  description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                  example: 'Y'
+                  enum:
+                    - 'Y'
+                    - 'N'
+                proxyp:
+                  type: string
+                  description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                  example: 'N'
+                  enum:
+                    - 'N'
+                    - 'Y'
                 sticky_session:
                   type: integer
                   description: 스티키세션 사용 여부에 해당하는 속성입니다.
@@ -19183,6 +19246,20 @@ paths:
                 enum:
                   - 'Y'
                   - 'N'
+              xfp:
+                type: string
+                description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                example: 'Y'
+                enum:
+                  - 'Y'
+                  - 'N'
+              proxyp:
+                type: string
+                description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                example: 'N'
+                enum:
+                  - 'N'
+                  - 'Y'
               sticky_session:
                 type: integer
                 description: 스티키세션 사용 여부에 해당하는 속성입니다.
@@ -19420,7 +19497,8 @@ paths:
 
         - 로드밸런서 포트를 추가, 변경, 삭제할 수 있습니다.
 
-        - 로드밸런서의 밸런서 모드, 세션 타임아웃, 세션 쿠키, X-Forwarded-For, 스티키 세션 설정을 변경할 수 있습니다.
+        - 로드밸런서의 밸런서 모드, 세션 타임아웃, 세션 쿠키, X-Forwarded-For, X-Forwarded-Proto, 프록시
+        프로토콜, 스티키 세션 설정을 변경할 수 있습니다.
 
         - 로드밸런서의 네트워크가 차단되었을 경우 설정을 변경할 수 없습니다.
 
@@ -19441,6 +19519,8 @@ paths:
             "session_time": 50,
             "session_cookie": "Y",
             "xff": "Y",
+            "xfp": "Y",
+            "proxyp": "N",
             "sticky_session": "Y",
             "program": "php",
             "token_length": 64,
@@ -19581,6 +19661,24 @@ paths:
                   - 'Y'
                   - 'N'
                 exmaple: 'Y'
+              xfp:
+                description: |
+                  로드밸런서 X-Forwarded-Proto 설정에 해당하는 매개변수입니다.
+                  - protocol 이 HTTP, HTTPS인 로드밸런서 포트에만 적용됩니다.
+                type: string
+                enum:
+                  - 'Y'
+                  - 'N'
+                exmaple: 'Y'
+              proxyp:
+                description: |
+                  로드밸런서 프록시 프로토콜 설정에 해당하는 매개변수입니다.
+                  - protocol 이 TCP인 로드밸런서 포트에만 적용됩니다.
+                type: string
+                enum:
+                  - 'N'
+                  - 'Y'
+                exmaple: 'N'
               sticky_session:
                 description: |
                   로드밸런서 스티키 세션 사용여부에 해당하는 매개변수입니다.
@@ -19851,6 +19949,8 @@ paths:
               "session_time" => 180,
               "session_cookie" => "Y",
               "xff" => "Y",
+              "xfp" => "Y",
+              "proxyp" => "N",
               "sticky_session" => "Y",
               "program" => "php",
               "token_length" => 64,
@@ -19934,6 +20034,8 @@ paths:
                 "session_time": 50,
                 "session_cookie": "Y",
                 "xff": "Y",
+                "xfp": "Y",
+                "proxyp": "N",
                 "sticky_session": "Y",
                 "program": "php",
                 "token_length": 64,
@@ -20097,6 +20199,20 @@ paths:
                 enum:
                   - 'Y'
                   - 'N'
+              xfp:
+                type: string
+                description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                example: 'Y'
+                enum:
+                  - 'Y'
+                  - 'N'
+              proxyp:
+                type: string
+                description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                example: 'N'
+                enum:
+                  - 'N'
+                  - 'Y'
               sticky_session:
                 type: integer
                 description: 스티키세션 사용 여부에 해당하는 속성입니다.
@@ -20706,6 +20822,20 @@ paths:
                 enum:
                   - 'Y'
                   - 'N'
+              xfp:
+                type: string
+                description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                example: 'Y'
+                enum:
+                  - 'Y'
+                  - 'N'
+              proxyp:
+                type: string
+                description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                example: 'N'
+                enum:
+                  - 'N'
+                  - 'Y'
               sticky_session:
                 type: integer
                 description: 스티키세션 사용 여부에 해당하는 속성입니다.
@@ -21154,6 +21284,20 @@ paths:
                 enum:
                   - 'Y'
                   - 'N'
+              xfp:
+                type: string
+                description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                example: 'Y'
+                enum:
+                  - 'Y'
+                  - 'N'
+              proxyp:
+                type: string
+                description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                example: 'N'
+                enum:
+                  - 'N'
+                  - 'Y'
               sticky_session:
                 type: integer
                 description: 스티키세션 사용 여부에 해당하는 속성입니다.
@@ -21594,6 +21738,20 @@ paths:
                 enum:
                   - 'Y'
                   - 'N'
+              xfp:
+                type: string
+                description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                example: 'Y'
+                enum:
+                  - 'Y'
+                  - 'N'
+              proxyp:
+                type: string
+                description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                example: 'N'
+                enum:
+                  - 'N'
+                  - 'Y'
               sticky_session:
                 type: integer
                 description: 스티키세션 사용 여부에 해당하는 속성입니다.
@@ -22047,6 +22205,20 @@ paths:
                 enum:
                   - 'Y'
                   - 'N'
+              xfp:
+                type: string
+                description: X-Forwarded-Proto 설정에 해당하는 속성입니다.
+                example: 'Y'
+                enum:
+                  - 'Y'
+                  - 'N'
+              proxyp:
+                type: string
+                description: 프록시 프로토콜 설정에 해당하는 속성입니다.
+                example: 'N'
+                enum:
+                  - 'N'
+                  - 'Y'
               sticky_session:
                 type: integer
                 description: 스티키세션 사용 여부에 해당하는 속성입니다.
