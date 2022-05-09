@@ -1,232 +1,245 @@
 type: object
-description: |
-  - 서버 조회의 [Response 200 Accepted. 서버 조회 성공]과 password 속성이 추가된다는 점을 제외하고는 동일
 properties:
   partner_id:
     type: string
-    description: 파트너 ID
+    description: 파트너의 ID에 해당하는 속성입니다.
     example: biz_1004
   user_id:
     type: string
-    description: 사용자 ID
+    description: 이용자의 ID에 해당하는 속성입니다.
     example: company_777
     minLength: 3
     maxLength: 16
     pattern: ^[\w]{3,16}$
   svr_id:
     type: string
-    description: 서버 ID
+    description: g클라우드 서버의 ID에 해당하는 속성입니다.
     example: vm_1
     pattern: ^(vm_)+[1-9]{1}\d*$
   name:
     type: string
-    description: 서버 이름
+    description: g클라우드 서버의 자원명에 해당하는 속성입니다.
     example: WAS_1
     minLength: 1
     maxLength: 16
     pattern: ^[\w\-]{1,16}$
   desc:
     type: string
-    description: 서버 설명
+    description: g클라우드 서버에 대한 설명에 해당하는 속성입니다.
     example: 사용자 관리용 WAS 서버
     minLength: 0
     maxLength: 100
     pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
   status:
     type: string
-    description: 서버 상태
+    description: |
+      g클라우드 서버의 현재 상태 값을 나타내는 속성입니다.
+      - 01: g클라우드 서버가 정지된 상태를 나타내는 속성값입니다.
+      - 02: g클라우드 서버가 정지되고 있는 상태를 나타내는 속성값입니다.
+      - 03: g클라우드 서버가 시작된 상태를 나타내는 속성값입니다.
+      - 04: g클라우드 서버가 삭제된 상태를 나타내는 속성값입니다.
+      - 05: g클라우드 서버가 시작되고 있는 상태를 나타내는 속성값입니다.
+      - 06: g클라우드 서버가 삭제되고 있는 상태를 나타내는 속성값입니다.
+      - 07: g클라우드 서버가 생성되고 있는 상태를 나타내는 속성값입니다.
+      - 12: g클라우드 서버가 변경되고 있는 상태를 나타내는 속성값입니다.
     example: '03'
-    enum: ['01','02','03','04','05','06','07']
+    enum: ['01','02','03','04','05','06','07', '12']
   regdate:
     type: dateTime
-    description: 등록일
+    description: g클라우드 서버의 등록일에 해당하는 속성입니다.
     example: '2017-09-13 01:47:45'
   os:
     type: integer
-    description: 서버 OS
+    description: |
+      g클라우드 서버의 운영체제를 확인할 수 있는 속성입니다.
+      - Linux: Linux 계열 운영체제(CentOS, Ubuntu, Debian, Fedora 등)를 나타내는 속성값입니다.
+      - Windows: Windows 계열 운영체제를 나타내는 속성값입니다.
     example: Linux
     enum: ['Linux','Windows']
   cpu:
     type: integer
-    description: 서버 CPU
+    format: int32
+    enum: [1,2,4,8,16]
+    description: g클라우드 서버의 CPU 사양을 확인하는 속성으로 속성값의 단위는 vCore입니다.
     example: 1
   memory:
     type: integer
-    description: 서버 메모리
+    format: int32
+    enum: [1,2,3,4,8,16,32,64,128]
+    description: g클라우드 서버의 Memory 사양을 확인하는 속성으로 속성값의 단위는 GB입니다.
     example: 2
   type:
     type: string
-    description: 서버 종류
+    description: | 
+      g클라우드 서버의 종류를 나타내는 속성입니다.
+      - basic: 베이직 서버를 나타내는 속성값입니다.
+      - premium: 프리미엄 서버를 나타내는 속성값입니다.
+      - ssd : 로컬 SSD 서버를 나타내는 속성값입니다.
     example: basic
     enum: ['basic','premium','ssd']
+  storage_type:
+    type: string
+    description: |
+      g클라우드 서버 스토리지 타입을 나타내는 속성입니다.
+    enum: ['ssd', 'hdd']
   private_ip:
     type: string
-    description: 서버 사설 IP
-    example: 192.168.248.2
     format: ipv4
+    description: g클라우드 서버에 기본으로 할당되는 사설 IP에 해당하는 속성입니다.
+    example: 192.168.248.2
   img_id:
     type: string
-    description: 현재 서버가 생성된 이미지 ID
+    description: g클라우드 서버 생성 시 사용되는 이미지 ID에 해당하는 속성입니다.
     example: img_131
     pattern: ^(img_)+[1-9]{1}\d*$
   network:
     type: string
-    description: 서버 네트워크
+    description: |
+      g클라우드 서버의 네트워크 차단 여부를 확인할 수 있는 속성입니다.
+      - start: 네트워크가 차단되지 않았음을 나타내는 속성값입니다.
+      - stop: 네트워크가 차단되었음을 나타내는 속성값입니다.	
     example: start
     enum: [stop,start]
   service_zone:
     type: string
-    description: 서버 서비스존
-    enum: [zone_1]
+    description: g클라우드 서버가 생성되는 서비스 존을 확인할 수 있는 속성입니다.
+    enum: [zone_1, zone_2]
     pattern: ^(zone_)+[1-9]{1}\d*$
     example: zone_1
   password:
     type: string
     description: |
       g클라우드 서버 운영체제의 접속 비밀번호를 확인할 수 있는 속성으로 서버 생성 시에만 확인할 수 있습니다.
-    example: $#ESs&13H
   volumes:
     type: array
-    description: 서버에 부착된 볼륨
+    description: g클라우드 서버에 장착된 g클라우드 스토리지를 확인할 수 있는 속성으로 배열로 제공됩니다
     items:
       type: object
       properties:
         vol_id:
           type: string
-          description: 볼륨 ID
-          example: vol_1
-          pattern: ^(vol_)+[1-9]{1}\d*$
+          description: g클라우드 스토리지의 ID에 해당하는 속성입니다.
+          example: lun_1
+          pattern: ^(vol_|lun_)+[1-9]{1}\d*$
         vol_name:
           type: string
-          description: 볼륨 이름
+          description: g클라우드 스토리지의 자원명에 해당하는 속성입니다.
           example: 서버 추가 볼륨
+        vol_type:
+          type: string
+          description: g클라우드 스토리지의 타입에 해당하는 속성입니다.
+          enum: ['ssd', 'hdd']
+          example: ssd
         vol_size:
           type: integer
-          description: 볼륨 크기
-          example: 50
+          description: g클라우드 스토리지의 용량을 나타내는 속성으로 속성 값의 단위는 GB입니다.
+          example: 100
   ips:
     type: array
-    description: 서버에 부착된 공인 IP
+    description: g클라우드 서버에 할당된 공인 IP를 확인할 수 있는 속성으로 배열로 제공됩니다.
     items:
       type: object
       properties:
         ip_id:
           type: string
-          description: IP ID
+          description: 공인 IP의 ID에 해당하는 속성입니다.
           example: pubIp_1
           pattern: ^(pubIp_)+[1-9]{1}\d*$
         ip_addr:
           type: string
-          description: IP 주소
-          example: 10.222.222.143
           format: ipv4
-  fws:
-    type: array
-    description: 서버에 설정된 방화벽 정보
-    items:
-      type: object
-      properties:
-        fw_id:
-          type: string
-          description: 방화벽 ID
-          example: fr_1
-          pattern: ^(fr_)+[1-9]{1}\d*$
-        service:
-          type: string
-          description: 서비스
-          example: HTTP
-        protocol:
-          type: string
-          description: 프로토콜
-          example: TCP
-        start_port:
-          type: integer
-          description: 시작 포트번호
-          example: 80
-          minimum: 1
-          maximum: 65535
-        end_port:
-          type: integer
-          description: 끝 포트번호
-          example: 80
-          minimum: 1
-          maximum: 65535
-        ip_group:
-          type: string
-          description: IP/그룹
-          example: 0.0.0.0/0
-        desc:
-          type: string
-          description: 방화벽 설명
-          example: apache 방화벽
+          description: 공인 IP의 주소에 해당하는 속성입니다.
+          example: 10.222.222.143
   lbs:
     type: array
-    description: 서버에 연결되어 있는 로드밸런서
+    description: g클라우드 서버에 연결된 로드밸런서를 확인할 수 있는 속성으로 배열로 제공됩니다.
     items:
       type: object
       properties:
         lbg_id:
           type: string
-          description: 로드밸런서 ID
+          description: 로드밸런서의 ID에 해당하는 속성입니다.
           example: lbg_2
           pattern: ^(lbg_)+[1-9]{1}\d*$
         lb_name:
           type: string
-          description: 로드밸런서 이름
+          description: 로드밸런서의 이름에 해당하는 속성입니다.
           example: testlb
         lb_port:
           type: integer
-          description: 로드밸런서 포트
+          description: 로드밸런서의 포트 중 g클라우드 서버가 연결된 포트에 해당하는 속성입니다.
           example: 80
           minimum: 1
           maximum: 65535
         lb_svr_port:
           type: integer
-          description: 로드밸런서와 연결된 서버의 포트
+          description: 로드밸런서와 연결된 g클라우드 서버의 포트에 해당하는 속성입니다. 
           example: 8080
           minimum: 1
           maximum: 65535
   images:
     type: array
-    description: 서버로 생성한 이미지
+    description: 로컬 SSD 서버와 서버 타입이 베이직/프리미엄이고 스토리지 타입이 SSD인 서버로 생성된 이미지를 확인할 수 있는 속성으로 배열로 제공됩니다.
     items:
       type: object
       properties:
         img_id:
           type: string
-          description: 로드밸런서 ID
+          description: 이미지의 ID에 해당하는 속성입니다.
           example: img_1
           pattern: ^(img_)+[1-9]{1}\d
         img_name:
           type: string
-          description: 이미지 이름
+          description: 이미지의 자원명에 해당하는 속성입니다.
           example: centos-6.x-i686_TEST
           minLength: 1
           maxLength: 16
           pattern: ^[\w\-]{1,16}$
   snaps:
     type: array
-    description: 서버로 생성한 스냅샷
+    description: 서버 타입이 베이직/프리미엄이고 스토리지 타입이 HDD인 서버로 생성된 스냅샷을 확인할 수 있는 속성으로 배열로 제공됩니다.
     items:
       type: object
       properties:
         snap_id:
           type: string
-          description: 스냅샷 ID
+          description: 스냅샷의 ID에 해당하는 속성입니다.
           example: snap_1
           pattern: ^(snap_)+[1-9]{1}\d*$
         snap_name:
           type: string
-          description: 스냅샷 이름
+          description: 스냅샷의 자원명에 해당하는 속성입니다.
           example: backup-snap
           minLength: 1
           maxLength: 16
           pattern: ^[\w\-]{1,16}$p
         size:
           type: integer
-          description: 스냅샷 용량
+          description: 스냅샷 용량에 해당하는 속성입니다.
           example: 50
+  firewalls:
+    type: array
+    description: g클라우드 서버에 설정된 방화벽 그룹을 확인할 수 있는 속성으로 배열로 제공됩니다.
+    items:
+      type: object
+      properties:
+        fg_id :
+          type: string
+          description: 방화벽 그룹의 ID에 해당하는 속성입니다.
+          example: fg_1
+          pattern: ^(fg_)+[1-9]{1}\d*$
+        fg_name:
+          type: string
+          description: 방화벽 그룹의 자원명에 해당하는 속성입니다.
+          example: basic-firewall
+          minLength: 1
+          maxLength: 16
+          pattern: ^[\w\-]{1,16}$p
   storage:
     type: integer
-    description: 서버 전체 볼륨 크기
+    description: g클라우드 서버에 장착된 Root 스토리지와 Data 스토리지의 용량 합계를 나타내는 속성으로 속성 값의 단위는 GB입니다.
+    example: 100
+  root_storage:
+    type: integer
+    description: g클라우드 서버의 루트 스토리지 용량만을 나타내는 속성으로 값의 단위는 GB입니다.
     example: 100

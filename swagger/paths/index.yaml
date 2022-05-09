@@ -89,6 +89,10 @@
   $ref: ./nas.nas_id.snapshots.snap_id.recovery.yaml
 /nas/cifs:
   $ref: ./nas.cifs.yaml
+/nascifs:
+  $ref: ./nascifs.yaml
+/nascifs/{id}:
+  $ref: ./nascifs.cifs_resource_id.yaml
 /certificates:
   $ref: ./certificates.yaml
 /certificates/{ssl_id}:

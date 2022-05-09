@@ -39,7 +39,10 @@ tags:
 
   - name: NAS
     description: |
-      네트워크를 통해 다수의 g클라우드에 연결하여 사용할 수 있는 대용량 스토리지 서비스입니다. 
+      네트워크를 통해 다수의 g클라우드에 연결하여 사용할 수 있는 대용량 스토리지 서비스입니다.
+  - name: NASCIFS
+    description: |
+      CIFS NAS를 대상으로 인증 정보를 설정할 수 있습니다.
   - name: Certificates
     description: |
       사용자의 SSL 인증서를 등록하고 관리할 수 있는 서비스입니다.

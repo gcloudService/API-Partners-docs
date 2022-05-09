@@ -1,5 +1,13 @@
 type: object
 properties:
+  id:
+    type: number
+    description: CIFS 인증정보 ID에 해당하는 속성입니다.
+    example: 1
+  partner_id:
+    type: string
+    description: 파트너의 ID에 해당하는 속성입니다.
+    example: biz_1004
   user_id:
     type: string
     description: 이용자의 ID에 해당하는 속성입니다.
@@ -7,11 +15,26 @@ properties:
     minLength: 3
     maxLength: 16
     pattern: ^[\w]{3,16}$
+  type:
+    type: string
+    description: |
+      CIFS 인증정보을 설정한 NAS 스토리지 타입에 해당하는 속성입니다.
+      - `ssd`: SSD 스토리지 타입에 해당하는 속성값입니다.
+      - `hdd`: HDD 스토리지 타입에 해당하는 속성값입니다.
+    example: ssd
   cifs_id:
     type: string
     description: |
-      CIFS 인증정보 ID에 해당하는 속성입니다.
+      CIFS 인증정보에 설정한 ID에 해당하는 속성입니다.
     example: mycifs
     minLength: 1
     maxLength: 16
     pattern: ^[a-z0-9\-_]{1,16}$
+  regdate:
+    type: dateTime
+    description: CIFS 인증정보 생성일에 해당하는 속성입니다
+    example: '2017-09-13 10:28:08'
+  updatedate:
+    type: dateTime
+    description: CIFS 인증정보 수정일에 해당하는 속성입니다.
+    example: '2017-09-13 10:28:08'

@@ -1,0 +1,13 @@
+type: object
+properties:
+  msg:
+    type: string
+    description: 에러 메세지
+  code:
+    type: integer
+    description: 에러 코드
+    example: -621
+  desc:
+    type: string
+    description: 에러 설명
+    example: "[Auth] REST API 오류. 조작할 수 있는 상태가 아닙니다."

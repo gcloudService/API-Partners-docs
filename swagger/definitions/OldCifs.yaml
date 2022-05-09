@@ -1,0 +1,18 @@
+type: object
+properties:
+  user_id:
+    type: string
+    description: 이용자의 ID에 해당하는 속성입니다.
+    example: company_777
+    minLength: 3
+    maxLength: 16
+    pattern: ^[\w]{3,16}$
+  cifs_id:
+    type: string
+    description: |
+      CIFS 인증정보 ID에 해당하는 속성입니다.
+      - CIFS 인증정보가 입력되지 않았거나 삭제된 경우, 속성값은 null로 표기됩니다.
+    example: mycifs
+    minLength: 1
+    maxLength: 16
+    pattern: ^[a-z0-9\-_]{1,16}$
