@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.0] - 2022-04-04
+### Added
+- SSD NAS 스펙 추가
+
 ## [1.6.0] - 2020-08-25
 ### Changed
 - 로드밸런서 xfp, proxyp 속성 추가

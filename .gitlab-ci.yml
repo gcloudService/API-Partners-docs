@@ -29,8 +29,6 @@ nightwatch:
 
 pages:  
   stage: deploy
-  only:
-    - master
   script:
     - npm build
     - mkdir .public

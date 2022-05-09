@@ -5,6 +5,9 @@ post:
     NAS를 생성할 수 있습니다.
     - 네트워크를 통해 다수의 g클라우드 서버(베이직/프리미엄/SSD)에 연결하여 사용할 수 있습니다.
     - 0.1TB 단위로 최소 1TB에서 최대 10TB까지 생성할 수 있습니다.
+    - 스토리지 타입에 따라 2가지 타입으로 NAS를 생성할 수 있습니다.
+      - ssd: SSD 스토리지를 사용하는 타입의 NAS를 생성할 수 있습니다.
+      - hdd: HDD 스토리지를 사용하는 타입의 NAS를 생성할 수 있습니다.
     - 파일 시스템 프로토콜에 따라 2가지 타입으로 NAS를 생성할 수 있습니다.
       - NFS: Linux를 OS로 사용하는 서버에 NAS를 연결하고자 할 경우 NFS 프로토콜을 사용하는 타입의 NAS를 생성할 수 있습니다. 
       - CIFS: Windows를 OS로 사용하는 서버에 NAS를 연결하고자 경우 CIFS 프로토콜을 사용하는 타입의 NAS 생성할 수 있습니다.
@@ -20,8 +23,7 @@ post:
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
-      -d 'user_id=company_777&name=image1&desc=test-image&snap_id=snap_1'
-      -d 'user_id=company_777&name=nas-test1&desc=nas-backup&mount_path=mount1&protocol=cifs&size=2'
+      -d 'user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&mount_path=mount1&protocol=cifs&size=2'
     ```
 
     ### Error Code
@@ -38,6 +40,17 @@ post:
     - $ref: ../parameters/index.yaml#/user_id
     - $ref: ../parameters/index.yaml#/nas_name
     - $ref: ../parameters/index.yaml#/nas_desc
+    - in: formData
+      name: type
+      required: false
+      type: string
+      enum: ['ssd', 'hdd']
+      example: ssd
+      description: |
+        NAS 스토리지 타입을 설정하는 매개변수입니다.
+        - ssd: SSD 타입으로 설정하는 입력값입니다.
+        - hdd: HDD 타입으로 설정하는 입력값입니다.
+        - 해당 매개변수를 입력하지 않으면 hdd를 기본값으로 사용합니다.
     - in: formData
       name: mount_path
       required: true
@@ -68,7 +81,9 @@ post:
       example: 1.5
       description: |
         NAS의 용량을 선택하는 매개변수로 입력값의 단위는 TB입니다.
-        - 1.0 이상 10.0 이하의 값 중에서 선택할 수 있으며, 입력 값은 소수점 첫번째 자리까지만 입력할 수 있습니다.
+        - type에 따라 선택할 수 있는 값의 범위가 다릅니다.
+        - type이 hdd인 경우, 1.0 이상 10.0 이하의 값 중에서 선택할 수 있으며 입력 값은 소수점 첫번째 자리까지만 입력할 수 있습니다.
+        - type이 ssd인 경우, 0.3 이상 5.0 이하의 값 중에서 선택할 수 있으며 입력 값은 소수점 첫번째 자리까지만 입력할 수 있습니다.
   x-code-samples:
     - lang: PHP
       source: |
@@ -83,7 +98,7 @@ post:
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "user_id=company_777&name=nas-test1&desc=nas-backup&mount_path=mount1&protocol=cifs&size=2",
+          CURLOPT_POSTFIELDS => "user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&mount_path=mount1&protocol=cifs&size=2",
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
@@ -111,6 +126,7 @@ post:
               user_id: 'company_777',
               name: 'nas-test',
               desc: 'nas-backup',
+              type: 'ssd',
               mount_path: 'mount1',
               protocol: 'cifs',
               size: 2
@@ -137,7 +153,7 @@ post:
         $ref: ../definitions/Unauthorized.yaml
 get:
   summary: NAS 조회
-  operationId: geteNasList
+  operationId: getNasList
   description: |
     이용자가 소유한 NAS를 조회할 수 있습니다.
 
@@ -163,6 +179,7 @@ get:
           - user_id: 이용자 ID
           - nas_id: NAS ID
           - name: NAS 자원명
+          - type: NAS 스토리지 타입
           - protocol: NAS 파일 시스템 프로토콜
           - size: NAS 용량(TB)
           - status: NAS 현재 상태 값

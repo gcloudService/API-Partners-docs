@@ -227,6 +227,13 @@ nas_desc:
   maxLength: 100
   pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
   example: 백업 NAS
+cifs_resource_id:
+  name: id
+  description: CIFS 인증정보의 ID에 해당하는 매개변수입니다.
+  in: path
+  required: true
+  type: number
+  example: 1
 service_zone:
   name: service_zone
   description: 서비스 존
