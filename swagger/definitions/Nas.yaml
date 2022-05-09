@@ -30,6 +30,11 @@ properties:
     minLength: 0
     maxLength: 100
     pattern: ^((?![\/?;:|*<>@\\\'\"]).){0,100}$
+  type:
+    type: string
+    description: NAS 스토리지 타입에 해당하는 속성입니다.
+    example: ssd
+    enum: ['ssd', 'hdd']
   mount_path:
     type: string
     description:  NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.
