@@ -59,13 +59,13 @@ properties:
   cpu:
     type: integer
     format: int32
-    enum: [1,2,4,8,16]
+    enum: [1,2,4,8,16,32]
     description: g클라우드 서버의 CPU 사양을 확인하는 속성으로 속성값의 단위는 vCore입니다.
     example: 1
   memory:
     type: integer
     format: int32
-    enum: [1,2,3,4,8,16,32,64,128]
+    enum: [1,2,4,8,16,32,64,128]
     description: g클라우드 서버의 Memory 사양을 확인하는 속성으로 속성값의 단위는 GB입니다.
     example: 2
   type:
