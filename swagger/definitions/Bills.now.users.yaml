@@ -182,6 +182,10 @@ properties:
               type: string
               description: NAS의 스토리지 타입에 해당하는 속성입니다.
               example: ssd
+            version:
+              type: string
+              description: NAS 버전에 해당하는 속성입니다.
+              example: '1'
             size:
               type: float
               description: NAS의 용량에 해당하는 속성으로 속성값의 단위는 TB입니다.

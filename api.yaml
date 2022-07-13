@@ -4,7 +4,7 @@ schemes:
 host: cpapi.gabia.com
 basePath: /v1
 info:
-  version: 1.7.1
+  version: 1.8.0
   title: 클라우드 파트너 API
   x-logo:
     url: ./static/gcloud_ptn.jpg
@@ -26323,6 +26323,10 @@ paths:
                           type: string
                           description: NAS의 스토리지 타입에 해당하는 속성입니다.
                           example: ssd
+                        version:
+                          type: string
+                          description: NAS 버전에 해당하는 속성입니다.
+                          example: '1'
                         size:
                           type: float
                           description: NAS의 용량에 해당하는 속성으로 속성값의 단위는 TB입니다.
@@ -27024,6 +27028,10 @@ paths:
                           type: string
                           description: NAS의 스토리지 타입에 해당하는 속성입니다.
                           example: ssd
+                        version:
+                          type: string
+                          description: NAS 버전에 해당하는 속성입니다.
+                          example: '1'
                         size:
                           type: float
                           description: NAS의 용량에 해당하는 속성으로 속성값의 단위는 TB입니다.
@@ -27448,7 +27456,7 @@ paths:
           -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
           -H 'cache-control: no-cache' \
           -H 'content-type: application/x-www-form-urlencoded' \
-          -d 'user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&mount_path=mount1&protocol=cifs&size=2'
+          -d 'user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&version=1&mount_path=mount1&protocol=cifs&size=2'
         ```
 
 
@@ -27514,6 +27522,18 @@ paths:
             - hdd: HDD 타입으로 설정하는 입력값입니다.
             - 해당 매개변수를 입력하지 않으면 hdd를 기본값으로 사용합니다.
         - in: formData
+          name: version
+          required: false
+          type: string
+          example: '1'
+          description: >
+            NAS 버전을 설정하는 매개변수입니다. type 이 `ssd` 인 경우 기본값은 `1` 이고, type 이 `hdd` 인
+            경우 기본값은 `2` 입니다.
+
+            - `1`: type 이 `ssd` 인 경우 설정하는 입력값입니다. type 이 `hdd` 인 경우 설정할 수 없습니다.
+
+            - `2`: type 이 `hdd` 인 경우 설정하는 입력값입니다. type 이 `ssd` 인 경우 설정할 수 없습니다.
+        - in: formData
           name: mount_path
           required: true
           type: string
@@ -27567,7 +27587,7 @@ paths:
               CURLOPT_TIMEOUT => 30,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => "user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&mount_path=mount1&protocol=cifs&size=2",
+              CURLOPT_POSTFIELDS => "user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&version=1&mount_path=mount1&protocol=cifs&size=2",
               CURLOPT_HTTPHEADER => array(
                 "authorization: Bearer {YOUR-JWT-TOKEN}",
                 "cache-control: no-cache",
@@ -27596,6 +27616,7 @@ paths:
                   name: 'nas-test',
                   desc: 'nas-backup',
                   type: 'ssd',
+                  version: '1',
                   mount_path: 'mount1',
                   protocol: 'cifs',
                   size: 2
@@ -27650,6 +27671,10 @@ paths:
                 enum:
                   - ssd
                   - hdd
+              version:
+                type: string
+                description: NAS 버전에 해당하는 속성입니다.
+                example: '1'
               mount_path:
                 type: string
                 description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -27778,6 +27803,7 @@ paths:
               - nas_id: NAS ID
               - name: NAS 자원명
               - type: NAS 스토리지 타입
+              - version: NAS 버전
               - protocol: NAS 파일 시스템 프로토콜
               - size: NAS 용량(TB)
               - status: NAS 현재 상태 값
@@ -27902,6 +27928,10 @@ paths:
                   enum:
                     - ssd
                     - hdd
+                version:
+                  type: string
+                  description: NAS 버전에 해당하는 속성입니다.
+                  example: '1'
                 mount_path:
                   type: string
                   description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -28097,6 +28127,10 @@ paths:
                 enum:
                   - ssd
                   - hdd
+              version:
+                type: string
+                description: NAS 버전에 해당하는 속성입니다.
+                example: '1'
               mount_path:
                 type: string
                 description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -28378,6 +28412,10 @@ paths:
                 enum:
                   - ssd
                   - hdd
+              version:
+                type: string
+                description: NAS 버전에 해당하는 속성입니다.
+                example: '1'
               mount_path:
                 type: string
                 description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -28484,6 +28522,10 @@ paths:
                 enum:
                   - ssd
                   - hdd
+              version:
+                type: string
+                description: NAS 버전에 해당하는 속성입니다.
+                example: '1'
               mount_path:
                 type: string
                 description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -28746,6 +28788,10 @@ paths:
                 enum:
                   - ssd
                   - hdd
+              version:
+                type: string
+                description: NAS 버전에 해당하는 속성입니다.
+                example: '1'
               mount_path:
                 type: string
                 description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -29029,6 +29075,10 @@ paths:
                 enum:
                   - ssd
                   - hdd
+              version:
+                type: string
+                description: NAS 버전에 해당하는 속성입니다.
+                example: '1'
               mount_path:
                 type: string
                 description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -30211,6 +30261,18 @@ paths:
             - ssd: 스토리지 타입이 SSD인 NAS를 나타내는 값입니다.
             - hdd: 스토리지 타입이 HDD인 NAS를 나타내는 값입니다.
         - in: formData
+          name: version
+          required: false
+          type: string
+          example: '1'
+          description: >
+            NAS 버전에 해당하는 매개변수입니다. type 이 `ssd` 인 경우 기본값은 `1` 이고, type 이 `hdd` 인
+            경우 기본값은 `2` 입니다.
+
+            - `1`: type 이 `ssd` 인 경우 설정하는 입력값입니다. type 이 `hdd` 인 경우 설정할 수 없습니다.
+
+            - `2`: type 이 `hdd` 인 경우 설정하는 입력값입니다. type 이 `ssd` 인 경우 설정할 수 없습니다.
+        - in: formData
           name: cifs_id
           required: true
           type: string
@@ -30251,7 +30313,7 @@ paths:
               CURLOPT_TIMEOUT => 30,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => "type=ssd&user_id=company_777&cifs_id=mycifs&cifs_pw=pass@$WORD12",
+              CURLOPT_POSTFIELDS => "type=ssd&version=1&user_id=company_777&cifs_id=mycifs&cifs_pw=pass@$WORD12",
               CURLOPT_HTTPHEADER => array(
                 "authorization: Bearer {YOUR-JWT-TOKEN}",
                 "cache-control: no-cache",
@@ -30278,6 +30340,7 @@ paths:
                 form: {
                   'user_id': 'company_777',
                   'type': 'ssd',
+                  'version': '1',
                   'cifs_id': 'mycifs',
                   'cifs_pw': 'pass@$WORD12'
                 }
@@ -30316,6 +30379,11 @@ paths:
                   - `ssd`: SSD 스토리지 타입에 해당하는 속성값입니다.
                   - `hdd`: HDD 스토리지 타입에 해당하는 속성값입니다.
                 example: ssd
+              version:
+                type: string
+                description: |
+                  CIFS 인증정보를 설정한 NAS 버전에 해당하는 속성입니다.
+                example: '1'
               cifs_id:
                 type: string
                 description: |
@@ -30435,6 +30503,7 @@ paths:
               - id: NAS CIFS 인증 정보 ID
               - cifs_id: NAS CIFS 인증 ID
               - type: NAS 스토리지 타입
+              - version: NAS 버전
             - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
 
             - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할
@@ -30454,6 +30523,7 @@ paths:
               - user_id: 이용자 ID
               - cifs_id: NAS CIFS 인증 ID
               - type: NAS 스토리지 타입
+              - version: NAS 버전
               - regdate: NAS 생성일
               - updatedate: NAS 수정일
             - 사용할 수 있는 정렬 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력할 수 있으며 앞에 입력된 조건의 우선
@@ -30537,6 +30607,11 @@ paths:
                     - `ssd`: SSD 스토리지 타입에 해당하는 속성값입니다.
                     - `hdd`: HDD 스토리지 타입에 해당하는 속성값입니다.
                   example: ssd
+                version:
+                  type: string
+                  description: |
+                    CIFS 인증정보를 설정한 NAS 버전에 해당하는 속성입니다.
+                  example: '1'
                 cifs_id:
                   type: string
                   description: |
@@ -30668,6 +30743,11 @@ paths:
                   - `ssd`: SSD 스토리지 타입에 해당하는 속성값입니다.
                   - `hdd`: HDD 스토리지 타입에 해당하는 속성값입니다.
                 example: ssd
+              version:
+                type: string
+                description: |
+                  CIFS 인증정보를 설정한 NAS 버전에 해당하는 속성입니다.
+                example: '1'
               cifs_id:
                 type: string
                 description: |
@@ -30811,7 +30891,7 @@ paths:
               CURLOPT_TIMEOUT => 30,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "PUT",
-              CURLOPT_POSTFIELDS => "user_id=company_777&type=ssd&cifs_pw=NEWpass@$WORD1",
+              CURLOPT_POSTFIELDS => "cifs_pw=NEWpass@$WORD1",
               CURLOPT_HTTPHEADER => array(
                 "authorization: Bearer {YOUR-JWT-TOKEN}",
                 "cache-control: no-cache",
@@ -30873,6 +30953,11 @@ paths:
                   - `ssd`: SSD 스토리지 타입에 해당하는 속성값입니다.
                   - `hdd`: HDD 스토리지 타입에 해당하는 속성값입니다.
                 example: ssd
+              version:
+                type: string
+                description: |
+                  CIFS 인증정보를 설정한 NAS 버전에 해당하는 속성입니다.
+                example: '1'
               cifs_id:
                 type: string
                 description: |
@@ -33027,6 +33112,10 @@ definitions:
         enum:
           - ssd
           - hdd
+      version:
+        type: string
+        description: NAS 버전에 해당하는 속성입니다.
+        example: '1'
       mount_path:
         type: string
         description: 'NAS 마운트 시, 경로 지정에 사용될 마운트 패스에 해당하는 속성입니다.'
@@ -33116,6 +33205,11 @@ definitions:
           - `ssd`: SSD 스토리지 타입에 해당하는 속성값입니다.
           - `hdd`: HDD 스토리지 타입에 해당하는 속성값입니다.
         example: ssd
+      version:
+        type: string
+        description: |
+          CIFS 인증정보를 설정한 NAS 버전에 해당하는 속성입니다.
+        example: '1'
       cifs_id:
         type: string
         description: |

@@ -23,7 +23,7 @@ post:
       -H 'authorization: Bearer {YOUR-JWT-TOKEN}' \
       -H 'cache-control: no-cache' \
       -H 'content-type: application/x-www-form-urlencoded' \
-      -d 'user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&mount_path=mount1&protocol=cifs&size=2'
+      -d 'user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&version=1&mount_path=mount1&protocol=cifs&size=2'
     ```
 
     ### Error Code
@@ -51,6 +51,15 @@ post:
         - ssd: SSD 타입으로 설정하는 입력값입니다.
         - hdd: HDD 타입으로 설정하는 입력값입니다.
         - 해당 매개변수를 입력하지 않으면 hdd를 기본값으로 사용합니다.
+    - in: formData
+      name: version
+      required: false
+      type: string
+      example: '1'
+      description: |
+        NAS 버전을 설정하는 매개변수입니다. type 이 `ssd` 인 경우 기본값은 `1` 이고, type 이 `hdd` 인 경우 기본값은 `2` 입니다.
+        - `1`: type 이 `ssd` 인 경우 설정하는 입력값입니다. type 이 `hdd` 인 경우 설정할 수 없습니다.
+        - `2`: type 이 `hdd` 인 경우 설정하는 입력값입니다. type 이 `ssd` 인 경우 설정할 수 없습니다.
     - in: formData
       name: mount_path
       required: true
@@ -98,7 +107,7 @@ post:
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&mount_path=mount1&protocol=cifs&size=2",
+          CURLOPT_POSTFIELDS => "user_id=company_777&name=nas-test1&desc=nas-backup&type=ssd&version=1&mount_path=mount1&protocol=cifs&size=2",
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
@@ -127,6 +136,7 @@ post:
               name: 'nas-test',
               desc: 'nas-backup',
               type: 'ssd',
+              version: '1',
               mount_path: 'mount1',
               protocol: 'cifs',
               size: 2
@@ -180,6 +190,7 @@ get:
           - nas_id: NAS ID
           - name: NAS 자원명
           - type: NAS 스토리지 타입
+          - version: NAS 버전
           - protocol: NAS 파일 시스템 프로토콜
           - size: NAS 용량(TB)
           - status: NAS 현재 상태 값

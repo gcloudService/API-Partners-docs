@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 2022-05-24
+### Changed
+- NAS 버전 정보 추가
 ## [1.7.1] - 2022-06-09
 ### Changed
 - 일부 VM 사양 종료함에 따라 제공하는 사양 안내 추가
