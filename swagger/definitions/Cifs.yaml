@@ -22,6 +22,11 @@ properties:
       - `ssd`: SSD 스토리지 타입에 해당하는 속성값입니다.
       - `hdd`: HDD 스토리지 타입에 해당하는 속성값입니다.
     example: ssd
+  version:
+    type: string
+    description: |
+      CIFS 인증정보를 설정한 NAS 버전에 해당하는 속성입니다.
+    example: '1'
   cifs_id:
     type: string
     description: |
