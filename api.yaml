@@ -4,7 +4,7 @@ schemes:
 host: cpapi.gabia.com
 basePath: /v1
 info:
-  version: 1.8.0
+  version: 1.8.1
   title: 클라우드 파트너 API
   x-logo:
     url: ./static/gcloud_ptn.jpg
@@ -427,7 +427,7 @@ info:
 
 
     [API Collection
-    다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.7.0/gCloud.partner.API.1.7.0.postman_collection.json)
+    다운로드](https://github.com/gcloudService/API-Partners-docs/releases/download/v1.8.1/gCloud.partner.API.1.8.1.postman_collection.json)
 
 
     [API Collection 버전
