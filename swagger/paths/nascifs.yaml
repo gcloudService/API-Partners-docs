@@ -39,6 +39,15 @@ post:
         - ssd: 스토리지 타입이 SSD인 NAS를 나타내는 값입니다.
         - hdd: 스토리지 타입이 HDD인 NAS를 나타내는 값입니다.
     - in: formData
+      name: version
+      required: false
+      type: string
+      example: '1'
+      description: |
+        NAS 버전에 해당하는 매개변수입니다. type 이 `ssd` 인 경우 기본값은 `1` 이고, type 이 `hdd` 인 경우 기본값은 `2` 입니다.
+        - `1`: type 이 `ssd` 인 경우 설정하는 입력값입니다. type 이 `hdd` 인 경우 설정할 수 없습니다.
+        - `2`: type 이 `hdd` 인 경우 설정하는 입력값입니다. type 이 `ssd` 인 경우 설정할 수 없습니다.
+    - in: formData
       name: cifs_id
       required: true
       type: string
@@ -75,7 +84,7 @@ post:
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "type=ssd&user_id=company_777&cifs_id=mycifs&cifs_pw=pass@$WORD12",
+          CURLOPT_POSTFIELDS => "type=ssd&version=1&user_id=company_777&cifs_id=mycifs&cifs_pw=pass@$WORD12",
           CURLOPT_HTTPHEADER => array(
             "authorization: Bearer {YOUR-JWT-TOKEN}",
             "cache-control: no-cache",
@@ -102,6 +111,7 @@ post:
             form: {
               'user_id': 'company_777',
               'type': 'ssd',
+              'version': '1',
               'cifs_id': 'mycifs',
               'cifs_pw': 'pass@$WORD12'
             }
@@ -163,6 +173,7 @@ get:
           - id: NAS CIFS 인증 정보 ID
           - cifs_id: NAS CIFS 인증 ID
           - type: NAS 스토리지 타입
+          - version: NAS 버전
         - 검색하려는 대상과 조회 조건의 값이 정확히 일치되는 경우에만 조회할 수 있습니다.
         - 사용할 수 있는 조회 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력하여 모든 조건에 만족하는 값을 조회할 수 있습니다.
         - 조회 조건 값에 대한 정보는 각 기능에 대한 응답(Responses)를 참고해 입력할 수 있습니다.
@@ -177,6 +188,7 @@ get:
           - user_id: 이용자 ID
           - cifs_id: NAS CIFS 인증 ID
           - type: NAS 스토리지 타입
+          - version: NAS 버전
           - regdate: NAS 생성일
           - updatedate: NAS 수정일
         - 사용할 수 있는 정렬 조건이 2개 이상일 경우, 적용하고자 하는 조건을 모두 입력할 수 있으며 앞에 입력된 조건의 우선 순위가 높습니다.
