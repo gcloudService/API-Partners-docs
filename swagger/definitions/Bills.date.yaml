@@ -89,3 +89,10 @@ properties:
         type: integer
         description: 당월 파트너의 라이선스 총 이용금액에 해당하는 속성으로 속성값의 단위는 원입니다. 
         example: 0
+  users:
+    type: array
+    description: 청구 대상 유저 ID 리스트에 해당하는 속성입니다.
+    items:
+      type: string
+      description: 청구 대상 유저 ID 에 해당하는 속성값입니다.
+      example: user1
