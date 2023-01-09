@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.2] - 2023-01-06
+### Changed
+- 정산금 조회 API 에 `users` 프로퍼티 추가
+- 실시간 요금 현황 API 에 `users` 프로퍼티 추가
+
 ## [1.8.1] - 2022-07-14
 ### Changed
 - Postman Collection 1.8.1
